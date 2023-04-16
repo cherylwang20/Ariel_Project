@@ -84,6 +84,7 @@ planetname = (
     "GJ 1214 b",
     "NGTS-10 b",
     "GJ 367 b"
+    #"TOI-193", # add in a JWST target
 )
 
 columns_ariel = [

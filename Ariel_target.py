@@ -18,3 +18,6 @@ print(len(JWST_Cycle1['Observation']))
 JWST_Phase = JWST_Cycle1[JWST_Cycle1['Observation'] == 'PHASE']
 print(JWST_Phase)
 print(f'The total JWST cycle 1 timeframe devoted to Phase Curve Observation is ~{11/141*100:.3f}%')
+
+JWST_Phase_Planet = JWST_Phase['Planet']
+print(JWST_Phase_Planet)
