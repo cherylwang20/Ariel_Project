@@ -49,5 +49,6 @@ ariel['pl_g'] = (G*M_jup*ariel["Planet Mass [Mj]"])/ ((r_jup*ariel["Planet Radiu
 
 #from JWST_Phasecurve_Graph import *
 #from JWST_Phase_Curve_pg import *
-from JWST_Phasecurve_prj import *
-from JWST_Ariel_Phasecurve_PG_Ecc import *
+#from JWST_Phasecurve_prj import *
+#from JWST_Ariel_Phasecurve_PG_Ecc import *
+from JWST_Ariel_Period_Graph import *

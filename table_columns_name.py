@@ -119,6 +119,15 @@ SS_radj = [1 / 11.2,  # Earth
            1,  # Jupiter
            1 / 2.88]  # Neptune
 
+
+SS_g = [9.8,  # Earth
+        24.8,  # Jupiter
+        11.5]  # Neptune
+
+SS_orb = [365.2, # Earth
+          4331, #Jupiter
+          59800] #Neptune
+
 '''
 planet_ariel = (
     "GJ 1214 b",

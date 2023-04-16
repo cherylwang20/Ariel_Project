@@ -76,6 +76,7 @@ for x, y, name in zip(pc_telescope.query("JWST == 'Yes'")["pl_eqt"], pc_telescop
                      ha='center')  # horizontal alignment can be left, right or center
 
 ## Label HD 189
+'''
 for x, y, name in zip(pc_telescope.query("pl_name == 'HD 189733 b'")["pl_eqt"],
                       pc_telescope.query("pl_name == 'HD 189733 b'")["pl_radj"],
                       pc_telescope.query("pl_name == 'HD 189733 b'")["pl_name"]):
@@ -86,7 +87,7 @@ for x, y, name in zip(pc_telescope.query("pl_name == 'HD 189733 b'")["pl_eqt"],
                  textcoords="offset points",  # how to position the text
                  xytext=(0, 0),  # distance from text to points (x,y)
                  ha='center')  # horizontal alignment can be left, right or center
-
+'''
 ################################################################################3
 
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
