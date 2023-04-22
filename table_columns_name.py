@@ -1,7 +1,9 @@
 import pandas as pd
+from function_constants import *
 tableName = 'pscomppars'
 
-ariel = pd.read_csv("ariel_target.csv")
+
+ariel = pd.read_csv(os.path.join(data_dir,"ariel_target.csv"))
 
 columns = [
     "pl_name",

@@ -11,6 +11,8 @@ M_jup = 1.89e27
 r_jup = 69911*1000
 
 save_dir = os.path.join(os.getcwd(),'figure/')
+data_dir = os.path.join(os.getcwd(), 'data/')
+
 
 def planck(T):
     a = 2.0*h*c**2

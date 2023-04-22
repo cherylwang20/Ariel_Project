@@ -1,3 +1,5 @@
+import os.path
+
 import pyvo
 import pandas as pd
 from tabulate import tabulate
@@ -24,7 +26,7 @@ pc_df = results.to_table().to_pandas()
 
 #read in csv file, this file tells us whether each object is
 #observed in any of the three telescope: Hubble,Spitzer,JWST
-telescopes = pd.read_csv('pl_telescope.csv')
+telescopes = pd.read_csv(os.path.join(data_dir,'pl_telescope.csv'))
 
 
 pc_telescope = pd.merge(pc_df, telescopes, how='left', left_on='pl_name', right_on='Planet_name')
