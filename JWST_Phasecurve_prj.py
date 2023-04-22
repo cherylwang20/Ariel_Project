@@ -117,6 +117,6 @@ plt.xlabel("Planetary Equilibrium Temperature [K]", fontsize=18)
 plt.ylabel("Planetary Radius [$R_{Jup}$]", fontsize=18)
 plt.title("Planets Observed with Phase Curves", fontsize=24)
 # plt.yscale('log')
-plt.savefig('JWST-Ariel-PhaseCurvePlot-eccen.pdf')
+plt.savefig(save_dir + 'JWST-Ariel-PhaseCurvePlot-eccen.jpg')
 
 plt.show()

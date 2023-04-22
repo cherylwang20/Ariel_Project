@@ -154,6 +154,6 @@ plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.yscale('log')
 # plt.ylim([0,105])
-plt.savefig('JWST-Ariel-Phasecurves-Plg.pdf')
+plt.savefig(save_dir + 'JWST-Ariel-Phasecurves-Plg.jpg')
 
 plt.show()

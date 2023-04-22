@@ -50,7 +50,7 @@ for x, y, name in zip(pc_telescope.query("JWST == 'Yes'")["pl_orbper"], pc_teles
                      ha='center')  # horizontal alignment can be left, right or center
 ############################
 
-ax.axvline(3, color ='blue', lw = 4, alpha = 0.75)
+ax.axvline(3, color='blue', linestyle='dashed', linewidth=4, alpha=0.75)
 
 ################################################################################3
 
@@ -86,13 +86,13 @@ ax = plt.gca().add_artist(first_legend)
 
 plt.grid(True, alpha=0.35)
 plt.ylabel("Planetary Equilibrium Temperature [K]", fontsize=22, fontweight='bold')
-plt.xlabel("Planet Orbital Period [Days]", fontsize=22, fontweight='bold')
+plt.xlabel("Planet Orbital Period [days]", fontsize=22, fontweight='bold')
 plt.title("Planets Observed with Phase Curves", fontsize=26, fontweight='bold')
 plt.xscale('log')
 plt.yscale('log')
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
 # plt.ylim([0,105])
-plt.savefig('JWST-Ariel-PhaseCurvePlot-Orb-K.pdf')
+plt.savefig(save_dir + 'JWST-Ariel-PhaseCurvePlot-Orb-K.jpg')
 
 plt.show()

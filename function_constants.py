@@ -1,4 +1,5 @@
 import numpy as np
+import os
 #planck function
 h = 6.626e-34
 c = 3.0e+8
@@ -8,6 +9,8 @@ wav = 7.5e-6 #why this particular wavelength?
 G = 6.67e-11
 M_jup = 1.89e27
 r_jup = 69911*1000
+
+save_dir = os.path.join(os.getcwd(),'figure/')
 
 def planck(T):
     a = 2.0*h*c**2
