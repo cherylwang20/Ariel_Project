@@ -34,7 +34,7 @@ pc_telescope = pd.merge(pc_df, telescopes, how='left', left_on='pl_name', right_
 #Drop useless rows.
 pc_telescope = pc_telescope.drop(pc_telescope[(pc_telescope['JWST'] == 'No') & (pc_telescope['Spitzer'] == 'No')  & (pc_telescope['Hubble'] == 'No')].index)
 
-print(pc_telescope.query('pl_orbeccen > 0.09'))
+#(pc_telescope.query('pl_orbeccen > 0.09'))
 
 pc_telescope['ESM'] = ESM(1.1*pc_telescope['pl_eqt'], pc_telescope['st_teff'],pc_telescope['pl_radj'] ,pc_telescope['st_rad'],pc_telescope['sy_kmag'])
 
@@ -47,13 +47,21 @@ ariel['ESM'] = ESM(1.1*ariel['Planet Temperature [K]'], ariel["Star Temperature 
 
 ariel['pl_g'] = (G*M_jup*ariel["Planet Mass [Mj]"])/ ((r_jup*ariel["Planet Radius [Rj]"])**2)
 
-#print(ariel[columns_ariel].head())
+## sort ariel into different mass range:
+ariel_terrestrial = ariel.loc[ariel['Planet Mass [Mj]'] <= 0.16058]
+ariel_subnep = ariel.loc[(ariel['Planet Mass [Mj]'] >= 0.16058)
+                & (ariel['Planet Mass [Mj]'] <= 0.312251)]
+ariel_nep = ariel.loc[(ariel['Planet Mass [Mj]'] <= 0.624503)
+                & (ariel['Planet Mass [Mj]'] >= 0.312251)]
+ariel_giant = ariel.loc[ariel['Planet Mass [Mj]'] >= 0.624503]
 
-from JWST_Phasecurve_Graph import *
-from JWST_Phase_Curve_pg import *
-from JWST_Phasecurve_prj import *
-from JWST_Ariel_Phasecurve_PG_Ecc import *
-from JWST_Ariel_Period_Graph import *
-from JWST_Ariel_Fig3_PR_PP_PT import *
-from JWST_Ariel_ESM_Period_T import *
-from Ariel_Cumulative_Period import *
+
+#from JWST_Phasecurve_Graph import *
+#from JWST_Phase_Curve_pg import *
+#from JWST_Phasecurve_prj import *
+#from JWST_Ariel_Phasecurve_PG_Ecc import *
+#from JWST_Ariel_Period_Graph import *
+#from JWST_Ariel_Fig3_PR_PP_PT import *
+#from JWST_Ariel_ESM_Period_T import *
+#from Ariel_Cumulative_Period import *
+from Ariel_Temperature_Ecc import *

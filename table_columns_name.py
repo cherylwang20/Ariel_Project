@@ -114,6 +114,9 @@ columns_ariel = [
 planet_ariel = ariel["Planet Name"].tolist()
 ariel['Telescope'] = ['Ariel']*len(planet_ariel)
 
+
+
+
 SS_eqt = [279,  # Earth
           122,  # Jupiter
           51]  # Neptune

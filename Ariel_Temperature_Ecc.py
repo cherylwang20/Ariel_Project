@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 from phasecurve_plot_cheryl import *
 import matplotlib
 
@@ -7,25 +9,23 @@ min_, max_ = ariel.ESM.min(), ariel.ESM.max()
 print(min_,max_)
 # cmap='viridis_r'
 cmap = 'cool'
-ax.axhline(3, color='red', linestyle='dashed', linewidth=2, alpha=0.75, zorder = 0)
 
-
-Ariel_terr = ax.scatter(ariel_terrestrial["Planet Temperature [K]"], ariel_terrestrial['Planet Period [days]'],
+Ariel_terr = ax.scatter(ariel_terrestrial["Planet Temperature [K]"], ariel_terrestrial['Eccentricity'],
                         alpha=0.8, s = 100, c = ariel_terrestrial["ESM"], marker="*",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Terrestrial", zorder = 4)
 
-Ariel_subnep = ax.scatter(ariel_subnep["Planet Temperature [K]"], ariel_subnep['Planet Period [days]'],
+Ariel_subnep = ax.scatter(ariel_subnep["Planet Temperature [K]"], ariel_subnep['Eccentricity'],
                         alpha=0.8, s = 200, c = ariel_subnep["ESM"], marker="o",
                         edgecolor='white', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "SubNeptune", zorder = 3)
 
-Ariel_nept = ax.scatter(ariel_nep["Planet Temperature [K]"], ariel_nep['Planet Period [days]'],
+Ariel_nept = ax.scatter(ariel_nep["Planet Temperature [K]"], ariel_nep['Eccentricity'],
                         alpha=0.8, s = 350, c = ariel_nep["ESM"], marker="p",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Neptune", zorder = 2)
 
-Ariel_giant = ax.scatter(ariel_giant["Planet Temperature [K]"], ariel_giant['Planet Period [days]'],
+Ariel_giant = ax.scatter(ariel_giant["Planet Temperature [K]"], ariel_giant['Eccentricity'],
                         alpha=0.8, s = 600, c = ariel_giant["ESM"], marker="+",
                         cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Giant", zorder = 2)
@@ -34,11 +34,6 @@ Ariel_giant = ax.scatter(ariel_giant["Planet Temperature [K]"], ariel_giant['Pla
 # ax.set_clim(min_, max_)
 clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
 clb.ax.set_title('$\\bf{ESM} $')
-
-
-
-
-############################################################33
 
 # Create a legend for the first line.
 # first_legend = plt.legend(handles=[Spitzer_plot,Hubble_plot, JWST_plot], loc='upper right',
@@ -69,13 +64,14 @@ ax = plt.gca().add_artist(first_legend)
 
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planetary Equilibrium Temperature [K]", fontsize=18, fontweight='bold')
-plt.ylabel("Planet Period [days]", fontsize=18, fontweight='bold')
+plt.ylabel("Eccentricity", fontsize=18, fontweight='bold')
 plt.title("Planets Observed with Phase Curves", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-plt.yscale('log')
+plt.gca().set_ylim(top=1)
+#plt.yscale('log')
 #plt.xscale('log')
-# plt.ylim([0,105])
-plt.savefig(save_dir + 'Ariel-Phasecurves-ESM-Period.jpg')
+#plt.ylim([0,1])
+plt.savefig(save_dir+'Ariel-Phasecurves-T-Ecc.jpg')
 
 plt.show()

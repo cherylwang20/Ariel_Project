@@ -80,6 +80,8 @@ for x, y, name in zip(pc_telescope.query("pl_name == 'HD 189733 b'")["pl_eqt"],
                  ha='center')  # horizontal alignment can be left, right or center
 '''
 ################################################################################3
+ax.axhline(3, color='blue', linestyle='dashed', linewidth=2, alpha=0.75)
+
 
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
@@ -135,7 +137,7 @@ ax = plt.gca().add_artist(first_legend)
 
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planetary Equilibrium Temperature [K]", fontsize=18, fontweight='bold')
-plt.ylabel("Planet Orbital Period [days]", fontsize=18, fontweight='bold')
+plt.ylabel("Planet Period [days]", fontsize=18, fontweight='bold')
 plt.title("Planets Observed with Phase Curves", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
