@@ -60,7 +60,7 @@ ariel_giant = ariel.loc[ariel['Planet Mass [Mj]'] >= 0.624503]
 #from JWST_Phase_Curve_pg import *
 #from JWST_Phasecurve_prj import *
 #from JWST_Ariel_Phasecurve_PG_Ecc import *
-#from JWST_Ariel_Period_Graph import *
+from Ariel_Period_Graph import *
 #from JWST_Ariel_Fig3_PR_PP_PT import *
 #from JWST_Ariel_ESM_Period_T import *
 #from Ariel_Cumulative_Period import *

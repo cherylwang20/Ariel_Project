@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import os
 
 #we convert the excel to a csv file.
 df = pd.read_excel("Known_T1_10Obs_20220525_edits.xlsx")
@@ -9,11 +10,11 @@ new_target = df[df['Planet Period [days]'] < 5]
 
 df.to_csv('ariel_target.csv')
 
+data_dir = os.path.join(os.getcwd(), 'data/')
+file_name = os.path.join(data_dir, "All JWST transiting exoplanet observations  (GTO+GO+ERS) - All Transiting Exoplanet Observations.csv")
+JWST_Cycle1 = pd.read_csv(file_name,skiprows= 7)
 
-JWST_Cycle1 = pd.read_csv("All JWST transiting exoplanet observations  (GTO+GO+ERS) - All Transiting Exoplanet Observations.csv"
-                          ,skiprows= 7)
-
-print(len(JWST_Cycle1['Observation']))
+#print(len(JWST_Cycle1['Observation']))
 
 JWST_Phase = JWST_Cycle1[JWST_Cycle1['Observation'] == 'PHASE']
 print(JWST_Phase)
