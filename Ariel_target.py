@@ -7,10 +7,11 @@ df = pd.read_excel("Known_T1_10Obs_20220525_edits.xlsx")
 column_names = df.columns
 
 new_target = df[df['Planet Period [days]'] < 5]
-
-df.to_csv('ariel_target.csv')
-
 data_dir = os.path.join(os.getcwd(), 'data/')
+
+df.to_csv(data_dir + 'ariel_target.csv')
+
+
 file_name = os.path.join(data_dir, "All JWST transiting exoplanet observations  (GTO+GO+ERS) - All Transiting Exoplanet Observations.csv")
 JWST_Cycle1 = pd.read_csv(file_name,skiprows= 7)
 

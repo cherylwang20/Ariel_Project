@@ -90,6 +90,7 @@ planetname = (
 )
 
 columns_ariel = [
+    "Tier 3 Eclipses",
     "Planet Name",
     "Star Name",
     "Preferred Method",

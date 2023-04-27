@@ -2,74 +2,41 @@ from phasecurve_plot_cheryl import *
 import matplotlib
 
 fig, ax = plt.subplots(figsize=(15, 10))
-# plt.figure(figsize=(15,10))
-min_, max_ = ariel.ESM.min(), ariel.ESM.max()
-print(min_,max_)
-# cmap='viridis_r'
-cmap = 'cool'
 
-Ariel_terr = ax.scatter(ariel_terrestrial["Planet Temperature [K]"], ariel_terrestrial['Cumulative time (days)'],
-                        alpha=0.8, s = 100, c = ariel_terrestrial["ESM"], marker="*",
-                        edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
-                        linewidths=1, label = "Terrestrial", zorder = 4)
+Ariel_so = ax.plot(ariel_sort_so.index.tolist(), ariel_sort_so['cumulative days'].tolist(),
+                        alpha=0.8, label = "Orbital Period", linewidth= 3,
+                        linestyle = 'dashed', color = 'green')
 
-Ariel_subnep = ax.scatter(ariel_subnep["Planet Temperature [K]"], ariel_subnep['Cumulative time (days)'],
-                        alpha=0.8, s = 200, c = ariel_subnep["ESM"], marker="o",
-                        edgecolor='white', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
-                        linewidths=1, label = "SubNeptune", zorder = 3)
+Ariel_ESM = ax.plot(ariel_sort_ESM.index.tolist(), ariel_sort_ESM['cumulative days'].tolist(),
+                         alpha = 1, label = "ESM", linewidth= 3,
+                        linestyle = 'dotted', color = 'blue')
 
-Ariel_nept = ax.scatter(ariel_nep["Planet Temperature [K]"], ariel_nep['Cumulative time (days)'],
-                        alpha=0.8, s = 350, c = ariel_nep["ESM"], marker="p",
-                        edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
-                        linewidths=1, label = "Neptune", zorder = 2)
+Ariel_eclipse = ax.plot(ariel_sort_eclipse_num.index.tolist(), ariel_sort_eclipse_num['cumulative days'].tolist(),
+                        alpha = 1, label = "# Eclipse", linewidth= 3,
+                        linestyle = 'dashdot', color = 'red')
 
-Ariel_giant = ax.scatter(ariel_giant["Planet Temperature [K]"], ariel_giant['Cumulative time (days)'],
-                        alpha=0.8, s = 600, c = ariel_giant["ESM"], marker="+",
-                        cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
-                        linewidths=1, label = "Giant", zorder = 2)
+ax.axhline(120, color='orange', linestyle='solid', linewidth=2, alpha=0.75, zorder = 0)
 
 
-# ax.set_clim(min_, max_)
-clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
-clb.ax.set_title('$\\bf{ESM} $')
-
-ax.axhline(100, color='r', linestyle='dashed', linewidth=1, alpha=1)
-# Create a legend for the first line.
-# first_legend = plt.legend(handles=[Spitzer_plot,Hubble_plot, JWST_plot], loc='upper right',
-#                           title = "$\\bf{Telescope} $", title_fontsize = 20, prop={'size': 20}, fancybox = True)
-
-
-from matplotlib.lines import Line2D
-
-legend_elements = [Line2D([0], [0], marker='*', color='w', label='Terrestrial',
-                          markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25),
-                    Line2D([0], [0], marker='o', color='w', label='Sub-Neptune',
-                          markerfacecolor='none', markeredgecolor='black', mew=3, markersize=20),
-                    Line2D([0], [0], marker='p', color='w', label='Neptune',
-                          markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25),
-                    Line2D([0], [0], marker='+', color='w', label='Giant',
-                          markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25)
-                   ]
-
-first_legend = plt.legend(handles=legend_elements, loc='upper right',
-                          title="$\\bf{Telescope} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
+ax.legend(loc='lower right',
+                          title="$\\bf{Sorting Parameter} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
 
 # Add the legend manually to the current Axes.
-ax = plt.gca().add_artist(first_legend)
+#ax = plt.gca().add_artist(first_legend)
 
 # # Create another legend for the second line.
 # plt.legend(handles=[eccen_plot], loc='lower right',
 #           title = "$\\bf{Eccentric \ Planets}$", title_fontsize = 15, prop={'size': 15}, fancybox = True)
 
 plt.grid(True, alpha=0.35)
-plt.xlabel("Planetary Equilibrium Temperature [K]", fontsize=18, fontweight='bold')
+plt.xlabel("# of planets", fontsize=18, fontweight='bold')
 plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
 plt.title("Planets Observed with Phase Curves", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-plt.yscale('log')
+#plt.yscale('log')
 #plt.xscale('log')
 # plt.ylim([0,105])
-plt.savefig(save_dir+'Ariel-Phasecurves-ESM-T_Cul.jpg')
+plt.savefig(save_dir+'Ariel-Phasecurves-Cul_Orb.jpg')
 
 plt.show()

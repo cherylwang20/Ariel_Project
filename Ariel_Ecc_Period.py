@@ -1,45 +1,36 @@
 from phasecurve_plot_cheryl import *
-
-from phasecurve_plot_cheryl import *
 import matplotlib
 
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
-min_, max_ = ariel['Planet Temperature [K]'].min(), ariel['Planet Temperature [K]'].max()
-print(min_,max_)
+min_, max_ = ariel.ESM.min(), ariel.ESM.max()
 # cmap='viridis_r'
-cmap = 'RdYlBu_r'
-#ax.axvline(3, color='red', linestyle='dashed', linewidth=2, alpha=0.75, zorder = 0)
+cmap = 'cool'
 
+Ariel_terr = ax.scatter(ariel_terrestrial["Planet Period [days]"], ariel_terrestrial[ariel_terrestrial['Eccentricity'] > 0.2],
+                        alpha=0.8, s = 100, c = ariel_terrestrial["ESM"], marker="*",
+                        edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
+                        linewidths=1, label = "Terrestrial", zorder = 4)
 
-Ariel_terr = ax.scatter(ariel_terrestrial['Tier 3 Eclipses'],ariel_terrestrial["ESM"],
-                        alpha=1, s = 100, c = ariel_terrestrial["Planet Temperature [K]"], marker="*",
-                        edgecolor='black', cmap=cmap, vmin=min_, vmax=max_,
-                        linewidths=0.6, label = "Terrestrial", zorder = 4)
+Ariel_subnep = ax.scatter(ariel_subnep["Planet Period [days]"], ariel_subnep[ariel_subnep['Eccentricity'] > 0.2],
+                        alpha=0.8, s = 200, c = ariel_subnep["ESM"], marker="o",
+                        edgecolor='white', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
+                        linewidths=1, label = "SubNeptune", zorder = 3)
 
-Ariel_subnep = ax.scatter(ariel_subnep['Tier 3 Eclipses'],ariel_subnep["ESM"],
-                        alpha=1, s = 200, c = ariel_subnep["Planet Temperature [K]"], marker="o",
-                        edgecolor='white', cmap=cmap, vmin=min_, vmax=max_,
-                        linewidths=0.6, label = "SubNeptune", zorder = 3)
+Ariel_nept = ax.scatter(ariel_nep["Planet Period [days]"], ariel_nep[ariel_nep['Eccentricity'] > 0.2],
+                        alpha=0.8, s = 350, c = ariel_nep["ESM"], marker="p",
+                        edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
+                        linewidths=1, label = "Neptune", zorder = 2)
 
-Ariel_nept = ax.scatter( ariel_nep['Tier 3 Eclipses'],ariel_nep["ESM"],
-                        alpha=1, s = 350, c = ariel_nep["Planet Temperature [K]"], marker="p",
-                        edgecolor='black', cmap=cmap,vmin=min_, vmax=max_,
-                        linewidths=0.6, label = "Neptune", zorder = 2)
-
-Ariel_giant = ax.scatter(ariel_giant['Tier 3 Eclipses'],ariel_giant["ESM"],
-                        alpha=1, s = 600, c = ariel_giant["Planet Temperature [K]"], marker="+",
-                        cmap=cmap,vmin=min_, vmax=max_,
+Ariel_giant = ax.scatter(ariel_giant["Planet Period [days]"], ariel_giant[ariel_giant['Eccentricity'] > 0.2],
+                        alpha=0.8, s = 600, c = ariel_giant["ESM"], marker="+",
+                        cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Giant", zorder = 2)
 
 
 # ax.set_clim(min_, max_)
 clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
-clb.set_label('Planetary Equilibrium Temperature [K]',fontsize=16)
-
-
-
-############################################################33
+clb.ax.set_title('$\\bf{ESM} $')
 
 # Create a legend for the first line.
 # first_legend = plt.legend(handles=[Spitzer_plot,Hubble_plot, JWST_plot], loc='upper right',
@@ -69,14 +60,15 @@ ax = plt.gca().add_artist(first_legend)
 #           title = "$\\bf{Eccentric \ Planets}$", title_fontsize = 15, prop={'size': 15}, fancybox = True)
 
 plt.grid(True, alpha=0.35)
-plt.xlabel("# of Tier 3 Eclipses", fontsize=18, fontweight='bold')
-plt.ylabel("ESM", fontsize=18, fontweight='bold')
+plt.xlabel("Planet Period [days]", fontsize=18, fontweight='bold')
+plt.ylabel("Eccentricity", fontsize=18, fontweight='bold')
 plt.title("Planets Observed with Phase Curves", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-plt.yscale('log')
+plt.gca().set_ylim(top=1)
+#plt.yscale('log')
 plt.xscale('log')
-# plt.ylim([0,105])
-plt.savefig(save_dir + 'Ariel-Phasecurves-ESM-Eclipse-T.jpg')
+#plt.ylim([0,1])
+plt.savefig(save_dir+'Ariel-Phasecurves-Per-Ecc.jpg')
 
 plt.show()
