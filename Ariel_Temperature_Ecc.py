@@ -11,27 +11,27 @@ print(min_,max_)
 cmap = 'cool'
 
 Ariel_terr = ax.scatter(ariel_terrestrial["Planet Temperature [K]"], ariel_terrestrial['Eccentricity'],
-                        alpha=0.8, s = 100, c = ariel_terrestrial["ESM"], marker="*",
+                        alpha=0.6, s = 50, c = ariel_terrestrial["ESM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Terrestrial", zorder = 4)
 
 Ariel_subnep = ax.scatter(ariel_subnep["Planet Temperature [K]"], ariel_subnep['Eccentricity'],
-                        alpha=0.8, s = 200, c = ariel_subnep["ESM"], marker="o",
-                        edgecolor='white', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
+                        alpha=0.6, s = 150, c = ariel_subnep["ESM"], marker="o",
+                        edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "SubNeptune", zorder = 3)
 
 Ariel_nept = ax.scatter(ariel_nep["Planet Temperature [K]"], ariel_nep['Eccentricity'],
-                        alpha=0.8, s = 350, c = ariel_nep["ESM"], marker="p",
+                        alpha=0.6, s = 400, c = ariel_nep["ESM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Neptune", zorder = 2)
 
 Ariel_giant = ax.scatter(ariel_giant["Planet Temperature [K]"], ariel_giant['Eccentricity'],
-                        alpha=0.8, s = 600, c = ariel_giant["ESM"], marker="+",
-                        cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
-                        linewidths=1, label = "Giant", zorder = 2)
+                        alpha=0.6, s = 600, c = ariel_giant["ESM"], marker="o",
+                        edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
+                        linewidths=1, label = "Giant", zorder = 1)
 
 
-# ax.set_clim(min_, max_)
+
 clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
 clb.ax.set_title('$\\bf{ESM} $')
 
@@ -52,11 +52,11 @@ legend_elements = [Line2D([0], [0], marker='*', color='w', label='Terrestrial',
                           markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25)
                    ]
 
-first_legend = plt.legend(handles=legend_elements, loc='upper right',
-                          title="$\\bf{Telescope} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
+#first_legend = plt.legend(handles=legend_elements, loc='upper right',
+#                          title="$\\bf{Telescope} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
 
 # Add the legend manually to the current Axes.
-ax = plt.gca().add_artist(first_legend)
+#ax = plt.gca().add_artist(first_legend)
 
 # # Create another legend for the second line.
 # plt.legend(handles=[eccen_plot], loc='lower right',
@@ -65,7 +65,7 @@ ax = plt.gca().add_artist(first_legend)
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planetary Equilibrium Temperature [K]", fontsize=18, fontweight='bold')
 plt.ylabel("Eccentricity", fontsize=18, fontweight='bold')
-plt.title("Planets Observed with Phase Curves", fontsize=24, fontweight='bold')
+plt.title("Ariel Phase Curve Targets: Temp vs Ecc", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.gca().set_ylim(top=1)

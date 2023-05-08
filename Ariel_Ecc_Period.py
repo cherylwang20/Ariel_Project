@@ -7,25 +7,34 @@ min_, max_ = ariel.ESM.min(), ariel.ESM.max()
 # cmap='viridis_r'
 cmap = 'cool'
 
-Ariel_terr = ax.scatter(ariel_terrestrial["Planet Period [days]"], ariel_terrestrial[ariel_terrestrial['Eccentricity'] > 0.2],
-                        alpha=0.8, s = 100, c = ariel_terrestrial["ESM"], marker="*",
+#filter out eccentricities higher than 0.2
+'''
+ariel_terrestrial = ariel_terrestrial[ariel_terrestrial['Eccentricity'] > 0.2]
+ariel_subnep = ariel_subnep[ariel_subnep['Eccentricity']> 0.2]
+ariel_nep = ariel_nep[ariel_nep['Eccentricity'] > 0.2]
+ariel_giant = ariel_giant[ariel_giant['Eccentricity'] > 0.2]
+'''
+
+##
+Ariel_terr = ax.scatter(ariel_terrestrial["Planet Period [days]"], ariel_terrestrial['Eccentricity'],
+                        alpha=0.6, s = 50, c = ariel_terrestrial["ESM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Terrestrial", zorder = 4)
 
-Ariel_subnep = ax.scatter(ariel_subnep["Planet Period [days]"], ariel_subnep[ariel_subnep['Eccentricity'] > 0.2],
-                        alpha=0.8, s = 200, c = ariel_subnep["ESM"], marker="o",
-                        edgecolor='white', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
+Ariel_subnep = ax.scatter(ariel_subnep["Planet Period [days]"], ariel_subnep['Eccentricity'],
+                        alpha=0.6, s = 150, c = ariel_subnep["ESM"], marker="o",
+                        edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "SubNeptune", zorder = 3)
 
-Ariel_nept = ax.scatter(ariel_nep["Planet Period [days]"], ariel_nep[ariel_nep['Eccentricity'] > 0.2],
-                        alpha=0.8, s = 350, c = ariel_nep["ESM"], marker="p",
+Ariel_nept = ax.scatter(ariel_nep["Planet Period [days]"], ariel_nep['Eccentricity'],
+                        alpha=0.6, s = 400, c = ariel_nep["ESM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Neptune", zorder = 2)
 
-Ariel_giant = ax.scatter(ariel_giant["Planet Period [days]"], ariel_giant[ariel_giant['Eccentricity'] > 0.2],
-                        alpha=0.8, s = 600, c = ariel_giant["ESM"], marker="+",
-                        cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
-                        linewidths=1, label = "Giant", zorder = 2)
+Ariel_giant = ax.scatter(ariel_giant["Planet Period [days]"], ariel_giant['Eccentricity'],
+                        alpha=0.6, s = 600, c = ariel_giant["ESM"], marker="o",
+                        edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
+                        linewidths=1, label = "Giant", zorder = 1)
 
 
 # ax.set_clim(min_, max_)
@@ -36,6 +45,7 @@ clb.ax.set_title('$\\bf{ESM} $')
 # first_legend = plt.legend(handles=[Spitzer_plot,Hubble_plot, JWST_plot], loc='upper right',
 #                           title = "$\\bf{Telescope} $", title_fontsize = 20, prop={'size': 20}, fancybox = True)
 
+ax.axvline(3, color='red', linestyle='dashed', linewidth=2, alpha=0.75, zorder = 0)
 
 from matplotlib.lines import Line2D
 
@@ -49,11 +59,11 @@ legend_elements = [Line2D([0], [0], marker='*', color='w', label='Terrestrial',
                           markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25)
                    ]
 
-first_legend = plt.legend(handles=legend_elements, loc='upper right',
-                          title="$\\bf{Telescope} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
+#first_legend = plt.legend(handles=legend_elements, loc='upper right',
+#                          title="$\\bf{Telescope} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
 
 # Add the legend manually to the current Axes.
-ax = plt.gca().add_artist(first_legend)
+#ax = plt.gca().add_artist(first_legend)
 
 # # Create another legend for the second line.
 # plt.legend(handles=[eccen_plot], loc='lower right',
@@ -62,13 +72,14 @@ ax = plt.gca().add_artist(first_legend)
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planet Period [days]", fontsize=18, fontweight='bold')
 plt.ylabel("Eccentricity", fontsize=18, fontweight='bold')
-plt.title("Planets Observed with Phase Curves", fontsize=24, fontweight='bold')
+plt.title("Ariel Phase Curve Targets: Period vs Eccentricity", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.gca().set_ylim(top=1)
 #plt.yscale('log')
 plt.xscale('log')
 #plt.ylim([0,1])
+#plt.xlim([1,100])
 plt.savefig(save_dir+'Ariel-Phasecurves-Per-Ecc.jpg')
 
 plt.show()

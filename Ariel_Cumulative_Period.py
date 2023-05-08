@@ -31,7 +31,7 @@ ax.legend(loc='lower right',
 plt.grid(True, alpha=0.35)
 plt.xlabel("# of planets", fontsize=18, fontweight='bold')
 plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
-plt.title("Planets Observed with Phase Curves", fontsize=24, fontweight='bold')
+plt.title("Ariel Phase Curve Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 #plt.yscale('log')
