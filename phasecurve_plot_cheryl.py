@@ -48,7 +48,7 @@ ariel['ESM'] = ESM(1.1*ariel['Planet Temperature [K]'], ariel["Star Temperature 
 ariel['pl_g'] = (G*M_jup*ariel["Planet Mass [Mj]"])/ ((r_jup*ariel["Planet Radius [Rj]"])**2)
 
 #sort according to the shortest orbit and filter out the 10%
-cut_off = 500
+cut_off = 1000
 
 ariel_sort_so = ariel.sort_values('Planet Period [days]')
 cum_time = []
@@ -81,6 +81,10 @@ ariel_sort_ESM.index = ariel_sort_ESM.index + 1
 
 ariel_sort_ESM.to_csv(data_dir + 'ESM_Ariel_sort.csv')
 
+
+ariel_ESM_100 = ariel_sort_ESM.head(100)
+
+############################################3
 ariel_sort_eclipse_num = ariel.sort_values('Tier 3 Eclipses')
 cum_time = []
 cum = 0
@@ -110,10 +114,14 @@ ariel_giant = ariel.loc[ariel['Planet Mass [Mj]'] >= 0.624503]
 #from JWST_Phase_Curve_pg import *
 #from JWST_Phasecurve_prj import *
 #from JWST_Ariel_Phasecurve_PG_Ecc import *
-from Ariel_Period_Graph import *
+#from Ariel_Period_Graph import *
 #from JWST_Ariel_Fig3_PR_PP_PT import *
 #from JWST_Ariel_ESM_Period_T import *
-from Ariel_Cumulative_Period import *
-from Ariel_Temperature_Ecc import *
-from Ariel_ESM_Eclipse_Graph import *
-from Ariel_Ecc_Period import *
+#from Ariel_Cumulative_Period import *
+#from Ariel_Temperature_Ecc import *
+#from Ariel_ESM_Eclipse_Graph import *
+#from Ariel_Ecc_Period import *
+#from Ariel_Teq_Rp import *
+#from Ariel_Teq_period import *
+from Ariel_ESM_Planet_Rank import *
+from Ariel_num_eclipse_rank import *

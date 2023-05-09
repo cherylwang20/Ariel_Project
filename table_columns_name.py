@@ -109,6 +109,7 @@ columns_ariel = [
     "Star Age [Gyr]",
     "Star Distance [pc]",
     "Star K Mag",
+    "Star Spectral Type",
     "Telescope"
 ]
 

@@ -23,9 +23,12 @@ JWST_plot = ax.scatter(pc_telescope.query("JWST == 'Yes'")["pl_eqt"], pc_telesco
                        cmap=cmap,
                        label='JWST', zorder=2, vmin=min_, vmax=max_)
 
-Ariel_plot = ax.scatter(ariel["Planet Temperature [K]"], ariel['ESM'],
-                        alpha=0.4, s = 100, c = "grey", marker="*",
-                        edgecolor='black', cmap=cmap,
+print(ariel_sort_ESM.head(100))
+
+
+Ariel_plot = ax.scatter(ariel_ESM_100["Planet Temperature [K]"], ariel_ESM_100['ESM'],
+                        alpha=0.4, s = 100, c = "grey", marker="o",
+                        edgecolor='grey', cmap=cmap,
                         linewidths=1, label = "Ariel", zorder = 1, vmin=min_, vmax=max_)
 
 #ariel["Planet Radius [Rj]"]
@@ -93,7 +96,7 @@ legend_elements = [Line2D([0], [0], marker='P', color='w', label='Spitzer',
                           markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25),
                    Line2D([0], [0], marker='h', color='w', label='JWST',
                           markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25),
-                   Line2D([0], [0], marker='*', color='w', label='Ariel',
+                   Line2D([0], [0], marker='o', color='w', label='Ariel',
                           markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25)
                    ]
 
