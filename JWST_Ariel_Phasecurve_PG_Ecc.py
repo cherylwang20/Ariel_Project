@@ -13,7 +13,7 @@ Hubble_plot = ax.scatter(pc_telescope.query("Hubble == 'Yes'")["pl_eqt"], pc_tel
 JWST_plot = ax.scatter(pc_telescope.query("JWST == 'Yes'")["pl_eqt"], pc_telescope.query("JWST == 'Yes'")["pl_g"],
                        alpha=1, s=850, c='gold', marker='h', label='JWST', zorder=2)
 
-Ariel_plot = ax.scatter(ariel_ESM_100["Planet Temperature [K]"], ariel_ESM_100['pl_g'],
+Ariel_plot = ax.scatter(ariel_eclipse_100["Planet Temperature [K]"], ariel_eclipse_100['pl_g'],
                         alpha=0.4, s = 150, c = "grey", marker="o",
                         label = "Ariel", zorder = 1)
 
