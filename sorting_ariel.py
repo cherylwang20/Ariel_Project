@@ -60,3 +60,32 @@ ariel_eclipse_100 = ariel_sort_eclipse_num.head(100)
 ariel_sort_transit_num = ariel.sort_values('Tier 3 Transits')
 ariel_transit_100 = ariel_sort_transit_num.head(100)
 
+######### sort out targets with
+overlap_target = pd.merge(ariel_transit_100, ariel_eclipse_100, how = "inner")
+
+
+cum_time = []
+cum = 0
+for index, row in overlap_target.iterrows():
+    cum += row['Transit Duration [s]']
+    cum_time.append(cum)
+
+overlap_target['cumulative transit time [days]'] = cum_time
+overlap_target['cumulative transit time [days]'] = overlap_target['cumulative transit time [days]']/ 86400 * 3 # we account
+#for the based line by multiplying 3
+overlap_target.drop(columns=['Unnamed: 0'])
+overlap_target = overlap_target.reset_index(drop = True)
+overlap_target.index = overlap_target.index + 1
+
+overlap_target_selected = overlap_target[["Planet Name","Tier 3 Eclipses","Tier 3 Transits",
+                                           "Planet Period [days]", "Transit Duration [s]", 'cumulative transit time [days]' ]]
+overlap_target_selected.to_csv(data_dir + 'overlap.csv')
+
+################ sort ariel into different mass range:
+ariel_terrestrial = ariel.loc[ariel['Planet Mass [Mj]'] <= 0.16058]
+ariel_subnep = ariel.loc[(ariel['Planet Mass [Mj]'] >= 0.16058)
+                & (ariel['Planet Mass [Mj]'] <= 0.312251)]
+ariel_nep = ariel.loc[(ariel['Planet Mass [Mj]'] <= 0.624503)
+                & (ariel['Planet Mass [Mj]'] >= 0.312251)]
+ariel_giant = ariel.loc[ariel['Planet Mass [Mj]'] >= 0.624503]
+

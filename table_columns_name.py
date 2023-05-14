@@ -97,6 +97,7 @@ columns_ariel = [
     "Preferred Method",
     "Discovery Year",
     "Planet Period [days]",
+    "Transit Duration [s]",
     "Cumulative time (days)",
     "Planet Semi-major Axis [AU]",
     "Planet Radius [Rj]",

@@ -3,11 +3,14 @@ import pandas as pd
 import os
 
 #we convert the excel to a csv file.
-df = pd.read_excel("Known_T1_10Obs_20220525_edits.xlsx")
+
+data_dir = os.path.join(os.getcwd(), 'data/')
+
+df = pd.read_excel(data_dir + "Known_T1_10Obs_20220525_edits.xlsx")
 column_names = df.columns
 
 new_target = df[df['Planet Period [days]'] < 5]
-data_dir = os.path.join(os.getcwd(), 'data/')
+
 
 df.to_csv(data_dir + 'ariel_target.csv')
 

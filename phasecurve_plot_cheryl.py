@@ -50,15 +50,6 @@ ariel['pl_g'] = (G*M_jup*ariel["Planet Mass [Mj]"])/ ((r_jup*ariel["Planet Radiu
 ###############
 from sorting_ariel import *
 
-
-## sort ariel into different mass range:
-ariel_terrestrial = ariel.loc[ariel['Planet Mass [Mj]'] <= 0.16058]
-ariel_subnep = ariel.loc[(ariel['Planet Mass [Mj]'] >= 0.16058)
-                & (ariel['Planet Mass [Mj]'] <= 0.312251)]
-ariel_nep = ariel.loc[(ariel['Planet Mass [Mj]'] <= 0.624503)
-                & (ariel['Planet Mass [Mj]'] >= 0.312251)]
-ariel_giant = ariel.loc[ariel['Planet Mass [Mj]'] >= 0.624503]
-
 ####################### plotting
 
 #from JWST_Phasecurve_Graph import *
@@ -79,6 +70,4 @@ ariel_giant = ariel.loc[ariel['Planet Mass [Mj]'] >= 0.624503]
 #from Ariel_num_eclipse_rank import *
 
 
-#################################### transit target
-from Transit_target import *
 
