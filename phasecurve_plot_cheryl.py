@@ -47,6 +47,21 @@ ariel['ESM'] = ESM(1.1*ariel['Planet Temperature [K]'], ariel["Star Temperature 
 
 ariel['pl_g'] = (G*M_jup*ariel["Planet Mass [Mj]"])/ ((r_jup*ariel["Planet Radius [Rj]"])**2)
 
+
+selected_sample = jupiter_temp.merge(ariel, on='Planet Name',how = 'left')
+
+
+selected_sample['ESM High'] = ESM(selected_sample['T day (K)'], selected_sample["Star Temperature [K]"], selected_sample["Planet Radius [Rj]"],
+                   selected_sample["Star Radius [Rs]"], selected_sample["Star K Mag"])
+selected_sample['ESM Low'] = ESM(selected_sample['T night (K)'], selected_sample["Star Temperature [K]"], selected_sample["Planet Radius [Rj]"],
+                   selected_sample["Star Radius [Rs]"], selected_sample["Star K Mag"])
+
+
+selected_sample.to_csv(data_dir + 'selected_target.csv')
+
+
+
+
 ###############
 from sorting_ariel import *
 
@@ -68,6 +83,8 @@ from sorting_ariel import *
 #from Ariel_Teq_period import *
 #from Ariel_ESM_Planet_Rank import *
 #from Ariel_num_eclipse_rank import *
+#from Ariel_ESM_diff import *
+from ESM_ratio import *
 
 
 
