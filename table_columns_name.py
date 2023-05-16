@@ -1,9 +1,12 @@
+import os.path
+
 import pandas as pd
 from function_constants import *
 tableName = 'pscomppars'
 
 
 ariel = pd.read_csv(os.path.join(data_dir,"ariel_target.csv"))
+jupiter_temp = pd.read_csv(os.path.join(data_dir,'Jupiter_Temp.csv' ))
 
 columns = [
     "pl_name",

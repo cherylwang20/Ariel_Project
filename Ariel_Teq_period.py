@@ -15,7 +15,7 @@ colors = {'O': 'violet', 'B': 'mediumblue', 'A': 'lightblue', 'F': 'lawngreen', 
 Ariel_low_plot = ax.scatter(ariel_ESM_low["Planet Temperature [K]"], ariel_ESM_low['Planet Period [days]'],
                         alpha=0.4, s = 50, c = "pink", marker="o",
                         label = "Ariel", zorder = 1)
-Ariel_ESM_plot = ax.scatter(ariel_ESM_high["Planet Temperature [K]"], ariel_ESM_high['Planet Period [days]'],
+Ariel_high_plot = ax.scatter(ariel_ESM_high["Planet Temperature [K]"], ariel_ESM_high['Planet Period [days]'],
                         alpha=0.9, s = 150, c = ariel_ESM_high['Spectral Type'].apply(lambda  x: colors[x]),
                         edgecolor= 'white', marker="o", zorder = 2)
 
