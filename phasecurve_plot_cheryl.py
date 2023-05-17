@@ -84,7 +84,7 @@ from sorting_ariel import *
 #from Ariel_ESM_Planet_Rank import *
 #from Ariel_num_eclipse_rank import *
 #from Ariel_ESM_diff import *
-from ESM_ratio import *
+#from ESM_ratio import *
 
 
 
