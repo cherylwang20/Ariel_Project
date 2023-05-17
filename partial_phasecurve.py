@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-
 from phasecurve_plot_cheryl import *
 
 # we define the angle region when which we need to observe
@@ -34,12 +32,12 @@ fig, ax = plt.subplots(figsize=(15, 10))
 for i in angle:
     curve_df = new_cum_time(ariel_sort_eclipse_num,i)
     ax.plot(curve_df.index.tolist(), curve_df['New Cumulative Days'].tolist(),
-                            alpha=1, linewidth=3, label = '{}°'.format(i),
+                            alpha=1, linewidth=3, label = f'±{i}°',
                             linestyle='dashdot')
 
-ariel_sort_eclipse_num = ariel_sort_eclipse_num[ariel_sort_eclipse_num['cumulative days'] < partial_cutoff]
+ariel_sort_eclipse_num_2 = ariel_sort_eclipse_num[ariel_sort_eclipse_num['cumulative days'] < partial_cutoff]
 
-Ariel_eclipse = ax.plot(ariel_sort_eclipse_num.index.tolist(), ariel_sort_eclipse_num['cumulative days'].tolist(),
+Ariel_eclipse = ax.plot(ariel_sort_eclipse_num_2.index.tolist(), ariel_sort_eclipse_num_2['cumulative days'].tolist(),
                         alpha = 1, label = "Full Phase Curve", linewidth= 3,
                        color = 'black')
 

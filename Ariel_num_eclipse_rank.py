@@ -3,11 +3,9 @@ from phasecurve_plot_cheryl import *
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
 
-min_, max_ = ariel_sort_ESM['Planet Radius [Rj]'].min(), ariel_sort_ESM['Planet Radius [Rj]'].max()
+min_, max_ = ariel_sort_eclipse_num['Planet Radius [Rj]'].min(), ariel_sort_eclipse_num['Planet Radius [Rj]'].max()
 # cmap='viridis_r'
 cmap = 'PiYG'
-
-print(len(ariel_sort_ESM))
 
 Ariel_plot = ax.scatter(ariel_sort_eclipse_num.index.tolist(), ariel_sort_eclipse_num['ESM'],
                         alpha=0.9, s = 50, c = ariel_sort_eclipse_num['Planet Radius [Rj]'], marker="o",

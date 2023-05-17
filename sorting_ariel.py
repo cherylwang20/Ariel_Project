@@ -53,6 +53,9 @@ ariel_sort_eclipse_num.index = ariel_sort_eclipse_num.index + 1
 
 ariel_sort_eclipse_num.to_csv(data_dir + 'Eclipse_Cum.csv')
 
+print('eclipse len',len(ariel_sort_eclipse_num))
+
+
 ariel_eclipse_100 = ariel_sort_eclipse_num.head(100)
 
 ######################## rank everything based on tier 3 transits
