@@ -4,7 +4,7 @@ import os
 h = 6.626e-34
 c = 3.0e+8
 k = 1.38e-23
-wav = 7.5e-6 #why this particular wavelength?
+wav = 7.5e-6 
 # g = GM/r^2
 G = 6.67e-11
 M_jup = 1.89e27
