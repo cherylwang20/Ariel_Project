@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from table_columns_name import *
 from function_constants import *
+from ASM import *
 
 
 service = pyvo.dal.TAPService("https://exoplanetarchive.ipac.caltech.edu/TAP")
@@ -47,6 +48,13 @@ ariel['ESM'] = ESM(1.1*ariel['Planet Temperature [K]'], ariel["Star Temperature 
 
 ariel['pl_g'] = (G*M_jup*ariel["Planet Mass [Mj]"])/ ((r_jup*ariel["Planet Radius [Rj]"])**2)
 
+# calculate the ariel emission metric for all ariel targets
+
+ariel['ASM'] = ASM(ariel['Planet Radius [Rj]'], ariel['Star Radius [Rs]'], 
+                   T_day_eff(ariel['Star Temperature [K]'], ariel['Star Radius [Rs]'], ariel['Planet Semi-major Axis [m]']),
+                   ariel['Star Temperature [K]'])
+
+print(ariel['ASM'])
 
 selected_sample = jupiter_temp.merge(ariel, on='Planet Name',how = 'left')
 
