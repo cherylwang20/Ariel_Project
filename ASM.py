@@ -22,15 +22,17 @@ def T_day_eff(T_star, R_star, a, A_B = 0.3, eps = 0.2):
 
 # thermal constrast ratio
 def ASM(Rp, R_star, T_d, T_star):
-    b_ratio = planck_peak(T_d, T_d)/planck(T_star, T_d)
+    b_ratio = planck_peak(T_d, T_d)/planck_peak(T_star, T_d)
     r_ratio = ((7.1492e+7 *Rp)/(6.957e+8*R_star))**2
     return b_ratio*r_ratio
 
 
 def planck_peak(T, T_d):
     a = 2.0*h*c**2
-    peak_wav = 2898/T_d
+    peak_wav = 2898/T_d*10**(-6)
     b = h*c/(peak_wav*k*T)
     intensity = a/ ( (peak_wav**5) * (np.exp(b) - 1.0) )
     return intensity
 
+print(ASM(0.24, 0.2, 619, 3000))
+print(T_day_eff(5000, 0.75, 5*6.957e+8))

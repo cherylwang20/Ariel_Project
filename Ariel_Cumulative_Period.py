@@ -1,4 +1,4 @@
-from phasecurve_plot_cheryl import *
+from phasecurve_copy import *
 import matplotlib
 
 fig, ax = plt.subplots(figsize=(15, 10))
@@ -14,6 +14,10 @@ Ariel_ESM = ax.plot(ariel_sort_ESM.index.tolist(), ariel_sort_ESM['cumulative da
 Ariel_eclipse = ax.plot(ariel_sort_eclipse_num.index.tolist(), ariel_sort_eclipse_num['cumulative days'].tolist(),
                         alpha = 1, label = "# Eclipse", linewidth= 3,
                         linestyle = 'dashdot', color = 'red')
+
+#Ariel_ASM = ax.plot(ariel_sort_ASM.index.tolist(), ariel_sort_ASM['cumulative days'].tolist(),
+#                        alpha = 1, label = "ASM", linewidth= 3,
+#                        linestyle = 'solid', color = 'yellow')
 
 ax.axhline(120, color='orange', linestyle='solid', linewidth=2, alpha=0.75, zorder = 0)
 
