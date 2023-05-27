@@ -104,7 +104,7 @@ SS_eqt = [
 
 SS_g = [
         24.8,  # Jupiter
-        11.5 ]  # Neptune
+        11.5]  # Neptune
 
 ax.scatter(SS_eqt, SS_g)
 
