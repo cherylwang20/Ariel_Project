@@ -1,7 +1,7 @@
-from phasecurve_plot_cheryl import *
+from phasecurve_copy import *
 
 #sort according to the shortest orbit and filter out the 10%
-cut_off = 2000
+cut_off = 500
 
 ariel_sort_so = ariel.sort_values('Planet Period [days]')
 cum_time = []
@@ -11,7 +11,7 @@ for index, row in ariel_sort_so.iterrows():
     cum_time.append(cum)
 
 ariel_sort_so['cumulative days'] = cum_time
-#ariel_sort_so = ariel_sort_so[ariel_sort_so['cumulative days'] < cut_off]
+ariel_sort_so = ariel_sort_so[ariel_sort_so['cumulative days'] < cut_off]
 ariel_sort_so.drop(columns=['Unnamed: 0'])
 ariel_sort_so = ariel_sort_so.reset_index(drop=True)
 ariel_sort_so.index = ariel_sort_so.index + 1
@@ -57,6 +57,25 @@ print('eclipse len',len(ariel_sort_eclipse_num))
 
 
 ariel_eclipse_100 = ariel_sort_eclipse_num.head(100)
+
+####### sorting base on ASM
+
+ariel_sort_ASM = ariel.sort_values('ASM',ascending=False)
+cum_time = []
+cum = 0
+for index, row in ariel_sort_ASM.iterrows():
+    cum += row['Planet Period [days]']
+    cum_time.append(cum)
+
+ariel_sort_ASM['cumulative days'] = cum_time
+ariel_sort_ASM = ariel_sort_ASM[ariel_sort_ASM['cumulative days'] < cut_off]
+ariel_sort_ASM.drop(columns=['Unnamed: 0'])
+ariel_sort_ASM = ariel_sort_ASM.reset_index(drop=True)
+ariel_sort_ASM.index = ariel_sort_ASM.index + 1
+
+ariel_sort_ASM.to_csv(data_dir + 'ASM_Cum.csv')
+
+print(ariel_sort_ASM.head(100))
 
 ######################## rank everything based on tier 3 transits
 
