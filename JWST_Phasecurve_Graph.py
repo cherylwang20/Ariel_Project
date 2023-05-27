@@ -41,7 +41,7 @@ pc_telescope['T_min'] = pc_telescope['pl_eqt'] / np.sqrt(1 + pc_telescope['pl_or
 
 # eccen_plot = ax.hlines('pl_g', 'T_min', 'T_max', data = pc_telescope.query("pl_orbeccen > 0.09"), lw=3, label = 'Temperature Range')
 
-
+'''
 for x, y, name in zip(pc_telescope.query("JWST == 'Yes'")["pl_eqt"], pc_telescope.query("JWST == 'Yes'")["ESM"],
                       pc_telescope.query("JWST == 'Yes'")["pl_name"]):
 
@@ -80,6 +80,12 @@ for x, y, name in zip(pc_telescope.query("JWST == 'Yes'")["pl_eqt"], pc_telescop
                      textcoords="offset points",  # how to position the text
                      xytext=(0, -25),  # distance from text to points (x,y)
                      ha='center')  # horizontal alignment can be left, right or center
+    elif label == "TRAPPIST-1 b":
+        plt.annotate(label,  # this is the text
+                     (x, y),  # these are the coordinates to position the label
+                     textcoords="offset points",  # how to position the text
+                     xytext=(0, -25),  # distance from text to points (x,y)
+                     ha='center')  # horizontal alignment can be left, right or center
 
     else:
         plt.annotate(label,  # this is the text
@@ -87,6 +93,7 @@ for x, y, name in zip(pc_telescope.query("JWST == 'Yes'")["pl_eqt"], pc_telescop
                      textcoords="offset points",  # how to position the text
                      xytext=(0, -25),  # distance from text to points (x,y)
                      ha='center')  # horizontal alignment can be left, right or center
+'''
 
 from matplotlib.lines import Line2D
 

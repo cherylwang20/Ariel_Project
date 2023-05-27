@@ -88,7 +88,13 @@ planetname = (
     "K2-141 b",
     "GJ 1214 b",
     "NGTS-10 b",
-    "GJ 367 b"
+    "GJ 367 b",
+    "TOI-561 b",
+    "TRAPPIST-1 b",
+    "TRAPPIST-1 c",
+    "TOI-1685 b",
+    "K2-22 b",
+    "TOI-2445 b"
     #"TOI-193", # add in a JWST target
 )
 

@@ -54,6 +54,12 @@ for x, y, name in zip(pc_telescope.query("JWST == 'Yes'")["pl_eqt"], pc_telescop
                      textcoords="offset points",  # how to position the text
                      xytext=(0, -25),  # distance from text to points (x,y)
                      ha='center')  # horizontal alignment can be left, right or center
+    elif label == "TRAPPIST-1 b":
+        plt.annotate(label,  # this is the text
+                     (x, y),  # these are the coordinates to position the label
+                     textcoords="offset points",  # how to position the text
+                     xytext=(-25, -25),  # distance from text to points (x,y)
+                     ha='center')  # horizontal alignment can be left, right or center
 
     else:
         plt.annotate(label,  # this is the text
@@ -86,13 +92,17 @@ def getImage(path, zoom):
 
 
 paths = [
-    'Earth.png',
     'Jupiter.png',
     'neptune.jpg']
 
-zooms = [0.025, 0.065, 0.15]
+zooms = [ 0.065, 0.15]
 
-SS_g = [9.8,  # Earth
+
+SS_eqt = [
+          122,  # Jupiter
+          51]  # Neptune
+
+SS_g = [
         24.8,  # Jupiter
         11.5]  # Neptune
 
