@@ -66,6 +66,16 @@ selected_sample['ESM Low'] = ESM(selected_sample['T night (K)'], selected_sample
                    selected_sample["Star Radius [Rs]"], selected_sample["Star K Mag"])
 
 
+selected_sample['ASM High'] = ASM(selected_sample['T day (K)'], selected_sample['Star Radius [Rs]'],
+                                  T_day_eff(selected_sample['Star Temperature [K]'], selected_sample['Star Radius [Rs]'], selected_sample['Planet Semi-major Axis [m]'] ),
+                                  selected_sample["Star Temperature [K]"])
+
+selected_sample['ASM Low'] = ASM(selected_sample['T night (K)'], selected_sample['Star Radius [Rs]'],
+                                  T_day_eff(selected_sample['Star Temperature [K]'], selected_sample['Star Radius [Rs]'], selected_sample['Planet Semi-major Axis [m]'] ),
+                                  selected_sample["Star Temperature [K]"])
+
+
+
 selected_sample.to_csv(data_dir + 'selected_target.csv')
 
 

@@ -1,5 +1,6 @@
 import numpy as np
 from function_constants import *
+from scipy.integrate import quad
 
 # some constants
 k_B = 1.380649 * 10**(-23) #SI units
@@ -33,6 +34,29 @@ def planck_peak(T, T_d):
     b = h*c/(peak_wav*k*T)
     intensity = a/ ( (peak_wav**5) * (np.exp(b) - 1.0) )
     return intensity
+
+
+### Ariel Telescope Spec
+tau_ariel = #system throughput
+t = # integration time
+D = #telescope diameter
+
+## bandpass
+lamb_1_ariel =
+lamb_2_ariel =
+
+def Noise(tau, t, R_star, D, d, lamb_1, lamb_2, T_star):
+    N = np.pi*tau*t/h/c*(R_star*D/2/d)**2*quad(B_int, lamb_1,
+                                           lamb_2, args=T_star)
+    return N
+
+def B_int(wav, T_star):
+    a = 2.0*h*c**2
+    b = h*c/(wav*k*T_star)
+    intensity = a/ ( (wav**5) * (np.exp(b) - 1.0) )
+    return intensity
+
+
 
 print(ASM(0.24, 0.2, 619, 3000))
 print(T_day_eff(5000, 0.75, 5*6.957e+8))

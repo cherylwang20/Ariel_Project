@@ -1,4 +1,4 @@
-from phasecurve_copy import *
+from phasecurve_plot_cheryl import *
 
 #sort according to the shortest orbit and filter out the 10%
 cut_off = 500
