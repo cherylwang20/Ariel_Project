@@ -127,7 +127,7 @@ plt.legend(handles=[eccen_plot], loc='lower right',
 
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planetary Equilibrium Temperature [K]", fontsize=18)
-plt.ylabel("Planet Gravity [$g$]", fontsize=18)
+plt.ylabel(r"Planet Gravity [$m/s^2$]", fontsize=18)
 plt.title("Planets Observed with Phase Curves", fontsize=24)
 plt.yscale('log')
 # plt.ylim([0,105])

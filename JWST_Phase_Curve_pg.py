@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 from phasecurve_plot_cheryl import *
 
 fig, ax = plt.subplots(figsize=(15, 10))
@@ -151,9 +153,12 @@ ax = plt.gca().add_artist(first_legend)
 # plt.legend(handles=[eccen_plot], loc='lower right',
 #           title = "$\\bf{Eccentric \ Planets}$", title_fontsize = 15, prop={'size': 15}, fancybox = True)
 
+plt.rc('text', usetex = True)
+plt.rcParams['text.latex.preamble'] = [r"\usepackage{amsmath}"]
+
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planetary Equilibrium Temperature [K]", fontsize=18, fontweight='bold')
-plt.ylabel("Planet Gravity [$g$]", fontsize=18, fontweight='bold')
+plt.ylabel(r"Planet Gravity [$m/s^2$]", fontsize=18, fontweight='bold')
 plt.title("Planets Observed with Phase Curves", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)

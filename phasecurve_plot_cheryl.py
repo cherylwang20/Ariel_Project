@@ -54,7 +54,7 @@ ariel['ASM'] = ASM(ariel['Planet Radius [Rj]'], ariel['Star Radius [Rs]'],
                    T_day_eff(ariel['Star Temperature [K]'], ariel['Star Radius [Rs]'], ariel['Planet Semi-major Axis [m]']),
                    ariel['Star Temperature [K]'])
 
-print(ariel['ASM'])
+#print(ariel['ASM'])
 
 ############ this is day/night side constrast with Taylor's data
 selected_sample = jupiter_temp.merge(ariel, on='Planet Name',how = 'left')
@@ -179,9 +179,9 @@ ariel_giant = ariel.loc[ariel['Planet Mass [Mj]'] >= 0.624503]
 
 ####################### plotting
 
-from JWST_Phasecurve_Graph import *
+#from JWST_Phasecurve_Graph import *
 from JWST_Phase_Curve_pg import *
-from JWST_Phasecurve_prj import *
+#from JWST_Phasecurve_prj import *
 from JWST_Ariel_Phasecurve_PG_Ecc import *
 #from JWST_Ariel_Fig3_PR_PP_PT import *
 #from JWST_Ariel_ESM_Period_T import *
