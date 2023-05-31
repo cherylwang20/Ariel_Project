@@ -1,5 +1,6 @@
 import numpy as np
 from function_constants import *
+from phasecurve_plot_cheryl import *
 from scipy.integrate import quad
 
 # some constants
@@ -39,19 +40,16 @@ def planck_peak(T, T_d):
 
 
 ### Ariel Telescope Spec
-tau_ariel = 0.15 #system throughput, ****need to check ******
-D_ariel = 0.9#telescope diameter
+tau_ariel = 0.3 #system throughput, ****need to check ******
+D_ariel = 1 #telescope diameter
 
 ## bandpass
-lamb_1_ariel = 3.9e-6
+lamb_1_ariel = 1.95e-6
 lamb_2_ariel = 7.8e-6
 
-def Noise(tau, t, R_star, D, d, lamb_1, lamb_2, T_star): #set t to the phase curve period
+def N_photon(t, R_star, d, T_star, lamb_1 , lamb_2, tau = tau_ariel, D = D_ariel): #set t to the phase curve period
     B = quad(B_int, lamb_1, lamb_2, args=T_star)
-    N = np.pi*tau*t/h/c*(R_star*6.957e+8*D/2/d)**2*B[0]
-    print(np.pi*tau*t/h/c)
-    print((R_star*6.957e+8*D/2/d)**2)
-    print(B[0])
+    N = np.pi*tau*t*daytosec/h/c*(R_star*6.957e+8*D/2/(d*pctom))**2*B[0]
     return N
 
 def B_int(wav, T_star):
@@ -61,10 +59,50 @@ def B_int(wav, T_star):
     return intensity
 
 
+def SNR_Ariel(t, R_star, d, T_star, lamb_1 , lamb_2, Rp, T_d):
+    eps = ASM(Rp, R_star, T_d, T_star)
+    n_photon = N_photon(t, R_star, d, T_star, lamb_1 , lamb_2)
+    snr = eps*n_photon/np.sqrt(n_photon)
+    return snr
 
+e1 = ASM(0.24, 0.7, 619, 5000)
 #print(ASM(0.24, 0.2, 619, 3000))
 #print(T_day_eff(5000, 0.75, 5*6.957e+8))
 
-w1 = Noise(0.3, 3600, 0.75, 6.5, 20*pctom, 0.6e-6, 1e-6, 5000)
-print(1/np.sqrt(w1))
-#print(ASM(0.24, 0.2, 619, 3000)/w1)
+n1 = N_photon( 2.5, 0.7,  100, 5000, lamb_1_ariel, lamb_2_ariel)
+
+print('snr', e1*n1/np.sqrt(n1))
+
+print(SNR_Ariel(2.5, 0.7, 100, 5000, lamb_1_ariel, lamb_2_ariel, 0.24, 619))
+
+
+# calculate the ariel emission metric for all ariel targets
+row_list = []
+
+for i, row in ariel.iterrows():
+    row_list.append(SNR_Ariel(1/24, row['Star Radius [Rs]'], row['Star Distance [pc]'],
+                         row['Star Temperature [K]'],lamb_1_ariel, lamb_2_ariel, row['Planet Radius [Rj]'],
+                         row['Planet Temperature [K]'])) #row['Planet Period [days]']
+#print(row_list)
+ariel['ASM'] = pd.DataFrame(row_list)
+
+
+
+#sort according to the highest ASM and see if this matches with the highest # of bins. 
+ariel_sort_ASM = ariel.sort_values(by = 'ASM',ascending=False)
+cum_time = []
+cum = 0
+for index, row in ariel_sort_ASM.iterrows():
+    cum += row['Planet Period [days]']
+    cum_time.append(cum)
+
+ariel_sort_ASM['cumulative days'] = cum_time
+ariel_sort_ASM = ariel_sort_ASM[ariel_sort_ASM['cumulative days'] < cut_off]
+ariel_sort_ASM.drop(columns=['Unnamed: 0'])
+ariel_sort_ASM = ariel_sort_ASM.reset_index(drop=True)
+ariel_sort_ASM.index = ariel_sort_ASM.index + 1
+
+ariel_sort_ASM.to_csv(data_dir + 'ASM_Ariel_sort.csv')
+
+print(ariel['ASM'])
+
