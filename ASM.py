@@ -106,3 +106,4 @@ ariel_sort_ASM.to_csv(data_dir + 'ASM_Ariel_sort.csv')
 
 print(ariel['ASM'])
 
+
