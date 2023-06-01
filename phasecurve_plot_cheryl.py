@@ -60,6 +60,19 @@ selected_sample['ESM High'] = ESM(selected_sample['T day (K)'], selected_sample[
 selected_sample['ESM Low'] = ESM(selected_sample['T night (K)'], selected_sample["Star Temperature [K]"], selected_sample["Planet Radius [Rj]"],
                    selected_sample["Star Radius [Rs]"], selected_sample["Star K Mag"])
 
+# calculate the ariel emission metric for all ariel targets
+row_list = []
+
+for i, row in ariel.iterrows():
+    row_list.append(SNR_Ariel(1/24, row['Star Radius [Rs]'], row['Star Distance [pc]'],
+                         row['Star Temperature [K]'],lamb_1_ariel, lamb_2_ariel, row['Planet Radius [Rj]'],
+                         row['Planet Temperature [K]'])) #row['Planet Period [days]']
+#print(row_list)
+ariel['ASM'] = pd.DataFrame(row_list)
+
+
+
+
 '''
 selected_sample['ASM High'] = ASM(selected_sample['T day (K)'], selected_sample['Star Radius [Rs]'],
                                   T_day_eff(selected_sample['Star Temperature [K]'], selected_sample['Star Radius [Rs]'], selected_sample['Planet Semi-major Axis [m]'] ),
@@ -160,6 +173,23 @@ overlap_target.index = overlap_target.index + 1
 overlap_target_selected = overlap_target[["Planet Name","Tier 3 Eclipses","Tier 3 Transits",
                                            "Planet Period [days]", "Transit Duration [s]", 'cumulative transit time [days]' ]]
 overlap_target_selected.to_csv(data_dir + 'overlap.csv')
+
+
+# sort according to the highest ASM and see if this matches with the highest # of bins.
+ariel_sort_ASM = ariel.sort_values(by = 'ASM',ascending=False)
+cum_time = []
+cum = 0
+for index, row in ariel_sort_ASM.iterrows():
+    cum += row['Planet Period [days]']
+    cum_time.append(cum)
+
+ariel_sort_ASM['cumulative days'] = cum_time
+ariel_sort_ASM = ariel_sort_ASM[ariel_sort_ASM['cumulative days'] < cut_off]
+ariel_sort_ASM.drop(columns=['Unnamed: 0'])
+ariel_sort_ASM = ariel_sort_ASM.reset_index(drop=True)
+ariel_sort_ASM.index = ariel_sort_ASM.index + 1
+
+ariel_sort_ASM.to_csv(data_dir + 'ASM_Ariel_sort.csv')
 
 ################ sort ariel into different mass range:
 ariel_terrestrial = ariel.loc[ariel['Planet Mass [Mj]'] <= 0.16058]
