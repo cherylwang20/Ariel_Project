@@ -71,22 +71,29 @@ for i, row in ariel.iterrows():
 ariel['ASM'] = pd.DataFrame(row_list)
 
 
+############ calculate the ASM of the exoplanets in Bell (2021)
+row_list = []
+
+for i, row in selected_sample.iterrows():
+    row_list.append(SNR_Ariel(1/24, row['Star Radius [Rs]'], row['Star Distance [pc]'],
+                         row['Star Temperature [K]'],lamb_1_ariel, lamb_2_ariel, row['Planet Radius [Rj]'],
+                         row['T day (K)'])) #row['Planet Period [days]']
+#print(row_list)
+selected_sample['ASM High'] = pd.DataFrame(row_list)
 
 
-'''
-selected_sample['ASM High'] = ASM(selected_sample['T day (K)'], selected_sample['Star Radius [Rs]'],
-                                  T_day_eff(selected_sample['Star Temperature [K]'], selected_sample['Star Radius [Rs]'], selected_sample['Planet Semi-major Axis [m]'] ),
-                                  selected_sample["Star Temperature [K]"])
+row_list = []
 
-selected_sample['ASM Low'] = ASM(selected_sample['T night (K)'], selected_sample['Star Radius [Rs]'],
-                                  T_day_eff(selected_sample['Star Temperature [K]'], selected_sample['Star Radius [Rs]'], selected_sample['Planet Semi-major Axis [m]'] ),
-                                  selected_sample["Star Temperature [K]"])
+for i, row in selected_sample.iterrows():
+    row_list.append(SNR_Ariel(1/24, row['Star Radius [Rs]'], row['Star Distance [pc]'],
+                         row['Star Temperature [K]'],lamb_1_ariel, lamb_2_ariel, row['Planet Radius [Rj]'],
+                         row['T night (K)'])) #row['Planet Period [days]']
+#print(row_list)
+selected_sample['ASM Low'] = pd.DataFrame(row_list)
 
 
-
+print(len(selected_sample))
 selected_sample.to_csv(data_dir + 'selected_target.csv')
-'''
-
 
 
 ###############
@@ -143,10 +150,26 @@ ariel_sort_eclipse_num.index = ariel_sort_eclipse_num.index + 1
 
 ariel_sort_eclipse_num.to_csv(data_dir + 'Eclipse_Cum.csv')
 
-print('eclipse len',len(ariel_sort_eclipse_num))
-
 
 ariel_eclipse_100 = ariel_sort_eclipse_num.head(100)
+
+# sort according to the highest ASM and see if this matches with the highest # of bins.
+ariel_sort_ASM = ariel.sort_values(by = 'ASM',ascending=False)
+cum_time = []
+cum = 0
+for index, row in ariel_sort_ASM.iterrows():
+    cum += row['Planet Period [days]']
+    cum_time.append(cum)
+
+ariel_sort_ASM['cumulative days'] = cum_time
+ariel_sort_ASM = ariel_sort_ASM[ariel_sort_ASM['cumulative days'] < cut_off]
+ariel_sort_ASM.drop(columns=['Unnamed: 0'])
+ariel_sort_ASM = ariel_sort_ASM.reset_index(drop=True)
+ariel_sort_ASM.index = ariel_sort_ASM.index + 1
+
+print(ariel_sort_ASM['ASM'])
+
+ariel_sort_ASM.to_csv(data_dir + 'ASM_Ariel_sort.csv')
 
 ######################## rank everything based on tier 3 transits
 
@@ -175,21 +198,7 @@ overlap_target_selected = overlap_target[["Planet Name","Tier 3 Eclipses","Tier 
 overlap_target_selected.to_csv(data_dir + 'overlap.csv')
 
 
-# sort according to the highest ASM and see if this matches with the highest # of bins.
-ariel_sort_ASM = ariel.sort_values(by = 'ASM',ascending=False)
-cum_time = []
-cum = 0
-for index, row in ariel_sort_ASM.iterrows():
-    cum += row['Planet Period [days]']
-    cum_time.append(cum)
 
-ariel_sort_ASM['cumulative days'] = cum_time
-ariel_sort_ASM = ariel_sort_ASM[ariel_sort_ASM['cumulative days'] < cut_off]
-ariel_sort_ASM.drop(columns=['Unnamed: 0'])
-ariel_sort_ASM = ariel_sort_ASM.reset_index(drop=True)
-ariel_sort_ASM.index = ariel_sort_ASM.index + 1
-
-ariel_sort_ASM.to_csv(data_dir + 'ASM_Ariel_sort.csv')
 
 ################ sort ariel into different mass range:
 ariel_terrestrial = ariel.loc[ariel['Planet Mass [Mj]'] <= 0.16058]

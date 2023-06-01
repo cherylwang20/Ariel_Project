@@ -1,4 +1,4 @@
-from phasecurve_copy import *
+from phasecurve_plot_cheryl import *
 
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
