@@ -104,6 +104,23 @@ ariel_sort_ASM.index = ariel_sort_ASM.index + 1
 
 ariel_sort_ASM.to_csv(data_dir + 'ASM_Ariel_sort.csv')
 
-print(ariel['ASM'])
+fig, ax = plt.subplots(figsize=(15, 10))
+
+Ariel_ASM = ax.scatter(ariel_sort_ASM['ASM'].head(400), ariel_sort_ASM['Tier 3 Eclipses'].head(400), 
+                        alpha = 1, linewidth= 3,
+                        linestyle = 'dashdot', color = 'red')
 
 
+plt.grid(True, alpha=0.35)
+plt.ylabel("# of Tier 3 Eclipses", fontsize=18, fontweight='bold')
+plt.xlabel("ASM", fontsize=18, fontweight='bold')
+plt.title("Ariel Phase Curve Comparison of SNR", fontsize=24, fontweight='bold')
+plt.xticks(fontsize=17)
+plt.yticks(fontsize=17)
+plt.yscale('log')
+plt.xscale('log')
+plt.gca().invert_xaxis()
+# plt.ylim([0,105])
+plt.savefig(save_dir+'Ariel-Phasecurves-Compare.jpg')
+
+plt.show()
