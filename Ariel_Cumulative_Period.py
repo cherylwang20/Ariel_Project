@@ -15,9 +15,9 @@ Ariel_eclipse = ax.plot(ariel_sort_eclipse_num.index.tolist(), ariel_sort_eclips
                         alpha = 1, label = "# Eclipse", linewidth= 3,
                         linestyle = 'dashdot', color = 'red')
 
-#Ariel_ASM = ax.plot(ariel_sort_ASM.index.tolist(), ariel_sort_ASM['cumulative days'].tolist(),
-#                        alpha = 1, label = "ASM", linewidth= 3,
-#                        linestyle = 'solid', color = 'yellow')
+Ariel_ASM = ax.plot(ariel_sort_ASM.index.tolist(), ariel_sort_ASM['cumulative days'].tolist(),
+                        alpha = 1, label = "ASM", linewidth= 3,
+                        linestyle = 'solid', color = 'yellow')
 
 ax.axhline(120, color='orange', linestyle='solid', linewidth=2, alpha=0.75, zorder = 0)
 
