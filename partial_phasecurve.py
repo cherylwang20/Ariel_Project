@@ -48,7 +48,7 @@ ax.axhline(120, color='orange', linestyle='solid', linewidth=2, alpha=0.75, zord
 plt.grid(True, alpha=0.35)
 plt.xlabel("# of planets", fontsize=18, fontweight='bold')
 plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
-plt.title("Ariel Partial Phase Curve Cumulative Observational Time", fontsize=24, fontweight='bold')
+plt.title("Ariel Partial Phase Curve (> 48hr) Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.legend(title = "Partial Observing Angle (°)")
