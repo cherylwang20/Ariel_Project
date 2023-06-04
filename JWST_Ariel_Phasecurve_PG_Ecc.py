@@ -13,16 +13,23 @@ Hubble_plot = ax.scatter(pc_telescope.query("Hubble == 'Yes'")["pl_eqt"], pc_tel
 JWST_plot = ax.scatter(pc_telescope.query("JWST == 'Yes'")["pl_eqt"], pc_telescope.query("JWST == 'Yes'")["pl_g"],
                        alpha=1, s=850, c='gold', marker='h', label='JWST', zorder=2)
 
-Ariel_plot = ax.scatter(ariel_eclipse_100["Planet Temperature [K]"], ariel_eclipse_100['pl_g'],
-                        alpha=0.4, s = 150, c = "grey", marker="o",
-                        label = "Ariel", zorder = 1)
+Ariel_full_plot = ax.scatter(ariel_full["Planet Temperature [K]"], ariel_full['pl_g'],
+                        alpha=0.7, s = 150, c = "grey", marker="o",
+                         label = "Ariel Full (< 48 hr)", zorder = 1)
 
+Ariel_partial_plot = ax.scatter(ariel_partial["Planet Temperature [K]"], ariel_partial['pl_g'],
+                        alpha=0.45, s = 150, c = "grey", marker="*",
+                         label = "Ariel Partial (±45°)", zorder = 1)
+
+
+
+'''
 pc_telescope['T_max'] = pc_telescope['pl_eqt'] / np.sqrt(1 - pc_telescope['pl_orbeccen'])
 pc_telescope['T_min'] = pc_telescope['pl_eqt'] / np.sqrt(1 + pc_telescope['pl_orbeccen'])
 
 eccen_plot = ax.hlines('pl_g', 'T_min', 'T_max', data=pc_telescope.query("pl_orbeccen > 0.09"), lw=3,
                        label='Temperature Range')
-
+'''
 for x, y, name in zip(pc_telescope.query("JWST == 'Yes'")["pl_eqt"], pc_telescope.query("JWST == 'Yes'")["pl_g"],
                       pc_telescope.query("JWST == 'Yes'")["pl_name"]):
 
@@ -115,15 +122,15 @@ for x0, y0, path, z in zip(SS_eqt, SS_g, paths, zooms):
 ############################################################33
 
 # Create a legend for the first line.
-first_legend = plt.legend(handles=[Spitzer_plot, Hubble_plot, JWST_plot, Ariel_plot], loc='upper right',
+first_legend = plt.legend(handles=[Spitzer_plot, Hubble_plot, JWST_plot, Ariel_full_plot, Ariel_partial_plot], loc='upper right',
                           title="$\\bf{Telescope} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
 
 # Add the legend manually to the current Axes.
 ax = plt.gca().add_artist(first_legend)
 
 # Create another legend for the second line.
-plt.legend(handles=[eccen_plot], loc='lower right',
-           title="$\\bf{Eccentric \ Planets}$", title_fontsize=15, prop={'size': 15}, fancybox=True)
+#plt.legend(handles=[eccen_plot], loc='lower right',
+#           title="$\\bf{Eccentric \ Planets}$", title_fontsize=15, prop={'size': 15}, fancybox=True)
 
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planetary Equilibrium Temperature [K]", fontsize=18)

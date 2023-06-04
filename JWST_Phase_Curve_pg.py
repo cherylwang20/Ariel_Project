@@ -153,8 +153,6 @@ ax = plt.gca().add_artist(first_legend)
 # plt.legend(handles=[eccen_plot], loc='lower right',
 #           title = "$\\bf{Eccentric \ Planets}$", title_fontsize = 15, prop={'size': 15}, fancybox = True)
 
-plt.rc('text', usetex = True)
-plt.rcParams['text.latex.preamble'] = [r"\usepackage{amsmath}"]
 
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planetary Equilibrium Temperature [K]", fontsize=18, fontweight='bold')

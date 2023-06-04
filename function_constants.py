@@ -77,3 +77,26 @@ def SNR_Ariel(t, R_star, d, T_star, lamb_1 , lamb_2, Rp, T_d):
     n_photon = N_photon(t, R_star, d, T_star, lamb_1 , lamb_2)
     snr = eps*n_photon/np.sqrt(n_photon)
     return snr
+
+############## partial phase curve
+partial_cutoff = 150
+def new_cum_time(df, angle):
+
+    df['Partial Period [days]'] = df['Planet Period [days]'].apply(lambda x: x if x <=2 else x * angle*2/360)
+
+    cum_time = []
+    cum = 0
+    for index, row in df.iterrows():
+        cum += row['Partial Period [days]']  + 2 * row['Transit Duration [s]']/ 86400
+        cum_time.append(cum)
+
+    df['New Cumulative Days'] = cum_time
+    df = df[df['New Cumulative Days'] < partial_cutoff]
+    df.drop(columns=['Unnamed: 0'])
+    df = df.reset_index(drop=True)
+    df.index = df.index + 1
+
+    full_num = len(df[df['Planet Period [days]'] <= 2])
+    partial_num = len(df[df['Planet Period [days]'] > 2])
+    print(f'{angle}, full num = {full_num}, partial num = {partial_num}')
+    return df, full_num, partial_num

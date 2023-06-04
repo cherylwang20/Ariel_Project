@@ -1,6 +1,6 @@
 import os.path
 
-#import pyvo
+import pyvo
 import pandas as pd
 from tabulate import tabulate
 import matplotlib.pyplot as plt
@@ -9,7 +9,7 @@ from table_columns_name import *
 from function_constants import *
 #from ASM import *
 
-'''
+
 service = pyvo.dal.TAPService("https://exoplanetarchive.ipac.caltech.edu/TAP")
 
 query = " ".join((
@@ -40,7 +40,7 @@ pc_telescope = pc_telescope.drop(pc_telescope[(pc_telescope['JWST'] == 'No') & (
 pc_telescope['ESM'] = ESM(1.1*pc_telescope['pl_eqt'], pc_telescope['st_teff'],pc_telescope['pl_radj'] ,pc_telescope['st_rad'],pc_telescope['sy_kmag'])
 
 pc_telescope['pl_g'] = (G*M_jup*pc_telescope['pl_bmassj'])/ ((r_jup*pc_telescope['pl_radj'])**2)
-'''
+
 
 #calculate ESM and planet gravity for all ariel potential targets
 
@@ -92,13 +92,13 @@ for i, row in selected_sample.iterrows():
 selected_sample['ASM Low'] = pd.DataFrame(row_list)
 
 
-print(len(selected_sample))
+
 selected_sample.to_csv(data_dir + 'selected_target.csv')
 
 
 ###############
 #sort according to the shortest orbit and filter out the 10%
-cut_off = 500
+cut_off = 2000
 
 ariel_sort_so = ariel.sort_values('Planet Period [days]')
 cum_time = []
@@ -167,7 +167,6 @@ ariel_sort_ASM.drop(columns=['Unnamed: 0'])
 ariel_sort_ASM = ariel_sort_ASM.reset_index(drop=True)
 ariel_sort_ASM.index = ariel_sort_ASM.index + 1
 
-print(ariel_sort_ASM['ASM'])
 
 ariel_sort_ASM.to_csv(data_dir + 'ASM_Ariel_sort.csv')
 
@@ -208,7 +207,10 @@ ariel_nep = ariel.loc[(ariel['Planet Mass [Mj]'] <= 0.624503)
                 & (ariel['Planet Mass [Mj]'] >= 0.312251)]
 ariel_giant = ariel.loc[ariel['Planet Mass [Mj]'] >= 0.624503]
 
-
+############## create df of partial phase curve and full phase curve for 45 degree phase curve
+curve_df = new_cum_time(ariel_sort_ASM,45)[0]
+ariel_full = curve_df[curve_df['Planet Period [days]']<= 2]
+ariel_partial = curve_df[curve_df['Planet Period [days]'] > 2]
 
 
 ####################### plotting
