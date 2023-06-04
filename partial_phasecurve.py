@@ -4,7 +4,7 @@ from phasecurve_plot_cheryl import *
 # before and after the eclipse to account for phase curve offset
 angle = [45, 60, 80, 90]
 
-partial_cutoff = 150
+#partial_cutoff = 150
 
 # we filter out things that are smaller than 2 days
 # and we take a partial curve of all greater than 2 days, with the angle we defined

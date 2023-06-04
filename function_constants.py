@@ -79,7 +79,7 @@ def SNR_Ariel(t, R_star, d, T_star, lamb_1 , lamb_2, Rp, T_d):
     return snr
 
 ############## partial phase curve
-partial_cutoff = 150
+partial_cutoff = 360
 def new_cum_time(df, angle):
 
     df['Partial Period [days]'] = df['Planet Period [days]'].apply(lambda x: x if x <=2 else x * angle*2/360)
