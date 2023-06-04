@@ -47,15 +47,19 @@ plt.close()
 ariel_sort_ASM['ASM Night'] = \
     ariel_sort_ASM['ASM']/(m*ariel_sort_ASM['Planet Temperature [K]'] + b)
 
+## now we convert ASM_day into ASM_night
+ariel_sort_eclipse_num['ASM Night'] = \
+    ariel_sort_eclipse_num['ASM']/(m*ariel_sort_eclipse_num['Planet Temperature [K]'] + b)
+
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
 
-min_, max_ = ariel_sort_ASM['Planet Radius [Rj]'].min(), ariel_sort_ASM['Planet Radius [Rj]'].max()
+min_, max_ = ariel_sort_eclipse_num['Planet Radius [Rj]'].min(), ariel_sort_eclipse_num['Planet Radius [Rj]'].max()
 # cmap='viridis_r'
 cmap = 'PiYG'
 
-Ariel_plot = ax.scatter(ariel_sort_ASM.index.tolist(), ariel_sort_ASM['ASM Night'],
-                        alpha=0.9, s = 50, c = ariel_sort_ASM['Planet Radius [Rj]'], marker="o",
+Ariel_plot = ax.scatter(ariel_sort_eclipse_num.index.tolist(), ariel_sort_eclipse_num['ASM Night'],
+                        alpha=0.9, s = 50, c = ariel_sort_eclipse_num['Planet Radius [Rj]'], marker="o",
                         label = "Ariel", zorder = 1)
 
 clb = fig.colorbar(Ariel_plot, ax=ax)  
@@ -65,7 +69,7 @@ clb.set_label('Planet Radius [Rj]',fontsize=16)
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planet Rank", fontsize=18)
 plt.ylabel("ASM Night", fontsize=18)
-plt.title("Ariel Phase Curve Targets - ASM Ranked", fontsize=24)
+plt.title("Ariel Phase Curve Targets - # of Eclipse Ranked", fontsize=24)
 plt.yscale('log')
 # plt.ylim([0,105])
 plt.savefig(save_dir + 'Ariel-PhaseCurve-ASM-Planet-Rank-Night.jpg')

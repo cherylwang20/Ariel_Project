@@ -98,17 +98,17 @@ selected_sample.to_csv(data_dir + 'selected_target.csv')
 
 ###############
 #sort according to the shortest orbit and filter out the 10%
-cut_off = 2000
+cut_off = 500
 
 ariel_sort_so = ariel.sort_values('Planet Period [days]')
 cum_time = []
 cum = 0
 for index, row in ariel_sort_so.iterrows():
-    cum += row['Planet Period [days]']
+    cum += row['Planet Period [days]'] + 2*row['Transit Duration [s]']/ 86400
     cum_time.append(cum)
 
 ariel_sort_so['cumulative days'] = cum_time
-#ariel_sort_so = ariel_sort_so[ariel_sort_so['cumulative days'] < cut_off]
+ariel_sort_so = ariel_sort_so[ariel_sort_so['cumulative days'] < cut_off]
 ariel_sort_so.drop(columns=['Unnamed: 0'])
 ariel_sort_so = ariel_sort_so.reset_index(drop=True)
 ariel_sort_so.index = ariel_sort_so.index + 1
@@ -120,7 +120,7 @@ ariel_sort_ESM = ariel.sort_values(by = 'ESM',ascending=False)
 cum_time = []
 cum = 0
 for index, row in ariel_sort_ESM.iterrows():
-    cum += row['Planet Period [days]']
+    cum += row['Planet Period [days]'] + 2*row['Transit Duration [s]']/ 86400
     cum_time.append(cum)
 
 ariel_sort_ESM['cumulative days'] = cum_time
@@ -139,7 +139,7 @@ ariel_sort_eclipse_num = ariel.sort_values('Tier 3 Eclipses')
 cum_time = []
 cum = 0
 for index, row in ariel_sort_eclipse_num.iterrows():
-    cum += row['Planet Period [days]']
+    cum += row['Planet Period [days]'] + 2*row['Transit Duration [s]']/ 86400
     cum_time.append(cum)
 
 ariel_sort_eclipse_num['cumulative days'] = cum_time
@@ -158,7 +158,7 @@ ariel_sort_ASM = ariel.sort_values(by = 'ASM',ascending=False)
 cum_time = []
 cum = 0
 for index, row in ariel_sort_ASM.iterrows():
-    cum += row['Planet Period [days]']
+    cum += row['Planet Period [days]']+ 2*row['Transit Duration [s]']/ 86400
     cum_time.append(cum)
 
 ariel_sort_ASM['cumulative days'] = cum_time

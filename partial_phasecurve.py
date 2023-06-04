@@ -35,6 +35,8 @@ for i in angle:
                             alpha=1, linewidth=3, label = f'±{i}°',
                             linestyle='dashdot')
 
+print(ariel_sort_eclipse_num)
+
 ariel_sort_eclipse_num_2 = ariel_sort_eclipse_num[ariel_sort_eclipse_num['cumulative days'] < partial_cutoff]
 
 Ariel_eclipse = ax.plot(ariel_sort_eclipse_num_2.index.tolist(), ariel_sort_eclipse_num_2['cumulative days'].tolist(),
