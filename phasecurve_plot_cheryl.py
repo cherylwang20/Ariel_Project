@@ -71,6 +71,9 @@ for i, row in ariel.iterrows():
 ariel['ASM'] = pd.DataFrame(row_list)
 
 
+
+
+
 ############ calculate the ASM of the exoplanets in Bell (2021)
 row_list = []
 

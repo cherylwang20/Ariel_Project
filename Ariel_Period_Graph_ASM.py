@@ -3,37 +3,37 @@ import matplotlib
 
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
-min_, max_ = ariel.ESM.min(), ariel.ESM.max()
+min_, max_ = ariel.ASM.min(), ariel.ASM.max()
 print(min_,max_)
 # cmap='viridis_r'
-cmap = 'cool'
+cmap = 'hot_r'
 ax.axvline(3, color='red', linestyle='dashed', linewidth=2, alpha=0.75, zorder = 0)
 
 
 Ariel_terr = ax.scatter(ariel_terrestrial["Planet Period [days]"], ariel_terrestrial["Planet Temperature [K]"],
-                        alpha=0.6, s = 50, c = ariel_terrestrial["ESM"], marker="o",
+                        alpha=0.6, s = 50, c = ariel_terrestrial["ASM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Terrestrial", zorder = 4)
 
 Ariel_subnep = ax.scatter(ariel_subnep["Planet Period [days]"], ariel_subnep["Planet Temperature [K]"],
-                        alpha=0.6, s = 150, c = ariel_subnep["ESM"], marker="o",
+                        alpha=0.6, s = 150, c = ariel_subnep["ASM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "SubNeptune", zorder = 3)
 
 Ariel_nept = ax.scatter(ariel_nep["Planet Period [days]"], ariel_nep["Planet Temperature [K]"],
-                        alpha=0.6, s = 400, c = ariel_nep["ESM"], marker="o",
+                        alpha=0.6, s = 400, c = ariel_nep["ASM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Neptune", zorder = 2)
 
 Ariel_giant = ax.scatter(ariel_giant["Planet Period [days]"], ariel_giant["Planet Temperature [K]"],
-                        alpha=0.6, s = 600, c = ariel_giant["ESM"], marker="o",
+                        alpha=0.6, s = 600, c = ariel_giant["ASM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Giant", zorder = 1)
 
 
 # ax.set_clim(min_, max_)
 clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
-clb.ax.set_title('$\\bf{ESM} $')
+clb.ax.set_title('$\\bf{ASM} $')
 
 
 
@@ -70,12 +70,12 @@ legend_elements = [Line2D([0], [0], marker='*', color='w', label='Terrestrial',
 plt.grid(True, alpha=0.35)
 plt.ylabel("Planetary Equilibrium Temperature [K]", fontsize=18, fontweight='bold')
 plt.xlabel("Planet Period [days]", fontsize=18, fontweight='bold')
-plt.title("Ariel Phase Curve Targets: Temp vs Period", fontsize=24, fontweight='bold')
+plt.title("Ariel Phase Curve Targets: Temperature vs Period", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.xscale('log')
 #plt.xscale('log')
 # plt.ylim([0,105])
-plt.savefig(save_dir + 'Ariel-Phasecurves-Temp-Period-ESM.jpg')
+plt.savefig(save_dir + 'Ariel-Phasecurves-Temp-Period-ASM.jpg')
 
 plt.show()
