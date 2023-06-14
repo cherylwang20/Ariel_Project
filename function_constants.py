@@ -55,7 +55,16 @@ def planck_peak(T, T_d):
     intensity = a/ ( (peak_wav**5) * (np.exp(b) - 1.0) )
     return intensity
 
+# the reflected light constrast ratio
+def ref_light(Rp, a, Ag = 0.3):
+    return Ag*(Rp/a)**2
 
+# The amplitude of transit spectral features
+def amp_tran(Rp, H, R_star, N_H = 4):
+    return 2*Rp*N_H*H/R_star**2
+
+def scale_height(T, g): # T is the dayside effective temperature
+    return k_B*T/mu/g
 
 
 def N_photon(t, R_star, d, T_star, lamb_1 , lamb_2, tau = tau_ariel, D = D_ariel): #set t to the phase curve period

@@ -3,18 +3,6 @@ from function_constants import *
 from phasecurve_plot_cheryl import *
 
 
-# the reflected light constrast ratio
-def ref_light(Rp, a, Ag = 0.3):
-    return Ag*(Rp/a)**2
-
-# The amplitude of transit spectral features
-def amp_tran(Rp, H, R_star, N_H = 4):
-    return 2*Rp*N_H*H/R_star**2
-
-def scale_height(T, g): # T is the dayside effective temperature
-    return k_B*T/mu/g
-
-
 e1 = ASM(0.24, 0.7, 619, 5000)
 #print(ASM(0.24, 0.2, 619, 3000))
 #print(T_day_eff(5000, 0.75, 5*6.957e+8))

@@ -1,8 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os.path
+data_dir = os.path.join(os.getcwd(), 'data/')
+
 
 from astropy.modeling.models import BlackBody
 from astropy import units as u
+import pandas as pd
 from astropy.visualization import quantity_support
 
 from function_constants import *
@@ -18,6 +22,7 @@ print(flux_2)
 
 ### choose a few targets, 3 - 5 for referencing their change in value based on their ASM ranking.
 
+targets = pd.read_csv(os.path.join(data_dir, 'four_target.csv'))
 
 #### check the two instrument that Ariel have
 ## AIRS  is  the  Ariel  scientific  instrument providing  low-resolution  spectroscopy  in  two  IR  channels
