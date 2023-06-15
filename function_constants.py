@@ -2,6 +2,9 @@ import numpy as np
 import os
 from scipy.integrate import quad
 
+from astropy.modeling.models import BlackBody
+from astropy import units as u
+
 #planck function
 h = 6.626e-34
 c = 3.0e+8
@@ -48,6 +51,17 @@ def ASM(Rp, R_star, T_d, T_star):
     r_ratio = ((7.1492e+7 *Rp)/(6.957e+8*R_star))**2
     return b_ratio*r_ratio
 
+def ASM_astropy(Rp, R_star, T_d, T_star, wavelength):
+    bb_planet = BlackBody(temperature=T_d * u.K, scale=1)
+    bb_star = BlackBody(temperature = T_star* u.K, scale=1)
+
+    flux_planet = bb_planet(wavelength * u.m)
+    flux_star = bb_star(wavelength * u.m)
+    b_ratio = flux_planet/flux_star
+
+    r_ratio = ((7.1492e+7 *Rp)/(6.957e+8*R_star))**2
+    return b_ratio*r_ratio
+
 def planck_peak(T, T_d):
     a = 2.0*h*c**2
     peak_wav = 2898/T_d*10**(-6)
@@ -60,10 +74,14 @@ def ref_light(Rp, a, Ag = 0.3):
     return Ag*(Rp/a)**2
 
 # The amplitude of transit spectral features
-def amp_tran(Rp, H, R_star, N_H = 4):
+def transit_signal(Rp, T, g, R_star, N_H = 1):
+    H = scale_height(T, g)
+    Rp = Rp * 7.1492e+7
+    R_star = R_star*6.957e+8
     return 2*Rp*N_H*H/R_star**2
 
 def scale_height(T, g): # T is the dayside effective temperature
+    mu = 1.67e-27 * 2
     return k_B*T/mu/g
 
 
