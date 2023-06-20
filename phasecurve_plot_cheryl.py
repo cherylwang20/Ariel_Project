@@ -101,7 +101,7 @@ selected_sample.to_csv(data_dir + 'selected_target.csv')
 
 ###############
 #sort according to the shortest orbit and filter out the 10%
-cut_off = 2000
+cut_off = 500
 
 ariel_sort_so = ariel.sort_values('Planet Period [days]')
 cum_time = []
