@@ -40,7 +40,7 @@ print(targets['Transit Signal'])
 
 #### emission spectroscopy signal, in range of ariel
 
-ariel_wl = np.arange(1.10, 7.80, 0.1)*1e-6
+ariel_wl = np.arange(1.10, 7.90, 0.1)*1e-6
 
 target_emiss = []
 
@@ -52,7 +52,7 @@ for i, row in targets.iterrows():
     for j in ariel_wl:
         target_emiss.append(ASM_astropy(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_day_eff(row['Star Temperature [K]'],
                                             row['Star Radius [Rs]'], row['Planet Semi-major Axis [m]']),row['Star Temperature [K]'], j))
-    plt.plot(ariel_wl*10**6, target_emiss, label = row['Planet Name'])
+    plt.plot(ariel_wl*10**6, target_emiss, label = row['Planet Name'], linewidth = 3)
 
 plt.grid(True, alpha=0.35)
 plt.text(1.2, 1e-2, 'NIRSpec', fontweight='bold',fontsize=14)
@@ -68,7 +68,8 @@ plt.ylabel('Thermal Contrast',fontsize=18, fontweight='bold')
 plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
-matplotx.line_labels()
+#matplotx.line_labels()
+plt.legend()
 #plt.xscale('log')
 plt.yscale('log')
 plt.savefig(save_dir + 'Ariel_Emission_Wavelength.jpg')

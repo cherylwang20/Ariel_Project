@@ -87,13 +87,15 @@ def scale_height(T, g): # T is the dayside effective temperature
 
 def N_photon(t, R_star, d, T_star, lamb_1 , lamb_2, tau = tau_ariel, D = D_ariel): #set t to the phase curve period
     B = quad(B_int, lamb_1, lamb_2, args=T_star)
-    N = np.pi*tau*t*daytosec/h/c*(R_star*6.957e+8*D/2/(d*pctom))**2*B[0]
-    return N
+    N = np.pi**2*tau*t*daytosec/h/c*(R_star*6.957e+8*D/2/(d*pctom))**2*B[0]
+    wa = (lamb_2 + lamb_1) / 2
+    #print(N)
+    return N#*wa#**2/c
 
 def B_int(wav, T_star):
     a = 2.0*h*c**2
     b = h*c/(wav*k*T_star)
-    intensity = a/ ( (wav**5) * (np.exp(b) - 1.0) )
+    intensity = a * wav/ ( (wav**5) * (np.exp(b) - 1.0) )
     return intensity
 
 def T_day_eff(T_star, R_star, a, A_B = 0.3, eps = 0.2):
@@ -102,6 +104,7 @@ def T_day_eff(T_star, R_star, a, A_B = 0.3, eps = 0.2):
 def SNR_Ariel(t, R_star, d, T_star, lamb_1 , lamb_2, Rp, T_d):
     eps = ASM(Rp, R_star, T_d, T_star)
     n_photon = N_photon(t, R_star, d, T_star, lamb_1 , lamb_2)
+    print(n_photon)
     snr = eps*n_photon/np.sqrt(n_photon)
     return snr
 
