@@ -49,14 +49,21 @@ while current < end:
 print(labels)
 #################################
 
+all_noise = []
+all_precision = []
 
 fig, ax = plt.subplots(figsize=(15, 10))
 
 for i, row in targets.iterrows():
     noise_wave = []
+    precision = []
     for j in range(len(ariel_wl) - 1):
-        noise_wave.append(N_photon(row['Transit Duration [s]']/daytosec, row['Star Radius [Rs]'], row['Star Distance [pc]'],
-                                row['Star Temperature [K]'], ariel_wl[j], ariel_wl[j+1]))
+        num_p = N_photon(row['Transit Duration [s]'] / daytosec, row['Star Radius [Rs]'], row['Star Distance [pc]'],
+                 row['Star Temperature [K]'], ariel_wl[j], ariel_wl[j + 1])
+        noise_wave.append(num_p)
+        precision.append(1/np.sqrt(num_p))
+    all_noise.append(noise_wave)
+    all_precision.append(precision)
     print(noise_wave)
     #plt.plot(ariel_wl[:-1]*10**6, noise_wave, label = row['Planet Name'], linewidth = 3)
     plt.bar(range(len(noise_wave)), noise_wave, align='center',label = row['Planet Name'], alpha = 0.7)
@@ -87,4 +94,28 @@ plt.yticks(fontsize=15)
 plt.yscale('log')
 plt.legend(loc ='upper right')
 plt.savefig(save_dir + 'Ariel_Noise_Wavelength.jpg')
+plt.show()
+
+############ precision plot
+
+fig, ax = plt.subplots(figsize=(15, 10))
+for i, row in targets.iterrows():
+    plt.bar(range(len(all_precision[0])), all_precision[i], alpha = 0.2, label = row['Planet Name'])
+plt.xticks(range(len(all_precision[0])), labels[:-1])#, rotation=45, ha='right')
+
+
+plt.grid(True, alpha=0.35)
+
+
+#plt.ylim([1e18, 1e23])
+plt.title('Ariel Target: Precision vs Wavelength',fontsize=24, fontweight='bold')
+plt.ylabel('Expected Precision',fontsize=18, fontweight='bold')
+plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
+plt.xticks(fontsize=15)
+plt.yticks(fontsize=15)
+#matplotx.line_labels()
+#plt.xscale('log')
+plt.yscale('log')
+plt.legend(loc ='upper left')
+plt.savefig(save_dir + 'Ariel_Precision_Wavelength.jpg')
 plt.show()
