@@ -20,7 +20,7 @@ interval_size = 0.5  # Size of each interval
 targets = pd.read_csv(os.path.join(data_dir, 'four_target.csv'))
 ariel_wl = np.arange(1.10, 7.90, interval_size)*1e-6
 
-print(ariel_wl)
+#print(ariel_wl)
 
 def Noise(t, R_star, d, T_star, lamb_1, lamb_2,tau=tau_ariel, D=D_ariel):
     bb_star = BlackBody(temperature = T_star* u.K, scale=1)
@@ -37,20 +37,24 @@ def Noise(t, R_star, d, T_star, lamb_1, lamb_2,tau=tau_ariel, D=D_ariel):
 
 # Generate the intervals and their labels
 labels = []
+intervals = []
 current = start
 while current < end:
     interval_end = min(current + interval_size, end)
-    print(current)
-    #intervals.append((current, interval_end))
+    #print(current)
+    intervals.append((current, interval_end))
     labels.append(f'{current:.1f}-{interval_end:.1f}')
     current += interval_size
 
 
-print(labels)
+#print(labels)
 #################################
 
 all_noise = []
 all_precision = []
+
+#print(intervals)
+#print(labels)
 
 fig, ax = plt.subplots(figsize=(15, 10))
 
@@ -61,15 +65,16 @@ for i, row in targets.iterrows():
         num_p = N_photon(row['Transit Duration [s]'] / daytosec, row['Star Radius [Rs]'], row['Star Distance [pc]'],
                  row['Star Temperature [K]'], ariel_wl[j], ariel_wl[j + 1])
         noise_wave.append(num_p)
-        precision.append(1/np.sqrt(num_p))
+        precision.append(1/np.sqrt(num_p/2))
     all_noise.append(noise_wave)
     all_precision.append(precision)
-    print(noise_wave)
+    #print(noise_wave)
     #plt.plot(ariel_wl[:-1]*10**6, noise_wave, label = row['Planet Name'], linewidth = 3)
     plt.bar(range(len(noise_wave)), noise_wave, align='center',label = row['Planet Name'], alpha = 0.7)
 
     # Set the x-axis tick labels
     plt.xticks(range(len(noise_wave)), labels[:-1])#, rotation=45, ha='right')
+
 
 
 plt.grid(True, alpha=0.35)
@@ -94,7 +99,8 @@ plt.yticks(fontsize=15)
 plt.yscale('log')
 plt.legend(loc ='upper right')
 plt.savefig(save_dir + 'Ariel_Noise_Wavelength.jpg')
-plt.show()
+#plt.show()
+plt.close()
 
 ############ precision plot
 
@@ -118,4 +124,5 @@ plt.yticks(fontsize=15)
 plt.yscale('log')
 plt.legend(loc ='upper left')
 plt.savefig(save_dir + 'Ariel_Precision_Wavelength.jpg')
-plt.show()
+#plt.show()
+plt.close()

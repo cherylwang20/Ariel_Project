@@ -60,7 +60,7 @@ def ASM_astropy(Rp, R_star, T_d, T_star, wavelength):
     b_ratio = flux_planet/flux_star
 
     r_ratio = ((7.1492e+7 *Rp)/(6.957e+8*R_star))**2
-    return b_ratio*r_ratio
+    return b_ratio.value*r_ratio
 
 def planck_peak(T, T_d):
     a = 2.0*h*c**2
