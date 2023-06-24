@@ -104,7 +104,7 @@ def T_day_eff(T_star, R_star, a, A_B = 0.3, eps = 0.2):
 def SNR_Ariel(t, R_star, d, T_star, lamb_1 , lamb_2, Rp, T_d):
     eps = ASM(Rp, R_star, T_d, T_star)
     n_photon = N_photon(t, R_star, d, T_star, lamb_1 , lamb_2)
-    print(n_photon)
+    #print(n_photon)
     snr = eps*n_photon/np.sqrt(n_photon)
     return snr
 

@@ -32,11 +32,11 @@ targets = pd.read_csv(os.path.join(data_dir, 'four_target.csv'))
 
 targets['Transit Signal'] = transit_signal(targets['Planet Radius [Rj]'], T_day_eff(targets['Star Temperature [K]'],
                                             targets['Star Radius [Rs]'], targets['Planet Semi-major Axis [m]']),
-                                           targets['Planet Temperature [K]'], targets['pl_g'],targets['Star Radius [Rs]'])
+                                            targets['pl_g'],targets['Star Radius [Rs]'])
 
 #print(targets['Transit Signal'])
 
-#print(transit_signal(1.1, 1787 ,20, 0.75, 4))
+print(transit_signal(1.1, 1787 ,20, 0.75, 4))
 
 #### emission spectroscopy signal, in range of ariel
 
