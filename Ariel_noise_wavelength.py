@@ -53,9 +53,6 @@ while current < end:
 all_noise = []
 all_precision = []
 
-#print(intervals)
-#print(labels)
-
 fig, ax = plt.subplots(figsize=(15, 10))
 
 for i, row in targets.iterrows():
@@ -79,15 +76,6 @@ for i, row in targets.iterrows():
 
 plt.grid(True, alpha=0.35)
 
-'''
-plt.text(1.2, 1e9, 'NIRSpec', fontweight='bold',fontsize=14, c = 'green')
-plt.text(2.5, 1e9, 'AIRS CH0', fontweight='bold',fontsize=14, c = 'orange')
-plt.text(5, 1e9, 'AIRS CH1', fontweight='bold',fontsize=14, c = 'red')
-ax.axvspan(1.1, 1.95, alpha=0.2, color='green')
-ax.axvspan(1.95, 3.9, alpha=0.2, color='yellow')
-ax.axvspan(3.9, 7.8, alpha=0.2, color='pink')
-'''
-
 #plt.ylim([1e18, 1e23])
 plt.title('Ariel Target: Noise vs Wavelength',fontsize=24, fontweight='bold')
 plt.ylabel('# of Photons',fontsize=18, fontweight='bold')
@@ -99,7 +87,7 @@ plt.yticks(fontsize=15)
 plt.yscale('log')
 plt.legend(loc ='upper right')
 plt.savefig(save_dir + 'Ariel_Noise_Wavelength.jpg')
-#plt.show()
+plt.show()
 plt.close()
 
 ############ precision plot
