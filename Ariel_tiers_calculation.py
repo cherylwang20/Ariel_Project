@@ -8,8 +8,8 @@ from phasecurve_plot_cheryl import *
 SNR_thres = 7
 start, end = 1.10, 7.8
 spectrometer = "All" # "All" or "NIRSpec"or "AIRS-CH0" or "AIRS-CH1",
-Tier = 3
-mode = "emission"  # "transmission" or "emission"
+Tier = 1
+mode = "transmission"  # "transmission" or "emission"
 if mode == "emission":
     if spectrometer == "NIRSpec":
         start, end = 1.10, 1.95
@@ -46,10 +46,10 @@ elif mode == "transmission":
         N_lambda = 150
 
 
+
 # calculate noise based on the required wavelength bin
 spec_wave_range = np.linspace(start, end, N_lambda + 1)
 
-#print(spec_wave_range)
 
 ## generate intervals and labels
 labels = []
@@ -63,7 +63,8 @@ while current < end:
     labels.append(f'{current:.3f}-{interval_end:.3f}')
     current += interval_size
 labels = labels[:-1]
-intervals = np.round(intervals[:-1], 3)
+intervals = np.round(intervals, 3)
+
 
 ########## calculate precision and noise plot noise to check
 all_noise = []
@@ -84,7 +85,10 @@ for i, row in ariel.iterrows():
     plt.bar(range(len(noise_wave)), noise_wave, align='center', label=row['Planet Name'], alpha=0.7)
 
     # Set the x-axis tick labels
-    plt.xticks(range(len(noise_wave)), labels, fontsize = 10)  # , rotation=45, ha='right')
+    if len(labels) != len(noise_wave):
+        plt.xticks(range(len(noise_wave)-1), labels, fontsize=10)  # , rotation=45, ha='right')
+    else:
+        plt.xticks(range(len(noise_wave)), labels, fontsize = 10)  # , rotation=45, ha='right')
 
 plt.grid(True, alpha=0.35)
 plt.yscale('log')
@@ -97,7 +101,7 @@ plt.yticks(fontsize=15)
 
 ### calculate the emission signal as a continuous function, plot to check
 
-ariel_signal_range = np.linspace(start, end, 150)*1e-6
+ariel_signal_range = np.linspace(start, end, 180)*1e-6
 
 target_emiss = []
 all_emiss = []
@@ -128,6 +132,12 @@ plt.close()
 
 all_target_snr = []
 
+#print(len(intervals))
+
+if len(intervals) != len(all_precision[0]):
+    intervals = intervals[:-1]
+
+
 ariel_wl_sig = np.asarray(ariel_signal_range*1e6)
 #print(ariel_wl_sig)
 for j in all_emiss:
@@ -139,7 +149,7 @@ for j in all_emiss:
         y_within_range = tar_emiss[indices]
         b = np.mean([y_within_range])
         average_sig.append(b)
-    #print(average_sig)
+    #print(len(average_sig))
     all_target_snr.append(average_sig)
 #print(all_target_snr)
 #print(all_precision)
@@ -181,8 +191,8 @@ ariel.to_csv(data_dir + 'SNR_all.csv')
 count_trans = np.sum(transit_snr > SNR_thres)
 
 if mode == "transmission":
-    print(f"At Tier {Tier}, with instrument {spectrometer}, the # of targets"
+    print(f"At Tier {Tier}, with instrument {spectrometer}, R = {N_lambda}, the # of targets"
       f" with SNR > {SNR_thres} is {count_trans}.")
 elif mode == "emission":
-    print(f"At Tier {Tier}, with instrument {spectrometer}, the # of targets"
+    print(f"At Tier {Tier}, with instrument {spectrometer}, R = {N_lambda}, the # of targets"
       f" with SNR > {SNR_thres} is {count_emiss}.")
