@@ -2,14 +2,15 @@ from phasecurve_plot_cheryl import *
 
 ############# we are looking at tier 2 resolution at the moment
 
-ariel = ariel.head(5)
+#ariel = ariel.head(10)
 
 #N_lambda = 75 ## change to different # of bins for different spectrometers?
 SNR_thres = 7
+start, end = 1.10, 7.8
 spectrometer = "All" # "All" or "NIRSpec"or "AIRS-CH0" or "AIRS-CH1",
-Tier = 2
-instrument = "photometer"  # "photometer" or "spectrometer"
-if instrument == "spectrometer":
+Tier = 3
+mode = "emission"  # "transmission" or "emission"
+if mode == "emission":
     if spectrometer == "NIRSpec":
         start, end = 1.10, 1.95
         if Tier == 2:
@@ -29,14 +30,21 @@ if instrument == "spectrometer":
         elif Tier == 3:
             N_lambda = 30
     elif spectrometer == "All":
-        start, end = 1.10, 7.8
-        if Tier == 2:
+        if Tier == 1:
+            N_lambda = 5
+        elif Tier == 2:
             N_lambda = 75
-        if Tier == 3:
+        elif Tier == 3:
             N_lambda = 150
-elif instrument == "photometer":
-    start, end = 0.5, 1.1
-    N_lambda = 75
+elif mode == "transmission":
+    spectrometer = 'Trans'
+    if Tier == 1:
+        N_lambda = 5
+    elif Tier == 2:
+        N_lambda = 75
+    elif Tier == 3:
+        N_lambda = 150
+
 
 # calculate noise based on the required wavelength bin
 spec_wave_range = np.linspace(start, end, N_lambda + 1)
@@ -133,7 +141,9 @@ for j in all_emiss:
         average_sig.append(b)
     #print(average_sig)
     all_target_snr.append(average_sig)
-
+#print(all_target_snr)
+#print(all_precision)
+#print(np.mean(all_precision, axis = 1))
 all_signal = np.array(all_target_snr)/np.array(all_precision)
 all_tier_snr = np.mean(all_signal, axis= 1)
 #print(all_tier_snr)
@@ -143,8 +153,7 @@ ariel['Tier_SNR'] = all_tier_snr
 ariel.to_csv(data_dir + 'SNR_all.csv')
 count_emiss = np.sum(all_tier_snr > SNR_thres)
 
-print(f"At Tier {Tier}, with instrument {spectrometer}, the # of targets"
-      f" with SNR > {SNR_thres} is {count_emiss}.")
+
 
 
 ###### calculate the transit signal
@@ -153,7 +162,7 @@ ariel['Transit Signal'] = transit_signal(ariel['Planet Radius [Rj]'], T_day_eff(
                                             ariel['Star Radius [Rs]'], ariel['Planet Semi-major Axis [m]']),
                                             ariel['pl_g'],ariel['Star Radius [Rs]'])
 
-
+#print('ariel transit signal', ariel['Transit Signal'])
 #print(ariel['Planet Radius [Rj]'], T_day_eff(ariel['Star Temperature [K]'], ariel['Star Radius [Rs]'], ariel['Planet Semi-major Axis [m]']),
                                             #ariel['pl_g'],ariel['Star Radius [Rs]'])
 
@@ -161,13 +170,19 @@ all_precision_mean = np.mean(all_precision, axis = 1)
 
 ##print(ariel['Transit Signal'])
 
-#print(all_precision_mean)
+#print(np.array(all_precision_mean))
+
+#print(ariel['Transit Signal'].to_numpy())
 
 transit_snr = ariel['Transit Signal'].to_numpy()/np.array(all_precision_mean)
-
-print(transit_snr)
+ariel.to_csv(data_dir + 'SNR_all.csv')
+#print(transit_snr)
 
 count_trans = np.sum(transit_snr > SNR_thres)
 
-print(f"At Tier {Tier}, with instrument {spectrometer}, the # of targets"
+if mode == "transmission":
+    print(f"At Tier {Tier}, with instrument {spectrometer}, the # of targets"
       f" with SNR > {SNR_thres} is {count_trans}.")
+elif mode == "emission":
+    print(f"At Tier {Tier}, with instrument {spectrometer}, the # of targets"
+      f" with SNR > {SNR_thres} is {count_emiss}.")

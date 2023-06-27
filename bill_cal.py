@@ -17,6 +17,9 @@ print(len(same_target))
 
 tran_sg_all = transit_signal(ariel['Planet Radius [Rj]'], T_day_eff(ariel['Star Temperature [K]'],
                                             ariel['Star Radius [Rs]'], ariel['Planet Semi-major Axis [m]']),
-                                           ariel['Planet Temperature [K]'], ariel['pl_g'],ariel['Star Radius [Rs]'])
+                                            ariel['pl_g'],ariel['Star Radius [Rs]'], 4)
 
 print(tran_sg_all)
+
+print(len(ariel[ariel['Tier 3 Eclipses'] <= 1]))
+print(len(ariel[ariel['Tier 3 Transits'] <= 1]))
