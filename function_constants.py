@@ -78,7 +78,7 @@ def transit_signal(Rp, T, g, R_star, N_H = 1):
     H = scale_height(T, g)
     Rp = Rp * 7.1492e+7
     R_star = R_star*6.957e+8
-    return 2*Rp*N_H*H/R_star**2
+    return 5*2*Rp*N_H*H/R_star**2
 
 def scale_height(T, g): # T is the dayside effective temperature
     mu = 1.67e-27 * 2
