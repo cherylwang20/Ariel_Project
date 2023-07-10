@@ -21,5 +21,5 @@ tran_sg_all = transit_signal(ariel['Planet Radius [Rj]'], T_day_eff(ariel['Star 
 
 print(tran_sg_all)
 
-print(len(ariel[ariel['Tier 3 Eclipses'] <= 1]))
-print(len(ariel[ariel['Tier 3 Transits'] <= 1]))
+print(len(ariel[ariel['Tier 1 Eclipses'] <= 1]))
+print(len(ariel[ariel['Tier 1 Transits'] <= 1]))

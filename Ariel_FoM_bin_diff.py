@@ -2,70 +2,51 @@ from phasecurve_plot_cheryl import *
 
 ############# we are looking at tier 2 resolution at the moment
 
-#ariel = ariel.head(20)
+#ariel = ariel.head(10)
 
 #N_lambda = 75 ## change to different # of bins for different spectrometers?
 SNR_thres = 7
-start, end = 1.10, 7.8
-spectrometer = "All" # "All" or "NIRSpec"or "AIRS-CH0" or "AIRS-CH1",
-Tier = 1
+Tier = 2
+start_NIR, end_NIR = 1.10, 1.95 #start and end wavelengh for NIRSpec
+start_0, end_0 = 1.95, 3.90 #start and end wavelength for AIR-CH0
+start_1, end_1 = 3.9, 7.8 #start and end wavelength for AIR-CH1
+
 mode = "transmission"  # "transmission" or "emission"
-if mode == "emission":
-    if spectrometer == "NIRSpec":
-        start, end = 1.10, 1.95
-        if Tier == 2:
-            N_lambda = 10
-        elif Tier == 3:
-            N_lambda = 20
-    elif spectrometer == "AIRS-CH0":
-        start, end = 1.95, 3.90
-        if Tier == 2:
-            N_lambda = 50
-        elif Tier == 3:
-            N_lambda = 100
-    elif spectrometer == "AIRS-CH1":
-        start = 3.90; end = 7.8;
-        if Tier == 2:
-            N_lambda = 15
-        elif Tier == 3:
-            N_lambda = 30
-    elif spectrometer == "All":
-        if Tier == 1:
-            N_lambda = 5
-        elif Tier == 2:
-            N_lambda = 75
-        elif Tier == 3:
-            N_lambda = 150
-elif mode == "transmission":
-    spectrometer = 'Trans'
-    if Tier == 1:
-        N_lambda = 5
-    elif Tier == 2:
-        N_lambda = 75
-    elif Tier == 3:
-        N_lambda = 150
+if Tier == 1:
+    lambda_1 = np.linspace(start_NIR, end_NIR, 1)
+    lambda_2 = np.linspace(start_0, end_0, 3)
+    lambda_3 = np.linspace(start_1, end_1 ,3)
+    spec_wave_range = np.concatenate((lambda_1, lambda_2[:-1], lambda_3))
+elif Tier == 2:
+    lambda_1 = np.linspace(start_NIR, end_NIR, 11)
+    lambda_2 = np.linspace(start_0, end_0, 51)
+    lambda_3 = np.linspace(start_1, end_1 ,16)
+    spec_wave_range = np.concatenate((lambda_1[:-1], lambda_2[:-1], lambda_3))
+elif Tier == 3:
+    lambda_1 = np.linspace(start_NIR, end_NIR, 21)
+    lambda_2 = np.linspace(start_0, end_0, 101)
+    lambda_3 = np.linspace(start_1, end_1 ,31)
+    spec_wave_range = np.concatenate((lambda_1[:-1], lambda_2[:-1], lambda_3))
+
+print(spec_wave_range)
 
 
 
-# calculate noise based on the required wavelength bin
-spec_wave_range = np.linspace(start, end, N_lambda + 1)
 
 
 ## generate intervals and labels
 labels = []
 intervals = []
 interval_size = spec_wave_range[1] - spec_wave_range[0]
-current = start
-while current < end:
-    interval_end = min(current + interval_size, end)
-    #print(current)
-    intervals.append((current, interval_end))
-    labels.append(f'{current:.3f}-{interval_end:.3f}')
-    current += interval_size
-labels = labels[:-1]
+current = start_NIR
+
+for i in range(len(spec_wave_range)-1):
+    intervals.append((spec_wave_range[i], spec_wave_range[i+1]))
+    labels.append(f'{spec_wave_range[i]:.3f}-{spec_wave_range[i+1]:.3f}')
 intervals = np.round(intervals, 3)
 
 
+#print(labels)
 ########## calculate precision and noise plot noise to check
 all_noise = []
 all_precision = []
@@ -92,16 +73,21 @@ for i, row in ariel.iterrows():
 
 plt.grid(True, alpha=0.35)
 plt.yscale('log')
-plt.title(f'Ariel Target: Noise vs Wavelength ({spectrometer})',fontsize=24, fontweight='bold')
+plt.title('Ariel Target: Noise vs Wavelength',fontsize=24, fontweight='bold')
 plt.ylabel('# of Photons',fontsize=18, fontweight='bold')
 plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
-#plt.show()
+plt.show()
+plt.close()
 
 ### calculate the emission signal as a continuous function, plot to check
-
-ariel_signal_range = np.linspace(start, end, 180)*1e-6
+if Tier == 1:
+    ariel_signal_range = np.linspace(start_NIR, end_1, 50) * 1e-6
+elif Tier == 2:
+    ariel_signal_range = np.linspace(start_NIR, end_1, 180) * 1e-6
+elif Tier == 3:
+    ariel_signal_range = np.linspace(start_NIR, end_1, 345) * 1e-6
 
 target_emiss = []
 all_emiss = []
@@ -119,13 +105,13 @@ for i, row in ariel.iterrows():
 
 plt.grid(True, alpha=0.35)
 
-plt.title(f'Ariel Target: Emission Signal vs Wavelength ({spectrometer})',fontsize=24, fontweight='bold')
+plt.title('Ariel Target: Emission Signal vs Wavelength',fontsize=24, fontweight='bold')
 plt.ylabel('Thermal Contrast',fontsize=18, fontweight='bold')
 plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
 plt.yscale('log')
-#plt.show()
+plt.show()
 plt.close()
 
 ######## combine the two to get a SNR for the tier + spectrometer we want
@@ -186,13 +172,13 @@ all_precision_mean = np.mean(all_precision, axis = 1)
 
 transit_snr = ariel['Transit Signal'].to_numpy()/np.array(all_precision_mean)
 ariel.to_csv(data_dir + 'SNR_all.csv')
-#print(transit_snr)
+print(transit_snr)
 
 count_trans = np.sum(transit_snr > SNR_thres)
 
-if mode == "transmission":
-    print(f"At Tier {Tier}, with instrument {spectrometer}, R = {N_lambda}, the # of targets"
-      f" with SNR > {SNR_thres} is {count_trans}.")
-elif mode == "emission":
-    print(f"At Tier {Tier}, with instrument {spectrometer}, R = {N_lambda}, the # of targets"
-      f" with SNR > {SNR_thres} is {count_emiss}.")
+
+print(f"At Tier {Tier}, the # of targets"
+      f" with SNR > {SNR_thres} is {count_trans} in transmission spectroscopy.")
+
+print(f"At Tier {Tier}, the # of targets"
+      f" with SNR > {SNR_thres} is {count_emiss} in emission spectroscopy.")

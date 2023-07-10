@@ -2,7 +2,7 @@ from phasecurve_plot_cheryl import *
 
 ############# we are looking at tier 2 resolution at the moment
 
-#ariel = ariel.head(20)
+ariel = ariel.head(20)
 
 #N_lambda = 75 ## change to different # of bins for different spectrometers?
 SNR_thres = 7
@@ -49,7 +49,7 @@ elif mode == "transmission":
 
 # calculate noise based on the required wavelength bin
 spec_wave_range = np.linspace(start, end, N_lambda + 1)
-
+print(spec_wave_range)
 
 ## generate intervals and labels
 labels = []
