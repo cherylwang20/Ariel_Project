@@ -30,7 +30,7 @@ targets = pd.read_csv(os.path.join(data_dir, 'four_target.csv'))
 # (called Channel 0, CH0, for the [1.95-3.90] μm band and Channel 1, CH1, for the [3.90-7.80] μm band).
 # NIRSpec (1.10-1.95 μm spectrometer with R ≥ 15)
 
-targets['Transit Signal'] = transit_signal(targets['Planet Radius [Rj]'], T_day_eff(targets['Star Temperature [K]'],
+targets['Transit Signal'] = transit_signal(targets['Planet Radius [Rj]'], T_eq(targets['Star Temperature [K]'],
                                             targets['Star Radius [Rs]'], targets['Planet Semi-major Axis [m]']),
                                             targets['pl_g'],targets['Star Radius [Rs]'])
 
@@ -51,9 +51,12 @@ fig, ax = plt.subplots(figsize=(15, 10))
 for i, row in targets.iterrows():
     target_emiss = []
     for j in ariel_wl_sig:
-        target_emiss.append(ASM_astropy(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_day_eff(row['Star Temperature [K]'],
+        target_emiss.append(ASM_astropy(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_eq(row['Star Temperature [K]'],
                                             row['Star Radius [Rs]'], row['Planet Semi-major Axis [m]']),row['Star Temperature [K]'], j))
     plt.plot(ariel_wl_sig*10**6, target_emiss, label = row['Planet Name'], linewidth = 3)
+    ### optional, draw the rayleigh-jean asymptotic limit
+    #plt.axhline(y = thermal_rayleigh(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_eq(row['Star Temperature [K]'],
+    #                                        row['Star Radius [Rs]'], row['Planet Semi-major Axis [m]']),row['Star Temperature [K]']), c = 'black')
     all_emiss.append(target_emiss)
 
 plt.grid(True, alpha=0.35)
@@ -70,11 +73,20 @@ plt.ylabel('Thermal Contrast',fontsize=18, fontweight='bold')
 plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
-#matplotx.line_labels()
-plt.legend()
-#plt.xscale('log')
+
+
+#get handles and labels
+handles, labels = plt.gca().get_legend_handles_labels()
+
+#specify order of items in legend
+order = [0, 3, 2, 1]
+
+#add legend to plot
+plt.legend([handles[idx] for idx in order],[labels[idx] for idx in order])
+
+
 plt.yscale('log')
 plt.savefig(save_dir + 'Ariel_Emission_Wavelength.jpg')
-#plt.show()
+plt.show()
 plt.close()
 

@@ -98,7 +98,7 @@ fig, ax = plt.subplots(figsize=(15, 10))
 for i, row in ariel.iterrows():
     target_emiss = []
     for j in ariel_signal_range:
-        target_emiss.append(ASM_astropy(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_day_eff(row['Star Temperature [K]'],
+        target_emiss.append(ASM_astropy(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_eq(row['Star Temperature [K]'],
                                             row['Star Radius [Rs]'], row['Planet Semi-major Axis [m]']),row['Star Temperature [K]'], j))
     plt.plot(ariel_signal_range*10**6, target_emiss, label = row['Planet Name'], linewidth = 3)
     all_emiss.append(target_emiss)

@@ -24,6 +24,7 @@ ax.axvline(0.160586, color='g', linestyle='dashed', linewidth=1, alpha=1)
 ax.axvline(0.312251, color='g', linestyle='dashed', linewidth=1, alpha=1)
 ax.axvline(0.624503, color='g', linestyle='dashed', linewidth=1, alpha=1)
 
+'''
 for x, y, name in zip(pc_telescope.query("JWST == 'Yes'")["pl_radj"], pc_telescope.query("JWST == 'Yes'")["pl_orbper"],
                       pc_telescope.query("JWST == 'Yes'")["pl_name"]):
 
@@ -69,7 +70,7 @@ for x, y, name in zip(pc_telescope.query("JWST == 'Yes'")["pl_radj"], pc_telesco
                      textcoords="offset points",  # how to position the text
                      xytext=(0, -25),  # distance from text to points (x,y)
                      ha='center')  # horizontal alignment can be left, right or center
-
+'''
 from matplotlib.lines import Line2D
 
 legend_elements = [Line2D([0], [0], marker='h', color='w', label='JWST',

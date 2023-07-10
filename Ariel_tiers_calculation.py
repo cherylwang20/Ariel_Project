@@ -2,7 +2,7 @@ from phasecurve_plot_cheryl import *
 
 ############# we are looking at tier 2 resolution at the moment
 
-ariel = ariel.head(20)
+#ariel = ariel.head(20)
 
 #N_lambda = 75 ## change to different # of bins for different spectrometers?
 SNR_thres = 7
@@ -56,13 +56,9 @@ labels = []
 intervals = []
 interval_size = spec_wave_range[1] - spec_wave_range[0]
 current = start
-while current < end:
-    interval_end = min(current + interval_size, end)
-    #print(current)
-    intervals.append((current, interval_end))
-    labels.append(f'{current:.3f}-{interval_end:.3f}')
-    current += interval_size
-labels = labels[:-1]
+for i in range(len(spec_wave_range)-1):
+    intervals.append((spec_wave_range[i], spec_wave_range[i+1]))
+    labels.append(f'{spec_wave_range[i]:.3f}-{spec_wave_range[i+1]:.3f}')
 intervals = np.round(intervals, 3)
 
 
@@ -112,7 +108,7 @@ fig, ax = plt.subplots(figsize=(15, 10))
 for i, row in ariel.iterrows():
     target_emiss = []
     for j in ariel_signal_range:
-        target_emiss.append(ASM_astropy(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_day_eff(row['Star Temperature [K]'],
+        target_emiss.append(ASM_astropy(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_eq(row['Star Temperature [K]'],
                                             row['Star Radius [Rs]'], row['Planet Semi-major Axis [m]']),row['Star Temperature [K]'], j))
     plt.plot(ariel_signal_range*10**6, target_emiss, label = row['Planet Name'], linewidth = 3)
     all_emiss.append(target_emiss)
@@ -190,9 +186,9 @@ ariel.to_csv(data_dir + 'SNR_all.csv')
 
 count_trans = np.sum(transit_snr > SNR_thres)
 
-if mode == "transmission":
-    print(f"At Tier {Tier}, with instrument {spectrometer}, R = {N_lambda}, the # of targets"
-      f" with SNR > {SNR_thres} is {count_trans}.")
-elif mode == "emission":
-    print(f"At Tier {Tier}, with instrument {spectrometer}, R = {N_lambda}, the # of targets"
-      f" with SNR > {SNR_thres} is {count_emiss}.")
+
+print(f"At Tier {Tier}, the # of targets"
+      f" with SNR > {SNR_thres} is {count_trans} in transmission spectroscopy.")
+
+print(f"At Tier {Tier}, the # of targets"
+      f" with SNR > {SNR_thres} is {count_emiss} in emission spectroscopy.")
