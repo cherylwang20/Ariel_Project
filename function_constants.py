@@ -136,3 +136,10 @@ def new_cum_time(df, angle):
     partial_num = len(df[df['Planet Period [days]'] > 2])
     print(f'{angle}, full num = {full_num}, partial num = {partial_num}')
     return df, full_num, partial_num
+
+def find_indices_greater_than(array_list, x):
+    indices = []
+    for i, element in enumerate(array_list):
+        if element > x:
+            indices.append(i)
+    return indices

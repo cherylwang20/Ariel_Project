@@ -5,46 +5,16 @@ from phasecurve_plot_cheryl import *
 #ariel = ariel.head(20)
 
 #N_lambda = 75 ## change to different # of bins for different spectrometers?
-SNR_thres = 10
+SNR_thres = 7
 start, end = 1.10, 7.8
-spectrometer = "All" # "All" or "NIRSpec"or "AIRS-CH0" or "AIRS-CH1",
-Tier = 1
-mode = "transmission"  # "transmission" or "emission"
-if mode == "emission":
-    if spectrometer == "NIRSpec":
-        start, end = 1.10, 1.95
-        if Tier == 2:
-            N_lambda = 10
-        elif Tier == 3:
-            N_lambda = 20
-    elif spectrometer == "AIRS-CH0":
-        start, end = 1.95, 3.90
-        if Tier == 2:
-            N_lambda = 50
-        elif Tier == 3:
-            N_lambda = 100
-    elif spectrometer == "AIRS-CH1":
-        start = 3.90; end = 7.8;
-        if Tier == 2:
-            N_lambda = 15
-        elif Tier == 3:
-            N_lambda = 30
-    elif spectrometer == "All":
-        if Tier == 1:
-            N_lambda = 10
-        elif Tier == 2:
-            N_lambda = 50
-        elif Tier == 3:
-            N_lambda = 150
-elif mode == "transmission":
-    spectrometer = 'Trans'
-    if Tier == 1:
-        N_lambda = 10
-    elif Tier == 2:
-        N_lambda = 50
-    elif Tier == 3:
-        N_lambda = 150
 
+Tier = 2
+if Tier == 1:
+    N_lambda = 5
+elif Tier == 2:
+    N_lambda = 75
+elif Tier == 3:
+    N_lambda = 150
 
 
 # calculate noise based on the required wavelength bin
@@ -88,7 +58,7 @@ for i, row in ariel.iterrows():
 
 plt.grid(True, alpha=0.35)
 plt.yscale('log')
-plt.title(f'Ariel Target: Noise vs Wavelength ({spectrometer})',fontsize=24, fontweight='bold')
+plt.title(f'Ariel Target: Noise vs Wavelength',fontsize=24, fontweight='bold')
 plt.ylabel('# of Photons',fontsize=18, fontweight='bold')
 plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
 plt.xticks(fontsize=15)
@@ -115,7 +85,7 @@ for i, row in ariel.iterrows():
 
 plt.grid(True, alpha=0.35)
 
-plt.title(f'Ariel Target: Emission Signal vs Wavelength ({spectrometer})',fontsize=24, fontweight='bold')
+plt.title(f'Ariel Target: Emission Signal vs Wavelength',fontsize=24, fontweight='bold')
 plt.ylabel('Thermal Contrast',fontsize=18, fontweight='bold')
 plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
 plt.xticks(fontsize=15)
@@ -159,9 +129,11 @@ ariel['Tier_SNR'] = all_tier_snr
 ariel.to_csv(data_dir + 'SNR_all.csv')
 count_emiss = np.sum(all_tier_snr > SNR_thres)
 
+emiss_indice = find_indices_greater_than(all_tier_snr, SNR_thres)
 
+print(emiss_indice)
 
-
+'''
 ###### calculate the transit signal
 
 ariel['Transit Signal'] = transit_signal(ariel['Planet Radius [Rj]'], T_eq(ariel['Star Temperature [K]'],
@@ -192,3 +164,4 @@ print(f"At Tier {Tier}, the # of targets"
 
 print(f"At Tier {Tier}, the # of targets"
       f" with SNR > {SNR_thres} is {count_emiss} in emission spectroscopy.")
+'''
