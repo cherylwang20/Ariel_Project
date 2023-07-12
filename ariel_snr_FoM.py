@@ -44,6 +44,8 @@ average_snr = np.mean(all_tg, axis= 1)/np.mean(all_precision, axis=1)
 average_snr = np.round(average_snr, 2)
 #print(average_snr)
 
+print(labels)
+
 fig, ax = plt.subplots(figsize=(15, 10))
 for i, row in targets.iterrows():
     plt.bar(range(len(all_sig[0])), all_sig[i], label = row['Planet Name'] )
@@ -51,8 +53,8 @@ plt.xticks(range(len(noise_wave)), labels[:-1])#, rotation=45, ha='right')
 
 plt.grid(True, alpha=0.35)
 
-plt.title('Ariel Target: SNR vs Wavelength',fontsize=24, fontweight='bold')
-plt.ylabel('Ariel SNR Metric',fontsize=18, fontweight='bold')
+plt.title('Ariel Target: S/N vs Wavelength',fontsize=24, fontweight='bold')
+plt.ylabel('Ariel S/N Metric',fontsize=18, fontweight='bold')
 plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
@@ -60,7 +62,7 @@ plt.yticks(fontsize=15)
 #plt.xscale('log')
 #plt.yscale('log')
 plt.legend(loc ='upper left')
-textstr = f"Average SNR {all_fom} \nAverage Sig/Average Uncer {average_snr}"
+textstr = f"Average S/N {all_fom} \nAverage Sig/Average Uncer {average_snr}"
 props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
 plt.text(0.02, 0.95, textstr, fontsize=10, transform=plt.gcf().transFigure, bbox=props)
 plt.savefig(save_dir + 'Ariel_SNR_Wavelength.jpg')

@@ -76,13 +76,13 @@ plt.yticks(fontsize=15)
 
 
 #get handles and labels
-handles, labels = plt.gca().get_legend_handles_labels()
+handles, plabels = plt.gca().get_legend_handles_labels()
 
 #specify order of items in legend
 order = [0, 3, 2, 1]
 
 #add legend to plot
-plt.legend([handles[idx] for idx in order],[labels[idx] for idx in order])
+plt.legend([handles[idx] for idx in order],[plabels[idx] for idx in order])
 
 
 plt.yscale('log')

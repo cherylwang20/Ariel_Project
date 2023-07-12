@@ -5,7 +5,7 @@ from phasecurve_plot_cheryl import *
 #ariel = ariel.head(20)
 
 #N_lambda = 75 ## change to different # of bins for different spectrometers?
-SNR_thres = 7
+SNR_thres = 10
 start, end = 1.10, 7.8
 spectrometer = "All" # "All" or "NIRSpec"or "AIRS-CH0" or "AIRS-CH1",
 Tier = 1
@@ -31,17 +31,17 @@ if mode == "emission":
             N_lambda = 30
     elif spectrometer == "All":
         if Tier == 1:
-            N_lambda = 5
+            N_lambda = 10
         elif Tier == 2:
-            N_lambda = 75
+            N_lambda = 50
         elif Tier == 3:
             N_lambda = 150
 elif mode == "transmission":
     spectrometer = 'Trans'
     if Tier == 1:
-        N_lambda = 5
+        N_lambda = 10
     elif Tier == 2:
-        N_lambda = 75
+        N_lambda = 50
     elif Tier == 3:
         N_lambda = 150
 
@@ -108,7 +108,7 @@ fig, ax = plt.subplots(figsize=(15, 10))
 for i, row in ariel.iterrows():
     target_emiss = []
     for j in ariel_signal_range:
-        target_emiss.append(ASM_astropy(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_eq(row['Star Temperature [K]'],
+        target_emiss.append(ASM_astropy(row['Planet Radius [Rj]'],row['Star Radius [Rs]'], T_day_eff(row['Star Temperature [K]'],
                                             row['Star Radius [Rs]'], row['Planet Semi-major Axis [m]']),row['Star Temperature [K]'], j))
     plt.plot(ariel_signal_range*10**6, target_emiss, label = row['Planet Name'], linewidth = 3)
     all_emiss.append(target_emiss)
@@ -164,7 +164,7 @@ count_emiss = np.sum(all_tier_snr > SNR_thres)
 
 ###### calculate the transit signal
 
-ariel['Transit Signal'] = transit_signal(ariel['Planet Radius [Rj]'], T_day_eff(ariel['Star Temperature [K]'],
+ariel['Transit Signal'] = transit_signal(ariel['Planet Radius [Rj]'], T_eq(ariel['Star Temperature [K]'],
                                             ariel['Star Radius [Rs]'], ariel['Planet Semi-major Axis [m]']),
                                             ariel['pl_g'],ariel['Star Radius [Rs]'])
 

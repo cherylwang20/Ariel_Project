@@ -27,7 +27,7 @@ Ariel_eclipse = ax.plot(ariel_sort_eclipse_num_2.index.tolist(), ariel_sort_ecli
                        color = 'black')
 
 
-ax.axhline(120, color='orange', linestyle='solid', linewidth=2, alpha=0.75, zorder = 0)
+#ax.axhline(120, color='orange', linestyle='solid', linewidth=2, alpha=0.75, zorder = 0)
 
 
 plt.grid(True, alpha=0.35)
@@ -36,7 +36,7 @@ plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold
 plt.title("Ariel Partial Phase Curve (> 48hr) Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-plt.legend(title = "Partial Observing Angle (°)", loc = "lower right", fontsize = 15, title_fontsize= 15)
+plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right", fontsize = 15, title_fontsize= 15)
 #plt.yscale('log')
 #plt.xscale('log')
 # plt.ylim([0,105])
@@ -64,7 +64,7 @@ Ariel_ASM = ax.plot(ariel_sort_ASM_2.index.tolist(), ariel_sort_ASM_2['cumulativ
                        color = 'black')
 
 
-ax.axhline(120, color='orange', linestyle='solid', linewidth=2, alpha=0.75, zorder = 0)
+#ax.axhline(120, color='orange', linestyle='solid', linewidth=2, alpha=0.75, zorder = 0)
 
 
 plt.grid(True, alpha=0.35)
@@ -73,7 +73,7 @@ plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold
 plt.title("Ariel Partial Phase Curve (> 48hr) Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-plt.legend(title = "Partial Observing Angle (°)", loc = "lower right", fontsize = 15, title_fontsize= 15)
+plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right", fontsize = 15, title_fontsize= 15)
 #plt.yscale('log')
 #plt.xscale('log')
 # plt.ylim([0,105])

@@ -47,7 +47,7 @@ while current < end:
     current += interval_size
 
 
-#print(labels)
+print(labels)
 #################################
 
 all_noise = []
@@ -75,19 +75,25 @@ for i, row in targets.iterrows():
 
 
 plt.grid(True, alpha=0.35)
-
-#plt.ylim([1e18, 1e23])
 plt.title('Ariel Target: Noise vs Wavelength',fontsize=24, fontweight='bold')
 plt.ylabel('# of Photons',fontsize=18, fontweight='bold')
 plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
-#matplotx.line_labels()
+
 #plt.xscale('log')
 plt.yscale('log')
-plt.legend(loc ='upper right')
+#get handles and labels
+handles, plabels = plt.gca().get_legend_handles_labels()
+
+#specify order of items in legend
+order = [0, 3, 2, 1]
+
+#add legend to plot
+plt.legend([handles[idx] for idx in order],[plabels[idx] for idx in order], loc ='upper right')
+
 plt.savefig(save_dir + 'Ariel_Noise_Wavelength.jpg')
-plt.show()
+#plt.show()
 plt.close()
 
 ############ precision plot
@@ -110,7 +116,16 @@ plt.yticks(fontsize=15)
 #matplotx.line_labels()
 #plt.xscale('log')
 plt.yscale('log')
-plt.legend(loc ='upper left')
+
+handles, plabels = plt.gca().get_legend_handles_labels()
+
+#specify order of items in legend
+order = [0, 3, 2, 1]
+
+#add legend to plot
+plt.legend([handles[idx] for idx in order],[plabels[idx] for idx in order], loc ='upper left')
+
+
 plt.savefig(save_dir + 'Ariel_Precision_Wavelength.jpg')
-#plt.show()
+plt.show()
 plt.close()
