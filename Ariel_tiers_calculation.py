@@ -133,7 +133,7 @@ emiss_indice = find_indices_greater_than(all_tier_snr, SNR_thres)
 
 print(emiss_indice)
 
-'''
+
 ###### calculate the transit signal
 
 ariel['Transit Signal'] = transit_signal(ariel['Planet Radius [Rj]'], T_eq(ariel['Star Temperature [K]'],
@@ -158,10 +158,13 @@ ariel.to_csv(data_dir + 'SNR_all.csv')
 
 count_trans = np.sum(transit_snr > SNR_thres)
 
+trans_indice = find_indices_greater_than(transit_snr, SNR_thres)
+
+print(trans_indice)
+
 
 print(f"At Tier {Tier}, the # of targets"
       f" with SNR > {SNR_thres} is {count_trans} in transmission spectroscopy.")
 
 print(f"At Tier {Tier}, the # of targets"
       f" with SNR > {SNR_thres} is {count_emiss} in emission spectroscopy.")
-'''
