@@ -203,15 +203,15 @@ overlap_target_selected.to_csv(data_dir + 'overlap.csv')
 
 
 ################ sort ariel into different mass range:
-ariel_terrestrial = ariel.loc[ariel['Planet Mass [Mj]'] <= 0.16058]
-ariel_subnep = ariel.loc[(ariel['Planet Mass [Mj]'] >= 0.16058)
-                & (ariel['Planet Mass [Mj]'] <= 0.312251)]
-ariel_nep = ariel.loc[(ariel['Planet Mass [Mj]'] <= 0.624503)
-                & (ariel['Planet Mass [Mj]'] >= 0.312251)]
-ariel_giant = ariel.loc[ariel['Planet Mass [Mj]'] >= 0.624503]
+ariel_terrestrial = ariel.loc[ariel['Planet Radius [Rj]'] <= 0.16058]
+ariel_subnep = ariel.loc[(ariel['Planet Radius [Rj]'] >= 0.16058)
+                & (ariel['Planet Radius [Rj]'] <= 0.312251)]
+ariel_nep = ariel.loc[(ariel['Planet Radius [Rj]'] <= 0.624503)
+                & (ariel['Planet Radius [Rj]'] >= 0.312251)]
+ariel_giant = ariel.loc[ariel['Planet Radius [Rj]'] >= 0.624503]
 
 ############## create df of partial phase curve and full phase curve for 45 degree phase curve
-curve_df = new_cum_time(ariel_sort_ASM,45)[0]
+curve_df = new_cum_time(ariel_sort_eclipse_num,45)[0]
 ariel_full = curve_df[curve_df['Planet Period [days]']<= 2]
 ariel_partial = curve_df[curve_df['Planet Period [days]'] > 2]
 

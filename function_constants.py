@@ -143,3 +143,16 @@ def find_indices_greater_than(array_list, x):
         if element > x:
             indices.append(i)
     return indices
+
+def cum_df(df):
+    cum_time = []
+    cum = 0
+    for index, row in df.iterrows():
+        cum += row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
+        cum_time.append(cum)
+
+    df['cumulative days'] = cum_time
+    df.drop(columns=['Unnamed: 0'])
+    df = df.reset_index(drop=True)
+    df.index = df.index + 1
+    return df

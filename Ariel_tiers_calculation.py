@@ -153,6 +153,7 @@ all_precision_mean = np.mean(all_precision, axis = 1)
 #print(ariel['Transit Signal'].to_numpy())
 
 transit_snr = ariel['Transit Signal'].to_numpy()/np.array(all_precision_mean)
+ariel['Transit S/N'] = transit_snr
 ariel.to_csv(data_dir + 'SNR_all.csv')
 #print(transit_snr)
 

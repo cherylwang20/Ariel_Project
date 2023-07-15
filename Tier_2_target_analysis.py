@@ -36,7 +36,7 @@ tier2_eclipse_sort['cumulative days'] = cum_time
 tier2_eclipse_sort.drop(columns=['Unnamed: 0'])
 tier2_eclipse_sort = tier2_eclipse_sort.reset_index(drop=True)
 tier2_eclipse_sort.index = tier2_eclipse_sort.index + 1
-print(tier2_eclipse_sort)
+#print(tier2_eclipse_sort)
 
 ##### we draw the cumulative observing time
 
@@ -64,7 +64,7 @@ plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right"
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_Cul.jpg')
 
-plt.show()
+#plt.show()
 plt.close()
 
 ###################################### we look at the distribution of those targets
@@ -118,6 +118,7 @@ plt.yscale('log')
 # plt.ylim([0,105])
 plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2.jpg')
 
-plt.show()
+#plt.show()
+plt.close()
 
 ############ calculate how many of those overlap with the transit targets.
