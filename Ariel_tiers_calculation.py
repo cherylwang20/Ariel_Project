@@ -8,7 +8,7 @@ from phasecurve_plot_cheryl import *
 SNR_thres = 7
 start, end = 1.10, 7.8
 
-Tier = 2
+Tier = 1
 if Tier == 1:
     N_lambda = 5
 elif Tier == 2:
@@ -124,7 +124,12 @@ all_signal = np.array(all_target_snr)/np.array(all_precision)
 all_tier_snr = np.mean(all_signal, axis= 1)
 #print(all_tier_snr)
 
-ariel['Tier_SNR'] = all_tier_snr
+if Tier == 1:
+    ariel['Tier1_SNR'] = all_tier_snr
+elif Tier == 2 :
+    ariel['Tier2_SNR'] = all_tier_snr
+elif Tier == 3:
+    ariel['Tier3_SNR'] = all_tier_snr
 
 ariel.to_csv(data_dir + 'SNR_all.csv')
 count_emiss = np.sum(all_tier_snr > SNR_thres)
@@ -153,7 +158,14 @@ all_precision_mean = np.mean(all_precision, axis = 1)
 #print(ariel['Transit Signal'].to_numpy())
 
 transit_snr = ariel['Transit Signal'].to_numpy()/np.array(all_precision_mean)
-ariel['Transit S/N'] = transit_snr
+
+if Tier == 1:
+    ariel['Tier1 Transit S/N'] = transit_snr
+elif Tier == 2 :
+    ariel['Tier2 Transit S/N'] = transit_snr
+elif Tier == 3:
+    ariel['Tier3 Transit S/N'] = transit_snr
+
 ariel.to_csv(data_dir + 'SNR_all.csv')
 #print(transit_snr)
 
