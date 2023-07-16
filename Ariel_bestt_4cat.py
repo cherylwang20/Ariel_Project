@@ -42,10 +42,12 @@ Ariel_eclipse = ax.plot(ariel_4cat.index.tolist(), ariel_4cat['cumulative days']
                         alpha = 1, label = "Full Phase Curve", linewidth= 3,
                        color = 'black')
 
+print(ariel_4cat['cumulative days'].max())
+
 plt.grid(True, alpha=0.35)
 plt.xlabel("# of planets", fontsize=18, fontweight='bold')
 plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
-plt.title("Ariel Tier 2 Cumulative Observational Time", fontsize=24, fontweight='bold')
+plt.title("Ariel Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right", fontsize = 15, title_fontsize= 15)
@@ -54,7 +56,7 @@ plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right"
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_allcat.jpg')
 
-plt.show()
+#plt.show()
 plt.close()
 
 
@@ -107,7 +109,8 @@ plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.savefig(save_dir + 'JWST-Ariel-pg_porb_fom.jpg')
 
-plt.show()
+#plt.show()
+plt.close()
 
 ###############################################
 fig, ax = plt.subplots(figsize=(15, 10))
@@ -159,7 +162,7 @@ plt.yscale('log')
 # plt.ylim([0,105])
 
 plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-allcat.jpg')
-plt.show()
+#plt.show()
 
 plt.close()
 
@@ -222,5 +225,16 @@ plt.xscale('log')
 #plt.xlim([1,100])
 plt.savefig(save_dir+'Ariel-Phasecurves-cat4-Ecc-Period.jpg')
 
-plt.show()
+#plt.show()
 plt.close()
+
+
+##############################now we see how much time/transit targets are also overlappinp.
+
+cum_time = []
+cum = 0
+for index, row in ariel_4cat.iterrows():
+    cum += row['Transit Duration [s]'] * 3 / 86400
+    cum_time.append(cum)
+
+print(f'Total Tier 2 transit time is {cum} days.')

@@ -7,6 +7,10 @@ tier_2_indice = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1
 ariel['Tier 2 Emission'] = 0
 ariel.loc[tier_2_indice, 'Tier 2 Emission'] = 1
 
+Tier_2_emission = ariel[ariel['Tier 2 Emission'] == 1]
+
+Tier_2_emission.to_csv(data_dir + 'Tier_2_emission.csv')
+
 
 ################calculate total overlapping transit time
 tier_2_trans = [0, 2, 4, 5, 18, 36, 51, 58, 206, 326, 350]
