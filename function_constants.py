@@ -116,15 +116,18 @@ def SNR_Ariel(t, R_star, d, T_star, lamb_1 , lamb_2, Rp, T_d):
 
 ############## partial phase curve
 partial_cutoff = 365
-def new_cum_time(df, angle):
+def new_cum_time(df, angle, tier = True):
 
     df['Partial Period [days]'] = df['Planet Period [days]'].apply(lambda x: x if x <=2 else x * angle*2/360)
 
     cum_time = []
     cum = 0
     for index, row in df.iterrows():
-        if row['Planet Radius [Rj]'] < 0.624:
-            cum += (row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400)*1
+        if not tier:
+            if row['Tier2_SNR'] < 7:
+                cum += (row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400)*4
+            else:
+                cum += row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
         else:
             cum += row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
         cum_time.append(cum)
@@ -160,12 +163,15 @@ def cum_df(df):
     df.index = df.index + 1
     return df
 
-def cum_df_4(df):
+def cum_df_4(df, tier = True):
     cum_time = []
     cum = 0
     for index, row in df.iterrows():
-        if row['Planet Radius [Rj]'] < 0.624:
-            cum += (row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400)*1
+        if not tier:
+            if row['Tier2_SNR'] < 7:
+                cum += (row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400) * 4
+            else:
+                cum += row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
         else:
             cum += row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
         cum_time.append(cum)
