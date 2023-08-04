@@ -46,26 +46,39 @@ average_snr = np.round(average_snr, 2)
 
 print(labels)
 
-fig, ax = plt.subplots(figsize=(15, 10))
+mov = [-0.3, -0.1, 0.1, 0.3]
+
+fig, ax = plt.subplots(figsize=(15, 12))
+x = np.arange(len(all_precision[0]))
 for i, row in targets.iterrows():
-    plt.bar(range(len(all_sig[0])), all_sig[i], label = row['Planet Name'] )
+    plt.bar(x + mov[i], all_sig[i], width = 0.2,  alpha = 0.7,
+            linewidth = 3, label = row['Planet Name'] )
 plt.xticks(range(len(noise_wave)), labels[:-1])#, rotation=45, ha='right')
 
 plt.grid(True, alpha=0.35)
 
-plt.title('Ariel Target: S/N vs Wavelength',fontsize=24, fontweight='bold')
-plt.ylabel('Ariel S/N Metric',fontsize=18, fontweight='bold')
-plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
+#plt.title('Ariel Target: S/N vs Wavelength',fontsize=24, fontweight='bold')
+plt.ylabel('Ariel Emission Spectroscopy Metric (AESM)',fontsize=22, fontweight='bold')
+plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=22, fontweight='bold')
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
 #matplotx.line_labels()
 #plt.xscale('log')
 #plt.yscale('log')
-plt.legend(loc ='upper left')
+handles, plabels = plt.gca().get_legend_handles_labels()
+
+#specify order of items in legend
+order = [0, 3, 2, 1]
+
+#add legend to plot
+plt.legend([handles[idx] for idx in order],[plabels[idx] for idx in order], loc ='upper left', fontsize = 20)
+
+
+print(average_snr)
 textstr = f"Average S/N {all_fom} \nAverage Sig/Average Uncer {average_snr}"
 props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
-plt.text(0.02, 0.95, textstr, fontsize=10, transform=plt.gcf().transFigure, bbox=props)
-plt.savefig(save_dir + 'Ariel_SNR_Wavelength.jpg')
+#plt.text(0.02, 0.95, textstr, fontsize=10, transform=plt.gcf().transFigure, bbox=props)
+plt.savefig(save_dir + 'Ariel_SNR_Wavelength.pdf')
 plt.show()
 plt.close()
 

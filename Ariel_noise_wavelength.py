@@ -50,6 +50,8 @@ while current < end:
 print(labels)
 #################################
 
+color = ['blue', 'orange', 'green', 'red']
+
 all_noise = []
 all_precision = []
 
@@ -67,7 +69,7 @@ for i, row in targets.iterrows():
     all_precision.append(precision)
     #print(noise_wave)
     #plt.plot(ariel_wl[:-1]*10**6, noise_wave, label = row['Planet Name'], linewidth = 3)
-    plt.bar(range(len(noise_wave)), noise_wave, align='center',label = row['Planet Name'], alpha = 0.7)
+    plt.bar(range(len(noise_wave)), noise_wave, align='center',label = row['Planet Name'], fill = False)
 
     # Set the x-axis tick labels
     plt.xticks(range(len(noise_wave)), labels[:-1])#, rotation=45, ha='right')
@@ -98,9 +100,13 @@ plt.close()
 
 ############ precision plot
 
+mov = [-0.3, -0.1, 0.1, 0.3]
+
 fig, ax = plt.subplots(figsize=(15, 10))
+x = np.arange(len(all_precision[0]))
 for i, row in targets.iterrows():
-    plt.bar(range(len(all_precision[0])), all_precision[i], alpha = 0.2, label = row['Planet Name'])
+    plt.bar(x + mov[i] ,all_precision[i], width = 0.2,  alpha = 0.7,
+            linewidth = 3, label = row['Planet Name'])
 plt.xticks(range(len(all_precision[0])), labels[:-1])#, rotation=45, ha='right')
 
 
@@ -108,9 +114,9 @@ plt.grid(True, alpha=0.35)
 
 
 #plt.ylim([1e18, 1e23])
-plt.title('Ariel Target: Precision vs Wavelength',fontsize=24, fontweight='bold')
-plt.ylabel('Expected Precision',fontsize=18, fontweight='bold')
-plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
+#plt.title('Ariel Target: Precision vs Wavelength',fontsize=24, fontweight='bold')
+plt.ylabel('Expected Precision',fontsize=22, fontweight='bold')
+plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=22, fontweight='bold')
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
 #matplotx.line_labels()
@@ -123,9 +129,9 @@ handles, plabels = plt.gca().get_legend_handles_labels()
 order = [0, 3, 2, 1]
 
 #add legend to plot
-plt.legend([handles[idx] for idx in order],[plabels[idx] for idx in order], loc ='upper left')
+plt.legend([handles[idx] for idx in order],[plabels[idx] for idx in order], loc ='upper left', fontsize = 20)
 
 
-plt.savefig(save_dir + 'Ariel_Precision_Wavelength.jpg')
+plt.savefig(save_dir + 'Ariel_Precision_Wavelength.pdf')
 plt.show()
 plt.close()

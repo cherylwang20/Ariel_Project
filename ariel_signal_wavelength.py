@@ -60,19 +60,19 @@ for i, row in targets.iterrows():
     all_emiss.append(target_emiss)
 
 plt.grid(True, alpha=0.35)
-plt.text(1.2, 1e-2, 'NIRSpec', fontweight='bold',fontsize=14)
-plt.text(2.5, 1e-2, 'AIRS CH0', fontweight='bold',fontsize=14)
-plt.text(5, 1e-2, 'AIRS CH1', fontweight='bold',fontsize=14)
+plt.text(1.2, 1e-2, 'NIRSpec', fontweight='bold',fontsize=18)
+plt.text(2.5, 1e-2, 'AIRS CH0', fontweight='bold',fontsize=18)
+plt.text(5, 1e-2, 'AIRS CH1', fontweight='bold',fontsize=18)
 ax.axvspan(1.1, 1.95, alpha=0.2, color='green')
 ax.axvspan(1.95, 3.9, alpha=0.2, color='yellow')
 ax.axvspan(3.9, 7.8, alpha=0.2, color='pink')
 
 
-plt.title('Ariel Target: Emission Signal vs Wavelength',fontsize=24, fontweight='bold')
-plt.ylabel('Thermal Contrast',fontsize=18, fontweight='bold')
-plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=18, fontweight='bold')
-plt.xticks(fontsize=15)
-plt.yticks(fontsize=15)
+#plt.title('Ariel Target: Emission Signal vs Wavelength',fontsize=24, fontweight='bold')
+plt.ylabel('Thermal Contrast',fontsize=22, fontweight='bold')
+plt.xlabel(r'$\lambda$ ($\mu$m)',fontsize=22, fontweight='bold')
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
 
 
 #get handles and labels
@@ -82,11 +82,11 @@ handles, plabels = plt.gca().get_legend_handles_labels()
 order = [0, 3, 2, 1]
 
 #add legend to plot
-plt.legend([handles[idx] for idx in order],[plabels[idx] for idx in order])
+plt.legend([handles[idx] for idx in order],[plabels[idx] for idx in order], fontsize = 20)
 
 
 plt.yscale('log')
-plt.savefig(save_dir + 'Ariel_Emission_Wavelength.jpg')
+plt.savefig(save_dir + 'Ariel_Emission_Wavelength.pdf')
 plt.show()
 plt.close()
 

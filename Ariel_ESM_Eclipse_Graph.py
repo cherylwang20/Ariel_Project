@@ -35,8 +35,8 @@ Ariel_giant = ax.scatter(ariel_giant['Tier 3 Eclipses'],ariel_giant["ESM"],
 
 # ax.set_clim(min_, max_)
 clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
-clb.set_label('Planetary Equilibrium Temperature [K]',fontsize=16)
-
+clb.set_label('Planetary Equilibrium Temperature [K]',fontsize=20)
+clb.ax.tick_params(labelsize=17)
 
 
 ############################################################33
@@ -71,12 +71,12 @@ legend_elements = [Line2D([0], [0], marker='*', color='w', label='Terrestrial',
 plt.grid(True, alpha=0.35)
 plt.xlabel("# of Tier 3 Eclipses", fontsize=18, fontweight='bold')
 plt.ylabel("ESM", fontsize=18, fontweight='bold')
-plt.title("Ariel Phase Curve Targets: ESM vs # Eclipse", fontsize=24, fontweight='bold')
+#plt.title("Ariel Phase Curve Targets: ESM vs # Eclipse", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.yscale('log')
 plt.xscale('log')
 # plt.ylim([0,105])
-plt.savefig(save_dir + 'Ariel-Phasecurves-ESM-Eclipse-T.jpg')
+plt.savefig(save_dir + 'Ariel-Phasecurves-ESM-Eclipse-T.pdf')
 
 plt.show()

@@ -123,7 +123,10 @@ def new_cum_time(df, angle):
     cum_time = []
     cum = 0
     for index, row in df.iterrows():
-        cum += row['Partial Period [days]']  + 2 * row['Transit Duration [s]']/ 86400
+        if row['Planet Radius [Rj]'] < 0.624:
+            cum += (row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400)*1
+        else:
+            cum += row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
         cum_time.append(cum)
 
     df['New Cumulative Days'] = cum_time
@@ -149,6 +152,22 @@ def cum_df(df):
     cum = 0
     for index, row in df.iterrows():
         cum += row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
+        cum_time.append(cum)
+
+    df['cumulative days'] = cum_time
+    df.drop(columns=['Unnamed: 0'])
+    df = df.reset_index(drop=True)
+    df.index = df.index + 1
+    return df
+
+def cum_df_4(df):
+    cum_time = []
+    cum = 0
+    for index, row in df.iterrows():
+        if row['Planet Radius [Rj]'] < 0.624:
+            cum += (row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400)*1
+        else:
+            cum += row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
         cum_time.append(cum)
 
     df['cumulative days'] = cum_time

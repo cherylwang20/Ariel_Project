@@ -1,6 +1,6 @@
 from phasecurve_plot_cheryl import *
 
-ariel_cal = pd.read_csv(os.path.join(data_dir, 'SNR_all.csv'))
+ariel_cal = pd.read_csv(os.path.join(data_dir, 'SNR_all_1.csv'))
 
 ariel_cal = ariel_cal.sort_values(by = 'Tier1 Transit S/N',ascending=False)
 
@@ -21,14 +21,15 @@ print(ariel_terrestrial.head())
 
 
 ariel_4cat = pd.concat([ariel_terrestrial.head(num), ariel_subnep.head(num),
-                        ariel_nep.head(num), ariel_giant.head(25)])
+                        ariel_nep.head(num),ariel_giant.head(25) ])
+
+ariel_4cat = cum_df_4(ariel_4cat)
 
 print(ariel_4cat)
 ariel_4cat.to_csv(data_dir + 'selected_target_final.csv')
 
 angle = [45, 90]
 
-ariel_4cat = cum_df(ariel_4cat)
 
 fig, ax = plt.subplots(figsize=(15, 10))
 
@@ -47,16 +48,16 @@ print(ariel_4cat['cumulative days'].max())
 plt.grid(True, alpha=0.35)
 plt.xlabel("# of planets", fontsize=18, fontweight='bold')
 plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
-plt.title("Ariel Cumulative Observational Time", fontsize=24, fontweight='bold')
+#plt.title("Ariel Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right", fontsize = 15, title_fontsize= 15)
 #plt.yscale('log')
 #plt.xscale('log')
 # plt.ylim([0,105])
-plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_allcat.jpg')
+plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_allcat.pdf')
 
-#plt.show()
+plt.show()
 plt.close()
 
 
@@ -91,7 +92,8 @@ Ariel_giant = ax.scatter(ariel_giant["Planet Period [days]"], ariel_giant['pl_g'
 
 clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
 #clb.ax.set_title('Planetary Equilibrium Temperature [K]', fontweight='bold')
-clb.set_label('Tier 1 Figure of Merit (FoM)',fontsize=16)
+clb.set_label('Tier 1 Figure of Merit (FoM)',fontsize=18)
+clb.ax.tick_params(labelsize=17)
 ################################################################################3
 
 
@@ -100,16 +102,16 @@ clb.set_label('Tier 1 Figure of Merit (FoM)',fontsize=16)
 #           title="$\\bf{Eccentric \ Planets}$", title_fontsize=15, prop={'size': 15}, fancybox=True)
 
 plt.grid(True, alpha=0.35)
-plt.ylabel(r"Planet Gravity [$m/s^2$]", fontsize=18, fontweight = 'bold')
-plt.xlabel("Planet Period [days]", fontsize=18 , fontweight = 'bold')
-plt.title("Planets Observed with Phase Curves", fontsize=24 , fontweight = 'bold')
+plt.ylabel(r"Planet Gravity [$m/s^2$]", fontsize=24, fontweight = 'bold')
+plt.xlabel("Planet Period [days]", fontsize=24 , fontweight = 'bold')
+#plt.title("Planets Observed with Phase Curves", fontsize=24 , fontweight = 'bold')
 plt.yscale('log')
 plt.xscale('log')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-plt.savefig(save_dir + 'JWST-Ariel-pg_porb_fom.jpg')
+plt.savefig(save_dir + 'JWST-Ariel-pg_porb_fom.pdf')
 
-#plt.show()
+plt.show()
 plt.close()
 
 ###############################################
@@ -131,7 +133,8 @@ Ariel_plot = ax.scatter(ariel_4cat["Planet Radius [Rj]"], ariel_4cat['Planet Per
 
 clb = fig.colorbar(JWST_plot, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
 #clb.ax.set_title('Planetary Equilibrium Temperature [K]', fontweight='bold')
-clb.set_label('Planetary Equilibrium Temperature [K]',fontsize=16)
+clb.set_label('Planetary Equilibrium Temperature [K]',fontsize=18)
+clb.ax.tick_params(labelsize=17)
 
 ax.axvline(0.160586, color='g', linestyle='dashed', linewidth=1, alpha=1)
 ax.axvline(0.312251, color='g', linestyle='dashed', linewidth=1, alpha=1)
@@ -155,14 +158,14 @@ ax = plt.gca().add_artist(first_legend)
 plt.grid(True, alpha=0.35)
 plt.xlabel('Planet Radius [R$_J$]', fontsize=24, fontweight='bold')
 plt.ylabel("Planet Period [days]", fontsize=28, fontweight='bold')
-plt.title("Phase Curves Targets", fontsize=28, fontweight='bold')
+#plt.title("Phase Curves Targets", fontsize=28, fontweight='bold')
 plt.xticks(fontsize=20)
 plt.yticks(fontsize=20)
 plt.yscale('log')
 # plt.ylim([0,105])
 
-plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-allcat.jpg')
-#plt.show()
+plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-allcat.pdf')
+plt.show()
 
 plt.close()
 
@@ -215,7 +218,7 @@ ax.axvline(3, color='red', linestyle='dashed', linewidth=2, alpha=0.75, zorder =
 plt.grid(True, alpha=0.35)
 plt.xlabel("Planet Period [days]", fontsize=18, fontweight='bold')
 plt.ylabel("Eccentricity", fontsize=18, fontweight='bold')
-plt.title("Ariel Phase Curve Targets: Period vs Eccentricity", fontsize=24, fontweight='bold')
+#plt.title("Ariel Phase Curve Targets: Period vs Eccentricity", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.gca().set_ylim(top=1)
@@ -223,9 +226,9 @@ plt.gca().set_ylim(top=1)
 plt.xscale('log')
 #plt.ylim([0,1])
 #plt.xlim([1,100])
-plt.savefig(save_dir+'Ariel-Phasecurves-cat4-Ecc-Period.jpg')
+plt.savefig(save_dir+'Ariel-Phasecurves-cat4-Ecc-Period.pdf')
 
-#plt.show()
+plt.show()
 plt.close()
 
 

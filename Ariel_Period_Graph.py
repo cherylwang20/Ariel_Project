@@ -33,8 +33,8 @@ Ariel_giant = ax.scatter(ariel_giant["Planet Period [days]"], ariel_giant["Plane
 
 # ax.set_clim(min_, max_)
 clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
-clb.ax.set_title('$\\bf{ESM} $')
-
+clb.ax.set_title('$\\bf{ESM} $', fontsize = 24)
+clb.ax.tick_params(labelsize=17)
 
 
 
@@ -70,12 +70,12 @@ legend_elements = [Line2D([0], [0], marker='*', color='w', label='Terrestrial',
 plt.grid(True, alpha=0.35)
 plt.ylabel("Planetary Equilibrium Temperature [K]", fontsize=18, fontweight='bold')
 plt.xlabel("Planet Period [days]", fontsize=18, fontweight='bold')
-plt.title("Ariel Phase Curve Targets: Temp vs Period", fontsize=24, fontweight='bold')
+#plt.title("Ariel Phase Curve Targets: Temp vs Period", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.xscale('log')
 #plt.xscale('log')
 # plt.ylim([0,105])
-plt.savefig(save_dir + 'Ariel-Phasecurves-Temp-Period-ESM.jpg')
+plt.savefig(save_dir + 'Ariel-Phasecurves-Temp-Period-ESM.pdf')
 
 plt.show()

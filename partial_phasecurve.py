@@ -31,16 +31,16 @@ Ariel_eclipse = ax.plot(ariel_sort_eclipse_num_2.index.tolist(), ariel_sort_ecli
 
 
 plt.grid(True, alpha=0.35)
-plt.xlabel("# of planets (Tier 3 Eclipse Ranked)", fontsize=18, fontweight='bold')
-plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
-plt.title("Ariel Partial Phase Curve (> 48hr) Cumulative Observational Time", fontsize=24, fontweight='bold')
+plt.xlabel("# of planets (Tier 3 Eclipse Ranked)", fontsize=20, fontweight='bold')
+plt.ylabel("Cumulative Observational Time [days]", fontsize=20, fontweight='bold')
+#plt.title("Ariel Partial Phase Curve (> 48hr) Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right", fontsize = 15, title_fontsize= 15)
+plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right", fontsize = 18, title_fontsize= 18)
 #plt.yscale('log')
 #plt.xscale('log')
 # plt.ylim([0,105])
-plt.savefig(save_dir+'Ariel-Phasecurves-Cul-Eclipse.jpg')
+plt.savefig(save_dir+'Ariel-Phasecurves-Cul-Eclipse.pdf')
 
 plt.show()
 plt.close()
