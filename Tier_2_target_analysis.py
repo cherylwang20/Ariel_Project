@@ -235,7 +235,7 @@ plt.show()
 
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
-min_, max_ = tier2_SNR_sort['Planet Temperature [K]'].min(), tier2_SNR_sort['Planet Temperature [K]'].max()
+min_, max_ = target_45['Planet Temperature [K]'].min(), target_45['Planet Temperature [K]'].max()
 # cmap='viridis_r'
 cmap = 'RdYlBu_r'
 
@@ -244,8 +244,8 @@ JWST_plot = ax.scatter(pc_telescope.query("JWST == 'Yes'")['pl_orbper'],pc_teles
                        cmap=cmap,
                        label='JWST', zorder=1, vmin=min_, vmax=max_)
 
-Ariel_plot = ax.scatter( tier2_SNR_sort['Planet Period [days]'],tier2_SNR_sort["Planet Radius [Rj]"],
-                        alpha=1, s = 200, c = tier2_SNR_sort["Planet Temperature [K]"], marker="*",
+Ariel_plot = ax.scatter(target_45['Planet Period [days]'],target_45["Planet Radius [Rj]"],
+                        alpha=1, s = 200, c = target_45["Planet Temperature [K]"], marker="*",
                         edgecolor='black', cmap=cmap,
                         linewidths=1, label = "Ariel", zorder = 2, vmin=min_, vmax=max_)
 
@@ -281,7 +281,7 @@ plt.xticks(fontsize=20)
 plt.yticks(fontsize=20)
 plt.xscale('log')
 # plt.ylim([0,105])
-plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2.pdf')
+plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2-365.pdf')
 
 plt.show()
 plt.close()

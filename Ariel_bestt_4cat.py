@@ -121,12 +121,12 @@ min_, max_ = ariel_4cat['Planet Temperature [K]'].min(), ariel_4cat['Planet Temp
 # cmap='viridis_r'
 cmap = 'RdYlBu_r'
 
-JWST_plot = ax.scatter(pc_telescope.query("JWST == 'Yes'")["pl_radj"], pc_telescope.query("JWST == 'Yes'")['pl_orbper'],
+JWST_plot = ax.scatter( pc_telescope.query("JWST == 'Yes'")['pl_orbper'],pc_telescope.query("JWST == 'Yes'")["pl_radj"],
                        alpha=1, s=850, c=pc_telescope.query("JWST == 'Yes'")["pl_eqt"], marker='h', edgecolor='black',
                        cmap=cmap,
                        label='JWST', zorder=1, vmin=min_, vmax=max_)
 
-Ariel_plot = ax.scatter(ariel_4cat["Planet Radius [Rj]"], ariel_4cat['Planet Period [days]'],
+Ariel_plot = ax.scatter(ariel_4cat['Planet Period [days]'],ariel_4cat["Planet Radius [Rj]"],
                         alpha=1, s = 200, c = ariel_4cat["Planet Temperature [K]"], marker="*",
                         edgecolor='black', cmap=cmap,
                         linewidths=1, label = "Ariel", zorder = 2, vmin=min_, vmax=max_)
@@ -136,9 +136,9 @@ clb = fig.colorbar(JWST_plot, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,f
 clb.set_label('Planetary Equilibrium Temperature [K]',fontsize=18)
 clb.ax.tick_params(labelsize=17)
 
-ax.axvline(0.160586, color='g', linestyle='dashed', linewidth=1, alpha=1)
-ax.axvline(0.312251, color='g', linestyle='dashed', linewidth=1, alpha=1)
-ax.axvline(0.624503, color='g', linestyle='dashed', linewidth=1, alpha=1)
+ax.axhline(0.160586, color='g', linestyle='dashed', linewidth=1, alpha=1)
+ax.axhline(0.312251, color='g', linestyle='dashed', linewidth=1, alpha=1)
+ax.axhline(0.624503, color='g', linestyle='dashed', linewidth=1, alpha=1)
 
 
 from matplotlib.lines import Line2D
@@ -156,12 +156,12 @@ ax = plt.gca().add_artist(first_legend)
 
 
 plt.grid(True, alpha=0.35)
-plt.xlabel('Planet Radius [R$_J$]', fontsize=24, fontweight='bold')
-plt.ylabel("Planet Period [days]", fontsize=28, fontweight='bold')
+plt.ylabel('Planet Radius [R$_J$]', fontsize=24, fontweight='bold')
+plt.xlabel("Planet Period [days]", fontsize=28, fontweight='bold')
 #plt.title("Phase Curves Targets", fontsize=28, fontweight='bold')
 plt.xticks(fontsize=20)
 plt.yticks(fontsize=20)
-plt.yscale('log')
+plt.xscale('log')
 # plt.ylim([0,105])
 
 plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-allcat.pdf')
