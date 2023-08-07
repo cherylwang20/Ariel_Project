@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import os
 from scipy.integrate import quad
 
@@ -123,9 +124,11 @@ def new_cum_time(df, angle, tier = True):
     cum_time = []
     cum = 0
     for index, row in df.iterrows():
+        N = 1
         if not tier:
             if row['Tier2_SNR'] < 7:
-                cum += (row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400)*4
+                N = math.ceil((7 / row['Tier2_SNR'])**2)
+                cum += (row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400) * N
             else:
                 cum += row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
         else:
@@ -167,16 +170,47 @@ def cum_df_4(df, tier = True):
     cum_time = []
     cum = 0
     for index, row in df.iterrows():
+        N = 1
         if not tier:
             if row['Tier2_SNR'] < 7:
-                cum += (row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400) * 4
+                N = math.ceil(7 / row['Tier2_SNR']) ** 2
+                cum += (row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400) * N
             else:
                 cum += row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
         else:
             cum += row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
+        print(N)
         cum_time.append(cum)
 
     df['cumulative days'] = cum_time
+    df.drop(columns=['Unnamed: 0'])
+    df = df.reset_index(drop=True)
+    df.index = df.index + 1
+    return df
+
+def cum_df_transit(df):
+    cum_time = []
+    cum = 0
+    for index, row in df.iterrows():
+        cum += 3 * row['Transit Duration [s]'] / 86400
+        cum_time.append(cum)
+
+    df['cumulative transit [days]'] = cum_time
+    df.drop(columns=['Unnamed: 0'])
+    df = df.reset_index(drop=True)
+    df.index = df.index + 1
+    return df
+
+def cum_df_transit_N(df):
+    cum_time = []
+    cum = 0
+    for index, row in df.iterrows():
+        N = 1
+        if row['Tier1 Transit S/N'] < 7:
+            N = math.ceil((7/row['Tier1 Transit S/N'])**2)
+        cum += N * 3 * row['Transit Duration [s]'] / 86400
+        cum_time.append(cum)
+    df['N cumulative transit [days]'] = cum_time
     df.drop(columns=['Unnamed: 0'])
     df = df.reset_index(drop=True)
     df.index = df.index + 1

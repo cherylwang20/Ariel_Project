@@ -24,16 +24,9 @@ print(f'Total Tier 2 transit time is {cum} days.')
 
 
 tier2_SNR_sort = Tier_2_emission.sort_values(by = 'Tier2_SNR',ascending=False)
-cum_time = []
-cum = 0
-for index, row in tier2_SNR_sort.iterrows():
-    cum += row['Planet Period [days]'] + 2*row['Transit Duration [s]']/ 86400
-    cum_time.append(cum)
 
-tier2_SNR_sort['cumulative days'] = cum_time
-tier2_SNR_sort.drop(columns=['Unnamed: 0'])
-tier2_SNR_sort = tier2_SNR_sort.reset_index(drop=True)
-tier2_SNR_sort.index = tier2_SNR_sort.index + 1
+tier2_SNR_sort = cum_df_4(tier2_SNR_sort)
+
 #print(tier2_SNR_sort)
 
 ##### we draw the cumulative observing time
@@ -148,10 +141,6 @@ clb.set_label('Tier 2 Emission Figure of Merit (FoM)',fontsize=18)
 clb.ax.tick_params(labelsize=17)
 ################################################################################3
 
-
-# Create another legend for the second line.
-#plt.legend(handles=[eccen_plot], loc='lower right',
-#           title="$\\bf{Eccentric \ Planets}$", title_fontsize=15, prop={'size': 15}, fancybox=True)
 
 plt.grid(True, alpha=0.35)
 plt.ylabel(r"Planet Gravity [$m/s^2$]", fontsize=24, fontweight = 'bold')
