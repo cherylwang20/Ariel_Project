@@ -173,12 +173,8 @@ def cum_df_4(df, tier = True):
         N = 1
         if not tier:
             if row['Tier2_SNR'] < 7:
-                N = math.ceil(7 / row['Tier2_SNR']) ** 2
-                cum += (row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400) * N
-            else:
-                cum += row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
-        else:
-            cum += row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
+                N = math.ceil((7 / row['Tier2_SNR']) ** 2)
+        cum += (row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400) * N
         print(N)
         cum_time.append(cum)
 
@@ -201,16 +197,67 @@ def cum_df_transit(df):
     df.index = df.index + 1
     return df
 
-def cum_df_transit_N(df):
+def cum_df_transit_N(df, Tier = 1):
     cum_time = []
     cum = 0
     for index, row in df.iterrows():
         N = 1
-        if row['Tier1 Transit S/N'] < 7:
-            N = math.ceil((7/row['Tier1 Transit S/N'])**2)
+        if Tier == 2:
+            if row['Tier2 Transit S/N'] < 7:
+                N = math.ceil((7 / row['Tier2 Transit S/N']) ** 2)
+        elif Tier == 3:
+            if row['Tier3 Transit S/N'] < 7:
+                N = math.ceil((7 / row['Tier3 Transit S/N']) ** 2)
+        elif Tier == 1:
+            if row['Tier1 Transit S/N'] < 7:
+                N = math.ceil((7/row['Tier1 Transit S/N'])**2)
         cum += N * 3 * row['Transit Duration [s]'] / 86400
         cum_time.append(cum)
     df['N cumulative transit [days]'] = cum_time
+    df.drop(columns=['Unnamed: 0'])
+    df = df.reset_index(drop=True)
+    df.index = df.index + 1
+    return df
+
+def cum_df_emission_N(df, Tier = 1):
+    cum_time = []
+    cum = 0
+    for index, row in df.iterrows():
+        N = 1
+        if Tier == 2:
+            if row['Tier2_SNR'] < 7:
+                N = math.ceil((7 / row['Tier2_SNR']) ** 2)
+        elif Tier == 3:
+            if row['Tier3_SNR'] < 7:
+                N = math.ceil((7 / row['Tier3_SNR']) ** 2)
+        elif Tier == 1:
+            if row['Tier1_SNR'] < 7:
+                N = math.ceil((7/row['Tier1_SNR'])**2)
+        cum += N * 3 * row['Transit Duration [s]'] / 86400
+        cum_time.append(cum)
+    df['N cumulative emission [days]'] = cum_time
+    df.drop(columns=['Unnamed: 0'])
+    df = df.reset_index(drop=True)
+    df.index = df.index + 1
+    return df
+
+def cum_df_pc_N(df, Tier = 1):
+    cum_time = []
+    cum = 0
+    for index, row in df.iterrows():
+        N = 1
+        if Tier == 2:
+            if row['Tier2_SNR'] < 7:
+                N = math.ceil((7 / row['Tier2_SNR']) ** 2)
+        elif Tier == 3:
+            if row['Tier3_SNR'] < 7:
+                N = math.ceil((7 / row['Tier3_SNR']) ** 2)
+        elif Tier == 1:
+            if row['Tier1_SNR'] < 7:
+                N = math.ceil((7/row['Tier1_SNR'])**2)
+        cum += (row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400)*N
+        cum_time.append(cum)
+    df['N cumulative pc [days]'] = cum_time
     df.drop(columns=['Unnamed: 0'])
     df = df.reset_index(drop=True)
     df.index = df.index + 1

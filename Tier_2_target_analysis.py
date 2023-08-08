@@ -4,6 +4,8 @@ from phasecurve_plot_cheryl import *
 
 Tier_2_target= pd.read_csv(os.path.join(data_dir, 'SNR_all_2.csv'))
 
+Tier_2_target = Tier_2_target.sort_values(by = 'Tier2_SNR',ascending=False)
+
 Tier_2_emission = Tier_2_target[Tier_2_target['Tier2_SNR'] > 7]
 Tier_2_emission.to_csv(data_dir + 'Tier_2_emission.csv')
 

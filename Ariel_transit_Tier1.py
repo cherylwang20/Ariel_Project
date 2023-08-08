@@ -14,7 +14,7 @@ ariel_target = cum_df_transit_N(ariel_target)
 
 ariel_transit_365 = ariel_target[ariel_target['N cumulative transit [days]'] < 1095]
 print(len(ariel_transit_365))
-ariel_transit_365.to_csv(data_dir + 'ariel_transit_in365.csv')
+ariel_transit_365.to_csv(data_dir + 'ariel_transit_Tier1_365.csv')
 
 #######################################################
 fig, ax = plt.subplots(figsize=(15, 10))

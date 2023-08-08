@@ -8,7 +8,7 @@ from phasecurve_plot_cheryl import *
 SNR_thres = 7
 start, end = 1.10, 7.8
 
-Tier = 2
+Tier = 3
 if Tier == 1:
     N_lambda = 5
 elif Tier == 2:
