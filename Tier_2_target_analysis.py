@@ -48,7 +48,7 @@ Ariel_eclipse = ax.plot(tier2_SNR_sort.index.tolist(), tier2_SNR_sort['cumulativ
                         color = 'black')
 
 plt.grid(True, alpha=0.35)
-plt.xlabel("# of planets (Tier 3 Eclipse Ranked)", fontsize=18, fontweight='bold')
+plt.xlabel("# of planets (Tier 2 AESM Ranked)", fontsize=18, fontweight='bold')
 plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
 #plt.title("Ariel Tier 2 Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
@@ -63,7 +63,7 @@ plt.show()
 plt.close()
 
 ###################################### we look at the distribution of those targets
-
+'''
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
 min_, max_ = tier2_SNR_sort['Planet Temperature [K]'].min(), tier2_SNR_sort['Planet Temperature [K]'].max()
@@ -116,7 +116,7 @@ plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2.pdf')
 
 plt.show()
 plt.close()
-
+'''
 ############ calculate how many of those overlap with the transit targets.
 
 ####################################################3
@@ -168,6 +168,13 @@ for i in theta:
     ax.plot(curve_df.index.tolist(), curve_df['New Cumulative Days'].tolist(),
                             alpha=1, linewidth=3, label = f'±{i}°, full = {fc}, partial = {pc}',
                             linestyle='dashdot')
+    if i == 45:
+        curve_df.to_csv(data_dir + 'ariel_rfm_45.csv')
+
+    print(i, curve_df)
+    print(i, 'average period', curve_df['Partial Period [days]'].mean() + 2*curve_df['Transit Duration [s]'].mean() / 86400)
+    print(i, 'average N', curve_df['N obs'].mean())
+
 tier2_SNR_sort = cum_df_4(Tier_2_target, False)
 tier2_SNR_sort = tier2_SNR_sort[tier2_SNR_sort['cumulative days'] < 365]
 print(len(tier2_SNR_sort))
@@ -176,7 +183,7 @@ Ariel_eclipse = ax.plot(tier2_SNR_sort.index.tolist(), tier2_SNR_sort['cumulativ
                         color = 'black')
 
 plt.grid(True, alpha=0.35)
-plt.xlabel("# of planets (AESM Eclipse Ranked)", fontsize=18, fontweight='bold')
+plt.xlabel("# of planets (Tier 2 AESM Ranked)", fontsize=18, fontweight='bold')
 plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
 #plt.title("Ariel Tier 2 Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
@@ -197,7 +204,8 @@ target_45 = new_cum_time(Tier_2_target, 45, False)[0]
 print(target_45['Tier2_SNR'].min())
 
 period = target_45['Planet Period [days]']
-transit = target_45['Transit Duration [s]']
+#transit = target_45['Transit Duration [s]']
+AESM = target_45['Tier2_SNR']
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey= True, figsize=(18, 10))
@@ -209,13 +217,13 @@ ax1.set_xlim(xmin=0, xmax = 26)
 ax1.hist(period, bins= 'auto', rwidth= 0.85, color = 'green')
 
 
-plt.xlabel("Transit Duration [hrs]", fontsize=20, fontweight='bold')
+plt.xlabel("AESM", fontsize=20, fontweight='bold')
 plt.ylabel("# of planets", fontsize=20, fontweight='bold')
 #plt.title("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
 
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-ax2.hist(transit*3/3600, bins = 'auto', rwidth= 0.85, color= 'red')
+ax2.hist(AESM, bins = 'auto', rwidth= 0.85, color= 'red')
 #fig.suptitle("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
 
 plt.savefig(save_dir + 'Ariel_histogram_365d.pdf')

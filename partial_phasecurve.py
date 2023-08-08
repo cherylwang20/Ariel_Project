@@ -46,18 +46,22 @@ plt.show()
 plt.close()
 
 
-############this is ranked by ASM
+############this is ranked by AESM
+
+ariel_target = pd.read_csv(os.path.join(data_dir, 'SNR_all_tier.csv'))
+ariel_target = ariel_target.sort_values(by = 'Tier2_SNR',ascending=False)
+
 
 fig, ax = plt.subplots(figsize=(15, 10))
 
 for i in angle:
-    curve_df, fc, pc = new_cum_time(ariel_sort_ASM,i)
+    curve_df, fc, pc = new_cum_time(ariel_target,i)
     ax.plot(curve_df.index.tolist(), curve_df['New Cumulative Days'].tolist(),
                             alpha=1, linewidth=3, label = f'±{i}°, full = {fc}, partial = {pc}',
                             linestyle='dashdot')
 
-
-ariel_sort_ASM_2 = ariel_sort_ASM[ariel_sort_ASM['cumulative days'] < partial_cutoff]
+ariel_target = cum_df(ariel_target)
+ariel_sort_ASM_2 = ariel_target[ariel_target['cumulative days'] < partial_cutoff]
 
 Ariel_ASM = ax.plot(ariel_sort_ASM_2.index.tolist(), ariel_sort_ASM_2['cumulative days'].tolist(),
                         alpha = 1, label = "Full Phase Curve", linewidth= 3,
@@ -68,16 +72,16 @@ Ariel_ASM = ax.plot(ariel_sort_ASM_2.index.tolist(), ariel_sort_ASM_2['cumulativ
 
 
 plt.grid(True, alpha=0.35)
-plt.xlabel("# of planets (ASM Ranked)", fontsize=18, fontweight='bold')
+plt.xlabel("# of planets (AESM Ranked)", fontsize=18, fontweight='bold')
 plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
-plt.title("Ariel Partial Phase Curve (> 48hr) Cumulative Observational Time", fontsize=24, fontweight='bold')
+#plt.title("Ariel Partial Phase Curve (> 48hr) Cumulative Observational Time", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right", fontsize = 15, title_fontsize= 15)
 #plt.yscale('log')
 #plt.xscale('log')
 # plt.ylim([0,105])
-plt.savefig(save_dir+'Ariel-Phasecurves-Cul-ASM-partial.jpg')
+plt.savefig(save_dir+'Ariel-Phasecurves-Cul-AESM-partial.pdf')
 
 plt.show()
 plt.close()

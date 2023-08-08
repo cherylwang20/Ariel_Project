@@ -1,10 +1,8 @@
 from phasecurve_plot_cheryl import *
 
-ariel_cal = pd.read_csv(os.path.join(data_dir, 'SNR_all_1.csv'))
+ariel_cal = pd.read_csv(os.path.join(data_dir, 'SNR_all_tier.csv'))
 
 ariel_cal = ariel_cal.sort_values(by = 'Tier1 Transit S/N',ascending=False)
-
-print(ariel_cal.head())
 num = 20
 
 
@@ -17,7 +15,6 @@ ariel_nep = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] <= 0.624503)
 ariel_cal = ariel_cal.sort_values(by = 'Tier1_SNR',ascending=False)
 ariel_giant = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] >= 0.624503)  & (ariel_cal['Tier1_SNR'] >= 7)].head(25)
 
-print(ariel_terrestrial.head())
 
 
 ariel_4cat = pd.concat([ariel_terrestrial.head(num), ariel_subnep.head(num),
@@ -25,7 +22,7 @@ ariel_4cat = pd.concat([ariel_terrestrial.head(num), ariel_subnep.head(num),
 
 ariel_4cat = cum_df_4(ariel_4cat)
 
-print(ariel_4cat)
+
 ariel_4cat.to_csv(data_dir + 'selected_target_final.csv')
 
 angle = [45, 90]
@@ -56,6 +53,44 @@ plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right"
 #plt.xscale('log')
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_allcat.pdf')
+
+plt.show()
+plt.close()
+#####################################
+ariel_4cat_N = ariel_4cat.sort_values(by = 'Tier2_SNR',ascending=False)
+ariel_4cat = ariel_4cat.sort_values(by = 'Tier2_SNR',ascending=False)
+ariel_4cat_N = cum_df_4(ariel_4cat_N, tier = False)
+
+fig, ax = plt.subplots(figsize=(15, 10))
+
+for i in angle:
+    curve_df, fc, pc = new_cum_time(ariel_4cat, i, False)
+    ax.plot(curve_df.index.tolist(), curve_df['New Cumulative Days'].tolist(),
+                            alpha=1, linewidth=3, label = f'±{i}°, full = {fc}, partial = {pc}',
+                            linestyle='dashdot')
+    if i == 45:
+        curve_df.to_csv(data_dir + 'ariel_45.csv')
+
+    print('45 degree',curve_df)
+    print(i, 'average period', curve_df['Partial Period [days]'].mean() + 2*curve_df['Transit Duration [s]'].mean() / 86400)
+    print(i, 'average N', curve_df['N obs'].mean())
+
+Ariel_eclipse = ax.plot(ariel_4cat_N.index.tolist(), ariel_4cat_N['cumulative days'].tolist(),
+                        alpha = 1, label = "Full Phase Curve", linewidth= 3,
+                       color = 'black')
+
+
+plt.grid(True, alpha=0.35)
+plt.xlabel("# of planets", fontsize=18, fontweight='bold')
+plt.ylabel("Cumulative Observational Time [days]", fontsize=18, fontweight='bold')
+#plt.title("Ariel Cumulative Observational Time", fontsize=24, fontweight='bold')
+plt.xticks(fontsize=17)
+plt.yticks(fontsize=17)
+plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right", fontsize = 15, title_fontsize= 15)
+plt.yscale('log')
+#plt.xscale('log')
+# plt.ylim([0,105])
+plt.savefig(save_dir+'Ariel-Phasecurves-Tier2-N_allcat.pdf')
 
 plt.show()
 plt.close()
@@ -114,6 +149,7 @@ plt.savefig(save_dir + 'JWST-Ariel-pg_porb_fom.pdf')
 plt.show()
 plt.close()
 
+'''
 ###############################################
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
@@ -169,7 +205,7 @@ plt.show()
 
 plt.close()
 
-
+'''
 ############## we look at the figure for eccentricity
 
 fig, ax = plt.subplots(figsize=(15, 10))

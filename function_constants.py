@@ -123,18 +123,16 @@ def new_cum_time(df, angle, tier = True):
 
     cum_time = []
     cum = 0
+    N_obs = []
     for index, row in df.iterrows():
         N = 1
         if not tier:
             if row['Tier2_SNR'] < 7:
                 N = math.ceil((7 / row['Tier2_SNR'])**2)
-                cum += (row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400) * N
-            else:
-                cum += row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
-        else:
-            cum += row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400
+        cum += (row['Partial Period [days]'] + 2 * row['Transit Duration [s]'] / 86400) * N
+        N_obs.append(N)
         cum_time.append(cum)
-
+    df['N obs'] = N_obs
     df['New Cumulative Days'] = cum_time
     df = df[df['New Cumulative Days'] < partial_cutoff]
     df.drop(columns=['Unnamed: 0'])
@@ -174,8 +172,8 @@ def cum_df_4(df, tier = True):
         if not tier:
             if row['Tier2_SNR'] < 7:
                 N = math.ceil((7 / row['Tier2_SNR']) ** 2)
+
         cum += (row['Planet Period [days]'] + 2 * row['Transit Duration [s]'] / 86400) * N
-        print(N)
         cum_time.append(cum)
 
     df['cumulative days'] = cum_time
