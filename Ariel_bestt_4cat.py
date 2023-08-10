@@ -2,23 +2,24 @@ from phasecurve_plot_cheryl import *
 
 ariel_cal = pd.read_csv(os.path.join(data_dir, 'SNR_all_tier.csv'))
 
-ariel_cal = ariel_cal.sort_values(by = 'Tier1 Transit S/N',ascending=False)
-num = 20
-
-
-ariel_terrestrial = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] <= 0.16058) & (ariel_cal['Tier1 Transit S/N'] >= 10)]
-ariel_subnep = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] >= 0.16058)
-                & (ariel_cal['Planet Radius [Rj]'] <= 0.312251)  & (ariel_cal['Tier1 Transit S/N'] >= 10)].head(num)
-ariel_nep = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] <= 0.624503)
-                & (ariel_cal['Planet Radius [Rj]'] >= 0.312251)  & (ariel_cal['Tier1 Transit S/N'] >= 10)].head(num)
-
 ariel_cal = ariel_cal.sort_values(by = 'Tier1_SNR',ascending=False)
-ariel_giant = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] >= 0.624503)  & (ariel_cal['Tier1_SNR'] >= 7)].head(25)
+num = 6
+
+
+ariel_terrestrial = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] <= 0.16058)].head(num)
+ariel_subnep = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] >= 0.16058)
+                & (ariel_cal['Planet Radius [Rj]'] <= 0.312251)].head(num)
+ariel_nep = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] <= 0.624503)
+                & (ariel_cal['Planet Radius [Rj]'] >= 0.312251) ].head(num)
+
+ariel_giant = ariel_cal.loc[(ariel_cal['Planet Radius [Rj]'] >= 0.624503)  & (ariel_cal['Tier2_SNR'] >= 7)].head(25)
 
 
 
 ariel_4cat = pd.concat([ariel_terrestrial.head(num), ariel_subnep.head(num),
                         ariel_nep.head(num),ariel_giant.head(25) ])
+
+print(len(ariel_4cat))
 
 ariel_4cat = cum_df_4(ariel_4cat)
 
@@ -75,10 +76,12 @@ for i in angle:
     print(i, 'average period', curve_df['Partial Period [days]'].mean() + 2*curve_df['Transit Duration [s]'].mean() / 86400)
     print(i, 'average N', curve_df['N obs'].mean())
 
+plt.axhline(365, color='black', linestyle='dashed', linewidth=2, alpha=1)
+
 Ariel_eclipse = ax.plot(ariel_4cat_N.index.tolist(), ariel_4cat_N['cumulative days'].tolist(),
                         alpha = 1, label = "Full Phase Curve", linewidth= 3,
                        color = 'black')
-
+print(ariel_4cat_N['cumulative days'].max())
 
 plt.grid(True, alpha=0.35)
 plt.xlabel("# of planets", fontsize=18, fontweight='bold')
@@ -100,34 +103,34 @@ plt.close()
 
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
-min_, max_ = ariel_4cat['Tier1_SNR'].min(), ariel_4cat['Tier1_SNR'].max()
+min_, max_ = ariel_4cat['Tier2_SNR'].min(), ariel_4cat['Tier2_SNR'].max()
 
 print(min_)
 # cmap='viridis_r'
 cmap = 'Spectral_r'
 
 Ariel_terr = ax.scatter(ariel_terrestrial["Planet Period [days]"], ariel_terrestrial['pl_g'],
-                        alpha=0.7, s = 50, c = ariel_terrestrial['Tier1_SNR'], cmap = cmap,
+                        alpha=0.7, s = 50, c = ariel_terrestrial['Tier2_SNR'], cmap = cmap,
                         marker="o", linewidths = 1.5, edgecolor = 'black',
                          label = "Ariel", zorder = 1, vmin=min_, vmax=max_)
 
 Ariel_subnep = ax.scatter(ariel_subnep["Planet Period [days]"], ariel_subnep['pl_g'],
-                        alpha=0.7, s = 150, c = ariel_subnep['Tier1_SNR'], cmap = cmap,
+                        alpha=0.7, s = 150, c = ariel_subnep['Tier2_SNR'], cmap = cmap,
                         marker="o", linewidths = 1.5, edgecolor = 'black',
                          label = "Ariel", zorder = 1, vmin=min_, vmax=max_)
 Ariel_nep = ax.scatter(ariel_nep["Planet Period [days]"], ariel_nep['pl_g'],
-                        alpha=0.7, s = 450, c = ariel_nep['Tier1_SNR'], cmap = cmap,
+                        alpha=0.7, s = 450, c = ariel_nep['Tier2_SNR'], cmap = cmap,
                         marker="o", linewidths = 1.5, edgecolor = 'black',
                          label = "Ariel", zorder = 1, vmin=min_, vmax=max_)
 Ariel_giant = ax.scatter(ariel_giant["Planet Period [days]"], ariel_giant['pl_g'],
-                        alpha=0.7, s = 700, c = ariel_giant['Tier1_SNR'], cmap = cmap,
+                        alpha=0.7, s = 700, c = ariel_giant['Tier2_SNR'], cmap = cmap,
                         marker="o", linewidths = 1.5, edgecolor = 'black',
                          label = "Ariel", zorder = 1, vmin=min_, vmax=max_)
 
 
 clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
 #clb.ax.set_title('Planetary Equilibrium Temperature [K]', fontweight='bold')
-clb.set_label('Tier 1 Figure of Merit (FoM)',fontsize=18)
+clb.set_label('Tier 2 AESM',fontsize=18)
 clb.ax.tick_params(labelsize=17)
 ################################################################################3
 
@@ -149,7 +152,7 @@ plt.savefig(save_dir + 'JWST-Ariel-pg_porb_fom.pdf')
 plt.show()
 plt.close()
 
-'''
+
 ###############################################
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
@@ -205,7 +208,7 @@ plt.show()
 
 plt.close()
 
-'''
+
 ############## we look at the figure for eccentricity
 
 fig, ax = plt.subplots(figsize=(15, 10))

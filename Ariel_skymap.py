@@ -1,6 +1,5 @@
 # Import modules
 import datetime
-import spiceypy
 import numpy as np
 import pandas as pd
 import os
