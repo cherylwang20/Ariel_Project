@@ -63,7 +63,7 @@ plt.show()
 plt.close()
 
 ###################################### we look at the distribution of those targets
-'''
+
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
 min_, max_ = tier2_SNR_sort['Planet Temperature [K]'].min(), tier2_SNR_sort['Planet Temperature [K]'].max()
@@ -116,7 +116,7 @@ plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2.pdf')
 
 plt.show()
 plt.close()
-'''
+
 ############ calculate how many of those overlap with the transit targets.
 
 ####################################################3
@@ -174,6 +174,7 @@ for i in theta:
     print(i, curve_df)
     print(i, 'average period', curve_df['Partial Period [days]'].mean() + 2*curve_df['Transit Duration [s]'].mean() / 86400)
     print(i, 'average N', curve_df['N obs'].mean())
+    print(i, 'average AESM', curve_df['Tier2_SNR'].mean())
 
 tier2_SNR_sort = cum_df_4(Tier_2_target, False)
 tier2_SNR_sort = tier2_SNR_sort[tier2_SNR_sort['cumulative days'] < 365]
@@ -207,23 +208,25 @@ period = target_45['Planet Period [days]']
 #transit = target_45['Transit Duration [s]']
 AESM = target_45['Tier2_SNR']
 
+print(AESM.min())
 
+bins = 15
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey= True, figsize=(18, 10))
-ax1.set_xlabel("Planet Period [days]", fontsize=20, fontweight='bold')
-ax1.set_ylabel("# of planets", fontsize=20, fontweight='bold')
+ax1.set_xlabel("Planet Period [days]", fontsize=22, fontweight='bold')
+ax1.set_ylabel("# of planets", fontsize=22, fontweight='bold')
 ax1.tick_params(axis="x", labelsize=17)
 ax1.tick_params(axis="y", labelsize=17)
-ax1.set_xlim(xmin=0, xmax = 26)
-ax1.hist(period, bins= 'auto', rwidth= 0.85, color = 'green')
+#ax1.set_xlim(xmin=0, xmax = 26)
+ax1.hist(period, bins= bins, rwidth= 0.85, color = 'green')
 
 
-plt.xlabel("AESM", fontsize=20, fontweight='bold')
-plt.ylabel("# of planets", fontsize=20, fontweight='bold')
+plt.xlabel("Tier 2 AESM", fontsize=22, fontweight='bold')
+plt.ylabel("# of planets", fontsize=22, fontweight='bold')
 #plt.title("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
 
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-ax2.hist(AESM, bins = 'auto', rwidth= 0.85, color= 'red')
+ax2.hist(AESM, bins = bins, rwidth= 0.85, color= 'red')
 #fig.suptitle("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
 
 plt.savefig(save_dir + 'Ariel_histogram_365d.pdf')

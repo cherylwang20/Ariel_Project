@@ -9,7 +9,7 @@ from table_columns_name import *
 from function_constants import *
 #from ASM import *
 
-'''
+
 service = pyvo.dal.TAPService("https://exoplanetarchive.ipac.caltech.edu/TAP")
 
 query = " ".join((
@@ -40,7 +40,7 @@ pc_telescope = pc_telescope.drop(pc_telescope[(pc_telescope['JWST'] == 'No') & (
 pc_telescope['ESM'] = ESM(1.1*pc_telescope['pl_eqt'], pc_telescope['st_teff'],pc_telescope['pl_radj'] ,pc_telescope['st_rad'],pc_telescope['sy_kmag'])
 
 pc_telescope['pl_g'] = (G*M_jup*pc_telescope['pl_bmassj'])/ ((r_jup*pc_telescope['pl_radj'])**2)
-'''
+
 
 #calculate ESM and planet gravity for all ariel potential targets
 
