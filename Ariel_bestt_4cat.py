@@ -79,6 +79,8 @@ for i in angle:
 
 plt.axhline(365, color='black', linestyle='dashed', linewidth=2, alpha=1)
 
+plt.axhline(365, color='black', linestyle='dashed', linewidth=2, alpha=1)
+
 Ariel_eclipse = ax.plot(ariel_4cat_N.index.tolist(), ariel_4cat_N['cumulative days'].tolist(),
                         alpha = 1, label = "Full Phase Curve", linewidth= 3,
                        color = 'black')
