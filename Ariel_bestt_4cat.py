@@ -55,7 +55,7 @@ plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right"
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_allcat.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
 #####################################
 ariel_4cat_N = ariel_4cat.sort_values(by = 'Tier2_SNR',ascending=False)
@@ -98,7 +98,7 @@ plt.yscale('log')
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2-N_allcat.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
 
 
@@ -152,7 +152,7 @@ plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.savefig(save_dir + 'JWST-Ariel-pg_porb_fom.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
 
 
@@ -207,7 +207,7 @@ plt.xscale('log')
 # plt.ylim([0,105])
 
 plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-allcat.pdf')
-plt.show()
+#plt.show()
 
 plt.close()
 
@@ -270,7 +270,7 @@ plt.xscale('log')
 #plt.xlim([1,100])
 plt.savefig(save_dir+'Ariel-Phasecurves-cat4-Ecc-Period.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
 
 

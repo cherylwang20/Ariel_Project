@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 from phasecurve_plot_cheryl import *
 
 ###### we look at the 51 Tier 2 emission spectroscopy targets calculate by Ariel_tiers_calculation.py
@@ -59,7 +61,7 @@ plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right"
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_Cul.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
 
 ###################################### we look at the distribution of those targets
@@ -114,7 +116,7 @@ plt.xscale('log')
 # plt.ylim([0,105])
 plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
 
 ############ calculate how many of those overlap with the transit targets.
@@ -154,7 +156,7 @@ plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.savefig(save_dir + 'Ariel-51_fom.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
 
 #################### four time cumulative
@@ -195,7 +197,7 @@ plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right"
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_Cul_N4.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
 
 ############ 45 phase curve targets
@@ -237,7 +239,8 @@ plt.yticks(fontsize=17)
 
 plt.savefig(save_dir + 'Ariel_histogram_365d.pdf')
 
-plt.show()
+#plt.show()
+plt.close()
 
 ###################################### we look at the distribution of those targets
 
@@ -291,12 +294,11 @@ plt.xscale('log')
 # plt.ylim([0,105])
 plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2-365.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
 
 ############## we consider the situation which we observe as many targets as we want in a year
 
-fig, ax = plt.subplots(figsize=(15, 10))
 df, fc, pc = new_cum_time(Tier_2_target, 45)
 print(df)
 

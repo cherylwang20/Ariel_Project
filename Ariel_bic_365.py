@@ -100,5 +100,5 @@ plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right"
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_allcat_n1.pdf')
 
-plt.show()
+#plt.show()
 plt.close()
