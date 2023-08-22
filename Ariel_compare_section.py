@@ -22,7 +22,7 @@ his, bin = np.histogram(N_obs_bic, bins=bins)
 logbin = np.logspace(np.log10(bin[0]),np.log10(bin[-1]),len(bin))
 ax1.hist([N_obs_rfm, N_obs_bic], bins= logbin, rwidth=3,
          color = ['deepskyblue', 'orange'], label= ['Ranked FoM', 'Best in Class'])
-ax1.legend(prop={'size': 15})
+ax1.legend(prop={'size': 18})
 
 
 
@@ -37,10 +37,12 @@ ax2.hist([AESM_rfm, AESM_bic], bins = logbins, rwidth= 0.85,
          color = ['deepskyblue', 'orange'], label= ['Ranked FoM', 'Best in Class'])
 #fig.suptitle("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
 plt.xscale('log')
-ax2.legend(prop={'size': 15})
+ax2.legend(prop={'size': 18})
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.savefig(save_dir + 'Ariel_histogram_compare.pdf')
 
 plt.show()
 plt.close()
+
+######################################
