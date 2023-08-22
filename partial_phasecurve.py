@@ -1,5 +1,7 @@
 from phasecurve_plot_cheryl import *
 
+Tier_2_target= pd.read_csv(os.path.join(data_dir, 'SNR_all_2.csv'))
+Tier_2_target = Tier_2_target.sort_values(by = 'Tier2_SNR',ascending=False)
 # we define the angle region when which we need to observe
 # before and after the eclipse to account for phase curve offset
 angle = [45, 60, 80, 90]

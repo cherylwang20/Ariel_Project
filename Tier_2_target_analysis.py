@@ -216,18 +216,24 @@ ax1.set_xlabel("Planet Period [days]", fontsize=22, fontweight='bold')
 ax1.set_ylabel("# of planets", fontsize=22, fontweight='bold')
 ax1.tick_params(axis="x", labelsize=17)
 ax1.tick_params(axis="y", labelsize=17)
+ax1.axvline(2, linestyle = 'dashed', color = 'cyan', linewidth = 3)
 #ax1.set_xlim(xmin=0, xmax = 26)
 ax1.hist(period, bins= bins, rwidth= 0.85, color = 'green')
+
 
 
 plt.xlabel("Tier 2 AESM", fontsize=22, fontweight='bold')
 plt.ylabel("# of planets", fontsize=22, fontweight='bold')
 #plt.title("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
 
+
+hist, bins = np.histogram(AESM, bins=bins)
+logbins = np.logspace(np.log10(bins[0]),np.log10(bins[-1]),len(bins))
+ax2.hist(AESM, bins = logbins, rwidth= 0.85, color= 'red')
+#fig.suptitle("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
+plt.xscale('log')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-ax2.hist(AESM, bins = bins, rwidth= 0.85, color= 'red')
-#fig.suptitle("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
 
 plt.savefig(save_dir + 'Ariel_histogram_365d.pdf')
 
@@ -287,3 +293,17 @@ plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2-365.pdf')
 
 plt.show()
 plt.close()
+
+############## we consider the situation which we observe as many targets as we want in a year
+
+fig, ax = plt.subplots(figsize=(15, 10))
+df, fc, pc = new_cum_time(Tier_2_target, 45)
+print(df)
+
+df.to_csv('test.csv')
+print(df['Tier2_SNR'].mean())
+
+print(df.loc[df['Planet Radius [Rj]'] <= 0.16058])
+print(df[df['Planet Radius [Rj]'] <= 0.312251].shape[0])
+print(df[df['Planet Radius [Rj]'] <= 0.624503].shape[0])
+
