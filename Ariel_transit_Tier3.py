@@ -2,6 +2,19 @@ import matplotlib.pyplot as plt
 
 from phasecurve_plot_cheryl import *
 
+
+########### we import JWST targets
+query_transit = " ".join((
+    f"SELECT {', '.join(columns)}",
+    f"FROM {tableName}",
+    f"WHERE pl_name in {JWST_transit}"
+))
+
+results_transit = service.search(query)
+
+JWST_transit_df= results.to_table().to_pandas()
+
+
 ariel_target_or = pd.read_csv(os.path.join(data_dir, 'SNR_all_tier.csv'))
 
 ariel_target = ariel_target_or.sort_values(by = 'Tier1 Transit S/N',ascending=False)
@@ -151,8 +164,8 @@ min_, max_ = ariel_target_or['Planet Temperature [K]'].min(), ariel_target_or['P
 cmap = 'RdYlBu_r'
 
 '''
-JWST_plot = ax.scatter( pc_telescope.query("JWST == 'Yes'")['pl_orbper'],pc_telescope.query("JWST == 'Yes'")["pl_radj"],
-                       alpha=1, s=850, c=pc_telescope.query("JWST == 'Yes'")["pl_eqt"], marker='h', edgecolor='black',
+JWST_plot = ax.scatter( JWST_transit_df['pl_orbper'],JWST_transit_df["pl_radj"],
+                       alpha=1, s=850, c=JWST_transit_df["pl_eqt"], marker='h', edgecolor='black',
                        cmap=cmap,
                        label='JWST', zorder=1, vmin=min_, vmax=max_)
 '''
@@ -207,7 +220,7 @@ plt.xscale('log')
 # plt.ylim([0,105])
 
 plt.savefig(save_dir+ 'JWST-Ariel-transit_all_tier.pdf')
-#plt.show()
+plt.show()
 
 plt.close()
 
@@ -226,12 +239,15 @@ ATSM_3 = ariel_tier3_transit['Tier3 Transit S/N']
 bin_num = 10
 
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey= True, figsize=(15, 10))
-ax1.set_xlabel("Transit Duration [hours]", fontsize=20, fontweight='bold')
+ax1.set_xlabel("Transit Duration [hrs]", fontsize=20, fontweight='bold')
 ax1.set_ylabel("# of planets", fontsize=20, fontweight='bold')
 ax1.tick_params(axis="x", labelsize=17)
 ax1.tick_params(axis="y", labelsize=17)
 #ax1.set_xlim(xmin=0, xmax = 26)
-ax1.hist([transit_1, transit_2, transit_3], bins= bin_num, rwidth= 1,
+his, bin = np.histogram(transit_2, bins=bin_num)
+logbin = np.logspace(np.log10(bin[0]),np.log10(bin[-1]),len(bin))
+ax1.set_xscale('log')
+ax1.hist([transit_1, transit_2, transit_3], bins= logbin, rwidth= 1,
          label = ['Tier 1', 'Tier 2', 'Tier 3'], color = ['green', 'lime', 'greenyellow'])
 ax1.legend(fontsize = 18)
 
@@ -243,9 +259,13 @@ plt.ylabel("# of planets", fontsize=20, fontweight='bold')
 
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-ax2.hist([ATSM_1,ATSM_2,ATSM_3], bins = bin_num, rwidth=1,
+
+hist, bins = np.histogram(ATSM_3, bins=bin_num)
+logbins = np.logspace(np.log10(bins[0]),np.log10(bins[-1]),len(bins))
+
+ax2.hist([ATSM_1,ATSM_2,ATSM_3], bins = logbins, rwidth=1,
          label = ['Tier 1', 'Tier 2', 'Tier 3'], color= ['maroon', 'salmon', 'orange'])
-#fig.suptitle("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
+plt.xscale('log')
 plt.legend(fontsize = 18)
 plt.savefig(save_dir + 'Ariel_histogram_transit.pdf')
 
@@ -294,3 +314,191 @@ plt.legend(fontsize = 12)
 # Save the figure
 plt.savefig(save_dir + 'Ariel_skymap_all.pdf', dpi=300)
 plt.show()
+plt.close()
+###########
+
+ariel_transit_all = pd.concat([ariel_tier1_transit, ariel_tier2_transit, ariel_tier3_transit ])
+
+
+fig, ax = plt.subplots(figsize=(15, 10))
+# plt.figure(figsize=(15,10))
+min_, max_ = ariel_target_or['Planet Temperature [K]'].min(), ariel_target_or['Planet Temperature [K]'].max()
+# cmap='viridis_r'
+cmap = 'RdYlBu_r'
+
+
+JWST_plot = ax.scatter( JWST_transit_df['pl_trandur'],JWST_transit_df["pl_radj"],
+                       alpha=1, s=850, c=JWST_transit_df["pl_eqt"], marker='h', edgecolor='black',
+                       cmap=cmap,
+                       label='JWST', zorder=1, vmin=min_, vmax=max_)
+
+Ariel_plot = ax.scatter(ariel_transit_all['Transit Duration [s]']/3600,ariel_transit_all["Planet Radius [Rj]"],
+                        alpha=0.7, s = 80, c = ariel_transit_all["Planet Temperature [K]"], marker="o",
+                        edgecolor='black', cmap=cmap,
+                        linewidths=1, label = "Ariel", zorder = 2, vmin=min_, vmax=max_)
+
+clb = fig.colorbar(Ariel_plot, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
+#clb.ax.set_title('Planetary Equilibrium Temperature [K]', fontweight='bold')
+clb.set_label('Planetary Equilibrium Temperature [K]',fontsize=18)
+clb.ax.tick_params(labelsize=17)
+
+ax.axhline(0.160586, color='g', linestyle='dashed', linewidth=1, alpha=1)
+ax.axhline(0.312251, color='g', linestyle='dashed', linewidth=1, alpha=1)
+ax.axhline(0.624503, color='g', linestyle='dashed', linewidth=1, alpha=1)
+
+
+from matplotlib.lines import Line2D
+
+legend_elements = [Line2D([0], [0], marker='h', color='w', label='JWST',
+                          markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25),
+                   Line2D([0], [0], marker='o', color='w', label='Ariel',
+                          markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25)
+                   ]
+
+first_legend = plt.legend(handles=legend_elements, loc='upper right',
+                          title="$\\bf{Telescope} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
+
+ax = plt.gca().add_artist(first_legend)
+
+
+plt.grid(True, alpha=0.35)
+plt.ylabel('Planet Radius [R$_J$]', fontsize=24, fontweight='bold')
+plt.xlabel("Transit Duration [hrs]", fontsize=24, fontweight='bold')
+#plt.title("Phase Curves Targets", fontsize=28, fontweight='bold')
+plt.xticks(fontsize=20)
+plt.yticks(fontsize=20)
+plt.xscale('log')
+# plt.ylim([0,105])
+
+plt.savefig(save_dir+ 'JWST-Ariel-transit_targets.pdf')
+plt.show()
+
+plt.close()
+
+
+########## create scatter plot for Tier 2 & Tier 3
+################# create scattered plot for each
+fig, ax = plt.subplots(figsize=(15, 10))
+# plt.figure(figsize=(15,10))
+min_, max_ = ariel_target_or['Planet Temperature [K]'].min(), ariel_target_or['Planet Temperature [K]'].max()
+# cmap='viridis_r'
+cmap = 'RdYlBu_r'
+
+'''
+JWST_plot = ax.scatter( JWST_transit_df['pl_orbper'],JWST_transit_df["pl_radj"],
+                       alpha=1, s=850, c=JWST_transit_df["pl_eqt"], marker='h', edgecolor='black',
+                       cmap=cmap,
+                       label='JWST', zorder=1, vmin=min_, vmax=max_)
+'''
+Ariel_plot = ax.scatter(ariel_tier2_transit['Planet Period [days]'],ariel_tier2_transit["Planet Radius [Rj]"],
+                        alpha=0.7, s = 200, c = ariel_tier2_transit["Planet Temperature [K]"], marker="*",
+                        edgecolor='black', cmap=cmap,
+                        linewidths=1, label = "Ariel", zorder = 2, vmin=min_, vmax=max_)
+Ariel_plot = ax.scatter(ariel_tier3_transit['Planet Period [days]'],ariel_tier3_transit["Planet Radius [Rj]"],
+                        alpha=0.7, s = 200, c = ariel_tier3_transit["Planet Temperature [K]"], marker="^",
+                        edgecolor='black', cmap=cmap,
+                        linewidths=1, label = "Ariel", zorder = 2, vmin=min_, vmax=max_)
+
+clb = fig.colorbar(Ariel_plot, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
+#clb.ax.set_title('Planetary Equilibrium Temperature [K]', fontweight='bold')
+clb.set_label('Planetary Equilibrium Temperature [K]',fontsize=18)
+clb.ax.tick_params(labelsize=17)
+
+ax.axhline(0.160586, color='g', linestyle='dashed', linewidth=1, alpha=1)
+ax.axhline(0.312251, color='g', linestyle='dashed', linewidth=1, alpha=1)
+ax.axhline(0.624503, color='g', linestyle='dashed', linewidth=1, alpha=1)
+
+
+from matplotlib.lines import Line2D
+
+legend_elements = [Line2D([0], [0], marker='*', color='w', label='Tier 2',
+                          markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25),
+                    Line2D([0], [0], marker='^', color='w', label='Tier 3',
+                          markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25)
+                   ]
+
+first_legend = plt.legend(handles=legend_elements, loc='upper right',
+                          title="$\\bf{Transit \quad Tier} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
+
+ax = plt.gca().add_artist(first_legend)
+
+
+plt.grid(True, alpha=0.35)
+plt.ylabel('Planet Radius [R$_J$]', fontsize=24, fontweight='bold')
+plt.xlabel("Planet Period [days]", fontsize=24, fontweight='bold')
+#plt.title("Phase Curves Targets", fontsize=28, fontweight='bold')
+plt.xticks(fontsize=20)
+plt.yticks(fontsize=20)
+plt.xscale('log')
+# plt.ylim([0,105])
+
+plt.savefig(save_dir+ 'JWST-Ariel-transit_tier23.pdf')
+plt.show()
+
+plt.close()
+
+############ we plot the stellar effective temperature again planetary temperature
+
+fig, ax = plt.subplots(figsize=(15, 10))
+# plt.figure(figsize=(15,10))
+
+'''
+Ariel_plot = ax.scatter(ariel_transit_all['Star Temperature [K]'],ariel_transit_all["Planet Temperature [K]"],
+                        alpha=0.7, s = ariel_transit_all['Planet Radius [Rj]']*300, marker="o", color = 'tomato', edgecolor='black',
+                        linewidths=1, label = "Ariel", zorder = 2)
+
+'''
+
+Ariel_plot = ax.scatter(ariel_tier1_transit['Star Temperature [K]'],ariel_tier1_transit["Planet Temperature [K]"],
+                        alpha=0.7, s = ariel_tier1_transit["Planet Radius [Rj]"]*300, marker="o",
+                        edgecolor='black', color = 'tomato',
+                        linewidths=1, label = "Ariel", zorder = 2)
+Ariel_plot = ax.scatter(ariel_tier2_transit['Star Temperature [K]'],ariel_tier2_transit["Planet Temperature [K]"],
+                        alpha=0.7, s = ariel_tier2_transit["Planet Radius [Rj]"]*300, marker="o",
+                        edgecolor='black', color = 'lawngreen',
+                        linewidths=1, label = "Ariel", zorder = 2)
+Ariel_plot = ax.scatter(ariel_tier3_transit['Star Temperature [K]'],ariel_tier3_transit["Planet Temperature [K]"],
+                        alpha=0.7, s  = ariel_tier3_transit["Planet Radius [Rj]"]*300, marker="o",
+                        edgecolor='black', color = 'royalblue',
+                        linewidths=1, label = "Ariel", zorder = 2)
+
+
+
+
+ax.axhline(500, color='g', linestyle='dashed', linewidth=2, alpha=1)
+ax.axhline(1000, color='g', linestyle='dashed', linewidth=2, alpha=1)
+ax.axhline(1500, color='g', linestyle='dashed', linewidth=2, alpha=1)
+ax.axhline(2500, color='g', linestyle='dashed', linewidth=2, alpha=1)
+
+ax.axvline(3955, color='dodgerblue', linestyle='dotted', linewidth=2, alpha=1)
+ax.axvline(5330, color='dodgerblue', linestyle='dotted', linewidth=2, alpha=1)
+ax.axvline(6070, color='dodgerblue', linestyle='dotted', linewidth=2, alpha=1)
+ax.axvline(7200, color='dodgerblue', linestyle='dotted', linewidth=2, alpha=1)
+
+
+legend_elements = [#Line2D([0], [0], marker='h', color='w', label='JWST',
+                         # markerfacecolor='none', markeredgecolor='black', mew=3, markersize=25),
+                   Line2D([0], [0], marker='o', color='w', label='Tier 1',
+                          markerfacecolor='tomato', markeredgecolor='black', mew=3, markersize=25),
+                    Line2D([0], [0], marker='o', color='w', label='Tier 2',
+                          markerfacecolor='lawngreen', markeredgecolor='black', mew=3, markersize=25),
+                    Line2D([0], [0], marker='o', color='w', label='Tier 3',
+                          markerfacecolor='royalblue', markeredgecolor='black', mew=3, markersize=25)
+                   ]
+
+first_legend = plt.legend(handles=legend_elements, loc='upper left',
+                          title="$\\bf{Transit \quad Tier} $", title_fontsize=20, prop={'size': 20}, fancybox=True)
+
+ax = plt.gca().add_artist(first_legend)
+
+
+plt.ylabel('Planet Temperature [K]', fontsize=24, fontweight='bold')
+plt.xlabel("Star Temperature [K]", fontsize=24, fontweight='bold')
+plt.xticks(fontsize=20)
+plt.yticks(fontsize=20)
+
+plt.savefig(save_dir + 'JWST-Ariel-transit_bin.pdf')
+plt.show()
+
+plt.close()
+
