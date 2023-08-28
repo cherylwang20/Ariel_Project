@@ -1,3 +1,14 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+The code
+1. provide necessary constants
+2. document all functions
+'''
+
+
+
 import numpy as np
 import math
 import os
@@ -29,8 +40,9 @@ D_ariel = 1 #telescope diameter
 lamb_1_ariel = 1.95e-6
 lamb_2_ariel = 7.8e-6
 
-save_dir = os.path.join(os.getcwd(),'figure/')
-data_dir = os.path.join(os.getcwd(), 'data/')
+parent_directory = os.path.join(os.getcwd(), os.pardir)
+save_dir = os.path.join(parent_directory,'figure/')
+data_dir = os.path.join(parent_directory, 'data/')
 
 
 def planck(T):

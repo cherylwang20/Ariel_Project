@@ -12,7 +12,7 @@ JWST_plot = ax.scatter(pc_telescope.query("JWST == 'Yes'")["pl_orbper"], pc_tele
                        cmap=cmap,norm=matplotlib.colors.LogNorm(vmin=min_, vmax=max_),
                        label='JWST', zorder=2)
 
-Ariel_plot = ax.scatter(ariel["Planet Temperature [K]"], ariel['Planet Period [days]'],
+Ariel_plot = ax.scatter( ariel['Planet Period [days]'], ariel["Planet Temperature [K]"],
                         alpha=0.8, s = 100, c = ariel["ESM"], marker="*",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Ariel", zorder = 1)
@@ -80,7 +80,7 @@ for x, y, name in zip(pc_telescope.query("pl_name == 'HD 189733 b'")["pl_eqt"],
                  ha='center')  # horizontal alignment can be left, right or center
 '''
 ################################################################################3
-ax.axhline(3, color='blue', linestyle='dashed', linewidth=2, alpha=0.75)
+ax.axvline(2, color='blue', linestyle='dashed', linewidth=2, alpha=0.75)
 
 
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
@@ -95,6 +95,10 @@ paths = [
     'Jupiter.png',
     'neptune.jpg']
 
+full_paths = [os.path.join(save_dir, path) for path in paths]
+
+
+
 zooms = [0.025, 0.065, 0.15]
 SS_eqt = [279,  # Earth
           122,  # Jupiter
@@ -106,7 +110,7 @@ SS_g = [9.8,  # Earth
 
 ax.scatter( SS_orb, SS_eqt)
 
-for x0, y0, path, z in zip( SS_orb,SS_eqt, paths, zooms):
+for x0, y0, path, z in zip( SS_orb,SS_eqt, full_paths, zooms):
     ab = AnnotationBbox(getImage(path, z), (x0, y0), frameon=False)
     ax.add_artist(ab)
 
@@ -144,6 +148,6 @@ plt.yticks(fontsize=17)
 plt.xscale('log')
 #plt.xscale('log')
 # plt.ylim([0,105])
-plt.savefig(save_dir + 'JWST-Ariel-Phasecurves-ESM-T.jpg')
+plt.savefig(save_dir + 'JWST-Ariel-Phasecurves-ESM-T.pdf')
 
 plt.show()
