@@ -1,3 +1,13 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+The distribution plots of Ariel Targets
+Ariel-Phasecurves Temperature-Period-ESM
+'''
+
+
+
 from phasecurve_plot_cheryl import *
 import matplotlib
 

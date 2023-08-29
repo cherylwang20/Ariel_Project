@@ -1,3 +1,13 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+The document shows the four example targets thermal emission contrast as a function of their wavelength
+AESM
+'''
+
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 import os.path

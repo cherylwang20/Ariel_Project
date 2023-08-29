@@ -1,5 +1,5 @@
 from Tier_2_target_analysis import *
-from Ariel_bestt_4cat import *
+from Ariel_best_in_class import *
 
 
 period = target_45['Planet Period [days]']

@@ -1,5 +1,15 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Graphing JWST-Ariel-Phasecurves
+period - temperature - ESM
+'''
+
+
 from phasecurve_plot_cheryl import *
 import matplotlib
+import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))

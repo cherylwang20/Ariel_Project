@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+The distribution of Ariel Phase Curve targets and Transit Targets in Sky.
+See Ariel_project_doc.pdf Figure 29.
+'''
+
+
 # Import modules
 import datetime
 import numpy as np

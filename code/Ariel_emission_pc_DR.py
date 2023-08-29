@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This code plots the diminishing return for observing lower signal targets at higher Tier.
+Please refer to Figure 8 of Ariel_project_doc.pdf
+
+'''
+
 from phasecurve_plot_cheryl import *
 
 ariel_target = pd.read_csv(os.path.join(data_dir, 'SNR_all_tier.csv'))

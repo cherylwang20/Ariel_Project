@@ -1,51 +1,59 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+The distribution plots of Ariel Targets
+Ariel-Phasecurves Temperature-Period-ASM
+'''
+
+
+
 from phasecurve_plot_cheryl import *
 import matplotlib
 
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))
 min_, max_ = ariel.ASM.min(), ariel.ASM.max()
+print(min_,max_)
 # cmap='viridis_r'
 cmap = 'hot_r'
+ax.axvline(3, color='red', linestyle='dashed', linewidth=2, alpha=0.75, zorder = 0)
 
-#filter out eccentricities higher than 0.2
-'''
-ariel_terrestrial = ariel_terrestrial[ariel_terrestrial['Eccentricity'] > 0.2]
-ariel_subnep = ariel_subnep[ariel_subnep['Eccentricity']> 0.2]
-ariel_nep = ariel_nep[ariel_nep['Eccentricity'] > 0.2]
-ariel_giant = ariel_giant[ariel_giant['Eccentricity'] > 0.2]
-'''
 
-##
-Ariel_terr = ax.scatter(ariel_terrestrial["Planet Period [days]"], ariel_terrestrial['Eccentricity'],
+Ariel_terr = ax.scatter(ariel_terrestrial["Planet Period [days]"], ariel_terrestrial["Planet Temperature [K]"],
                         alpha=0.6, s = 50, c = ariel_terrestrial["ASM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Terrestrial", zorder = 4)
 
-Ariel_subnep = ax.scatter(ariel_subnep["Planet Period [days]"], ariel_subnep['Eccentricity'],
+Ariel_subnep = ax.scatter(ariel_subnep["Planet Period [days]"], ariel_subnep["Planet Temperature [K]"],
                         alpha=0.6, s = 150, c = ariel_subnep["ASM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "SubNeptune", zorder = 3)
 
-Ariel_nept = ax.scatter(ariel_nep["Planet Period [days]"], ariel_nep['Eccentricity'],
+Ariel_nept = ax.scatter(ariel_nep["Planet Period [days]"], ariel_nep["Planet Temperature [K]"],
                         alpha=0.6, s = 400, c = ariel_nep["ASM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Neptune", zorder = 2)
 
-Ariel_giant = ax.scatter(ariel_giant["Planet Period [days]"], ariel_giant['Eccentricity'],
+Ariel_giant = ax.scatter(ariel_giant["Planet Period [days]"], ariel_giant["Planet Temperature [K]"],
                         alpha=0.6, s = 600, c = ariel_giant["ASM"], marker="o",
                         edgecolor='black', cmap=cmap,norm=matplotlib.colors.LogNorm( vmin=min_, vmax=max_),
                         linewidths=1, label = "Giant", zorder = 1)
 
 
 # ax.set_clim(min_, max_)
-clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ASM} $',rotation=270,fontsize=15)
+clb = fig.colorbar(Ariel_terr, ax=ax)  # .set_label('$\\bf{ESM} $',rotation=270,fontsize=15)
 clb.ax.set_title('$\\bf{ASM} $')
+
+
+
+
+############################################################33
 
 # Create a legend for the first line.
 # first_legend = plt.legend(handles=[Spitzer_plot,Hubble_plot, JWST_plot], loc='upper right',
 #                           title = "$\\bf{Telescope} $", title_fontsize = 20, prop={'size': 20}, fancybox = True)
 
-ax.axvline(3, color='red', linestyle='dashed', linewidth=2, alpha=0.75, zorder = 0)
 
 from matplotlib.lines import Line2D
 
@@ -70,16 +78,14 @@ legend_elements = [Line2D([0], [0], marker='*', color='w', label='Terrestrial',
 #           title = "$\\bf{Eccentric \ Planets}$", title_fontsize = 15, prop={'size': 15}, fancybox = True)
 
 plt.grid(True, alpha=0.35)
+plt.ylabel("Planetary Equilibrium Temperature [K]", fontsize=18, fontweight='bold')
 plt.xlabel("Planet Period [days]", fontsize=18, fontweight='bold')
-plt.ylabel("Eccentricity", fontsize=18, fontweight='bold')
-plt.title("Ariel Phase Curve Targets: Period vs Eccentricity", fontsize=24, fontweight='bold')
+plt.title("Ariel Phase Curve Targets: Temperature vs Period", fontsize=24, fontweight='bold')
 plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
-plt.gca().set_ylim(top=1)
-#plt.yscale('log')
 plt.xscale('log')
-#plt.ylim([0,1])
-#plt.xlim([1,100])
-plt.savefig(save_dir+'Ariel-Phasecurves-Per-Ecc-ASM.jpg')
+#plt.xscale('log')
+# plt.ylim([0,105])
+plt.savefig(save_dir + 'Ariel-Phasecurves-Temp-Period-ASM.jpg')
 
 plt.show()

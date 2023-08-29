@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This document calculates the noise and precision of four example targets. This document is listed in
+Ariel_project_doc.pdf 2.2.3
+
+'''
+
 import numpy as np
 import matplotlib.pyplot as plt
 import os.path

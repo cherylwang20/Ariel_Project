@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Not a major document
+AESM and ATSM calculation document
+the bins are NOT equally divided
+'''
+
 from phasecurve_plot_cheryl import *
 
 ############# we are looking at tier 2 resolution at the moment

@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This code looks at the best in class method when looking at 6/6/6/25 planets in each category
+all plots contained are for bic method
+'''
+
+
 from phasecurve_plot_cheryl import *
 
 ariel_cal = pd.read_csv(os.path.join(data_dir, 'SNR_all_tier.csv'))

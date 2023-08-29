@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This code looks the cumulative time needed to observe for Ariel targets using different ranking method
+'''
+
+
+
 from phasecurve_plot_cheryl import *
 import matplotlib
 

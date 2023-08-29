@@ -1,3 +1,14 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This code looks the distribution of Ariel Targets
+Ariel-Phasecurves- Period - Eccentricity - ESM
+'''
+
+
+
+
 from phasecurve_plot_cheryl import *
 import matplotlib
 
@@ -6,14 +17,6 @@ fig, ax = plt.subplots(figsize=(15, 10))
 min_, max_ = ariel.ESM.min(), ariel.ESM.max()
 # cmap='viridis_r'
 cmap = 'cool'
-
-#filter out eccentricities higher than 0.2
-'''
-ariel_terrestrial = ariel_terrestrial[ariel_terrestrial['Eccentricity'] > 0.2]
-ariel_subnep = ariel_subnep[ariel_subnep['Eccentricity']> 0.2]
-ariel_nep = ariel_nep[ariel_nep['Eccentricity'] > 0.2]
-ariel_giant = ariel_giant[ariel_giant['Eccentricity'] > 0.2]
-'''
 
 ##
 Ariel_terr = ax.scatter(ariel_terrestrial["Planet Period [days]"], ariel_terrestrial['Eccentricity'],

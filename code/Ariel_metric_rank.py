@@ -1,3 +1,11 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Not a major plot, ranked ASM and Tier 3 Eclipses and their corresponding ASM
+'''
+
+
 from phasecurve_plot_cheryl import *
 
 fig, ax = plt.subplots(figsize=(15, 10))

@@ -1,4 +1,15 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This code plots the day and night time ESM of the 16 targets in Taylor's paper on Spitzer reanalysis.
+
+This section is not included in the Ariel_project_doc.pdf
+'''
+
+
 from phasecurve_plot_cheryl import *
+from backup_code import *
 
 fig, ax = plt.subplots(figsize=(15, 10))
 # plt.figure(figsize=(15,10))

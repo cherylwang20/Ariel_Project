@@ -1,3 +1,10 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+histogram
+'''
+
 import pandas as pd
 
 from phasecurve_plot_cheryl import *

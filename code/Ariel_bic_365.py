@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This code looks at the best in class method when observing all targets for only once
+'''
+
+
+
 from phasecurve_plot_cheryl import *
 
 ariel_cal = pd.read_csv(os.path.join(data_dir, 'SNR_all_tier.csv'))

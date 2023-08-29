@@ -1,3 +1,11 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Not a major plot, ranked ESM and their corresponding ESM
+'''
+
+
 from phasecurve_plot_cheryl import *
 
 fig, ax = plt.subplots(figsize=(15, 10))

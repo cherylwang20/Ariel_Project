@@ -1,4 +1,11 @@
-from phasecurve_plot_cheryl import *
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This compare the ESM and the Eclipse metric
+
+Ariel-Phasecurves-ESM-Eclipse-Temperature
+'''
 
 from phasecurve_plot_cheryl import *
 import matplotlib
