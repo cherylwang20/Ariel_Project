@@ -3,7 +3,7 @@
 August 2023
 
 The document shows the four example targets thermal emission contrast as a function of their wavelength
-AESM
+AESM, see Figure 5 in Ariel_project_doc.pdfs
 '''
 
 

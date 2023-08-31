@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+The document shows the four example targets final AESM
+refer to Figure 7 in Ariel_project_doc.pdf
+'''
+
+
 from ariel_signal_wavelength import *
 from Ariel_noise_wavelength import *
 

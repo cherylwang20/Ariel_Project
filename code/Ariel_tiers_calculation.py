@@ -1,3 +1,17 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+The code computes the AESM and ATSM of all 605 targets for each tier respectively.
+
+You are able to change the threshold level, the start and end wavelength as well as the number of bins in each tier
+
+suggested edits:
+1. change the system throughput for each instrument
+2. combine the final output file. Now we have different csv for each tier
+3. change the Transmission and Emission spectrosocpy binning strategy.
+'''
+
 from phasecurve_plot_cheryl import *
 
 ############# we are looking at tier 2 resolution at the moment

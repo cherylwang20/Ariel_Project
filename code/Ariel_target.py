@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This document import all the Ariel data from excel and transfer it to df
+preparation for phasecurve_cheryl_plot
+'''
+
+
 import numpy as np
 import pandas as pd
 import os

@@ -1,3 +1,12 @@
+
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+The distribution of Ariel target, not major plot
+Temperature- Ecc - ESM
+'''
+
 import matplotlib.pyplot as plt
 
 from phasecurve_plot_cheryl import *
