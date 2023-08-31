@@ -9,7 +9,7 @@ You are able to change the threshold level, the start and end wavelength as well
 suggested edits:
 1. change the system throughput for each instrument
 2. combine the final output file. Now we have different csv for each tier
-3. change the Transmission and Emission spectrosocpy binning strategy.
+3. change the Transmission and Emission spectroscopy binning strategy.
 '''
 
 from phasecurve_plot_cheryl import *

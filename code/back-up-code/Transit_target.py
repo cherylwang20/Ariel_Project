@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This code looks at the cumulative transit time for target overlapping with the top ASM targets
+
+needs significant clean up. suggest rewritting if necessary
+'''
+
 from phasecurve_plot_cheryl import *
 
 

@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Graphing Hubble - Spizter - JWST-Ariel-Phasecurves
+period - gravity
+'''
+
+
 from phasecurve_plot_cheryl import *
 
 fig, ax = plt.subplots(figsize=(15, 10))

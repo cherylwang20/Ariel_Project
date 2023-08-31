@@ -1,3 +1,13 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Back-up code
+looks at the 16 Taylor Spitzer targets and rank them by their night time ESM
+'''
+
+
+
 import matplotlib.pyplot as plt
 
 from phasecurve_plot_cheryl import *

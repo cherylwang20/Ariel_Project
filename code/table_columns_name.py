@@ -2,7 +2,10 @@
 @author: Huiyi (Cheryl) Wang
 August 2023
 
-This code looks at the best in class method when observing all targets for only once
+This code provides the target list (phasecurve & transit) for JWST
+the column/parameters needed for JWST targets
+
+and some other parameters
 '''
 
 

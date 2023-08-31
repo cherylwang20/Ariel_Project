@@ -1,3 +1,14 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This code provides the main graphing and target selection of phase curve, as detailed in section 3 of
+Ariel_project_doc.pdf
+
+Figure 15 - 20
+'''
+
+
 import matplotlib.pyplot as plt
 
 from phasecurve_plot_cheryl import *
@@ -61,8 +72,43 @@ plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right"
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_Cul.pdf')
 
-#plt.show()
+plt.show()
 plt.close()
+
+############
+period = tier2_SNR_sort['Planet Period [days]']
+AESM = tier2_SNR_sort['Tier2_SNR']
+
+bins = 15
+
+
+fig, (ax1, ax2) = plt.subplots(1, 2, sharey= True, figsize=(18, 10))
+ax1.set_xlabel("Planet Period [days]", fontsize=20, fontweight='bold')
+ax1.set_ylabel("# of planets", fontsize=20, fontweight='bold')
+ax1.tick_params(axis="x", labelsize=17)
+ax1.tick_params(axis="y", labelsize=17)
+ax1.axvline(2, linestyle = 'dashed', color = 'cyan', linewidth = 3)
+#ax1.set_xlim(xmin=0, xmax = 26)
+ax1.hist(period, bins= bins, rwidth= 0.85, color = 'green')
+
+
+plt.xlabel("Tier 2 AESM", fontsize=22, fontweight='bold')
+plt.ylabel("# of planets", fontsize=22, fontweight='bold')
+#plt.title("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
+
+
+hist, bins = np.histogram(AESM, bins=bins)
+logbins = np.logspace(np.log10(bins[0]),np.log10(bins[-1]),len(bins))
+ax2.hist(AESM, bins = logbins, rwidth= 0.85, color= 'red')
+#fig.suptitle("Histogram of 42 selected targets", fontsize=24, fontweight='bold')
+plt.xscale('log')
+plt.xticks(fontsize=17)
+plt.yticks(fontsize=17)
+plt.savefig(save_dir + 'Ariel_histogram_51.pdf')
+
+plt.show()
+
+
 
 ###################################### we look at the distribution of those targets
 
@@ -116,10 +162,9 @@ plt.xscale('log')
 # plt.ylim([0,105])
 plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2.pdf')
 
-#plt.show()
+plt.show()
 plt.close()
 
-############ calculate how many of those overlap with the transit targets.
 
 ####################################################3
 
@@ -156,7 +201,7 @@ plt.xticks(fontsize=17)
 plt.yticks(fontsize=17)
 plt.savefig(save_dir + 'Ariel-51_fom.pdf')
 
-#plt.show()
+plt.show()
 plt.close()
 
 #################### four time cumulative
@@ -197,7 +242,7 @@ plt.legend(title = r"Partial Observing Angle $\theta$ (°)", loc = "lower right"
 # plt.ylim([0,105])
 plt.savefig(save_dir+'Ariel-Phasecurves-Tier2_Cul_N4.pdf')
 
-#plt.show()
+plt.show()
 plt.close()
 
 ############ 45 phase curve targets
@@ -239,7 +284,7 @@ plt.yticks(fontsize=17)
 
 plt.savefig(save_dir + 'Ariel_histogram_365d.pdf')
 
-#plt.show()
+plt.show()
 plt.close()
 
 ###################################### we look at the distribution of those targets
@@ -294,7 +339,7 @@ plt.xscale('log')
 # plt.ylim([0,105])
 plt.savefig(save_dir+ 'JWST-Ariel-Phasecurves-Tier_2-365.pdf')
 
-#plt.show()
+plt.show()
 plt.close()
 
 ############## we consider the situation which we observe as many targets as we want in a year
@@ -302,7 +347,6 @@ plt.close()
 df, fc, pc = new_cum_time(Tier_2_target, 45)
 print(df)
 
-df.to_csv('test.csv')
 print(df['Tier2_SNR'].mean())
 
 print(df.loc[df['Planet Radius [Rj]'] <= 0.16058])

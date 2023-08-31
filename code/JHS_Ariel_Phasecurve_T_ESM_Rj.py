@@ -1,3 +1,11 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Graphing Hubble - Spizter - JWST-Ariel-Phasecurves
+Temperature - ESM - Radius
+'''
+
 from phasecurve_plot_cheryl import *
 
 fig, ax = plt.subplots(figsize=(15, 10))

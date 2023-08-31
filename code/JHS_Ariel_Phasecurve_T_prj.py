@@ -1,3 +1,12 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Graphing Hubble - Spizter - JWST-Ariel-Phasecurves
+Temperature - Rj
+'''
+
+
 from phasecurve_plot_cheryl import *
 
 

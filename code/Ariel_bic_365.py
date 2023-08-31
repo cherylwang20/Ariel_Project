@@ -2,7 +2,7 @@
 @author: Huiyi (Cheryl) Wang
 August 2023
 
-This code looks at the best in class method when observing all targets for only once
+This code looks at the best in class method when observing all targets for only once within 365 days
 '''
 
 

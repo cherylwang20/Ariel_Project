@@ -1,3 +1,12 @@
+
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Calculation of how much target reaching tier in the initial Billy table using
+# of Tier 3 Eclipse metric
+'''
+
 from phasecurve_plot_cheryl import *
 
 BE_table6 = pd.read_csv(os.path.join(data_dir, "Billy_Edward_table_6.csv"))

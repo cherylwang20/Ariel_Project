@@ -1,3 +1,13 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Main plot for transit curve.
+
+Includes all Figures in Section 4 of Ariel_project_doc.pdf
+'''
+
+
 import matplotlib.pyplot as plt
 
 from phasecurve_plot_cheryl import *

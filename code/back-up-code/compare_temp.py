@@ -1,3 +1,13 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Backup code
+calculates the temperature different between day/night time of 16 selected targets
+in Taylor's Spitzer reanalysis paper
+'''
+
+
 import matplotlib.pyplot as plt
 
 from phasecurve_plot_cheryl import *

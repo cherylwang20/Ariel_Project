@@ -1,3 +1,13 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+Graphing JWST-Ariel-Phasecurves targets
+
+Period - Radius - Temperature
+'''
+
+
 from phasecurve_plot_cheryl import *
 
 fig, ax = plt.subplots(figsize=(15, 10))

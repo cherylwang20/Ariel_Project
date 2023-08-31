@@ -1,3 +1,11 @@
+'''
+@author: Huiyi (Cheryl) Wang
+August 2023
+
+This code provides comparsion between Best in class and Ranked FoM method
+which is section 3.3 in Ariel_project_doc.pdf, Figure 21 - 23
+'''
+
 from Tier_2_target_analysis import *
 from Ariel_best_in_class import *
 
